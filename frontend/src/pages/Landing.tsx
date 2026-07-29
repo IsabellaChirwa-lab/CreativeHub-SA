@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import handsImage from "../assets/hands.svg";
+import { useAuth } from "../api/AuthContext";
 
 const pins = [
   { label: "Photographer", color: "bg-white/10" },
@@ -26,15 +27,16 @@ const features = [
 ];
 
 export default function Landing() {
+  const { token } = useAuth();
   return (
     <div className="relative overflow-hidden min-h-screen bg-canvas text-white">
-      <div className="pointer-events-none absolute inset-0 opacity-70">
+      <div className="pointer-events-none absolute inset-0 z-0">
         <img
           src={handsImage}
           alt="Creative collaboration background"
-          className="h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover opacity-30 filter blur-sm grayscale mix-blend-overlay"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/30 to-black/95" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/40 to-black/90" />
       </div>
 
       <section className="relative px-6 md:px-12 pt-24 pb-24 max-w-6xl mx-auto">
@@ -57,7 +59,7 @@ export default function Landing() {
             Start your portfolio
           </Link>
           <Link
-            to="/login"
+            to={token ? "/dashboard" : "/login"}
             className="border border-zing/50 text-zing px-6 py-3 rounded-sm hover:border-white hover:text-white transition-colors"
           >
             Explore the studio
