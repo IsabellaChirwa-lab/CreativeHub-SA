@@ -82,6 +82,23 @@ export function updateMyProfile(token: string, payload: Partial<ProfileData>) {
   });
 }
 
+export interface DataProjectRunPayload {
+  records_ingested?: number;
+  pipeline_status?: string;
+}
+
+export function runDataProject(
+  token: string,
+  projectId: number,
+  payload: DataProjectRunPayload
+) {
+  return request<DataProject>(`/data-projects/${projectId}/run`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify(payload),
+  });
+}
+
 export function getDataProjects(token: string) {
   return request<DataProject[]>("/data-projects/me", {
     headers: { Authorization: `Bearer ${token}` },

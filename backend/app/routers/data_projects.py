@@ -1,10 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
 
 from app.core.database import get_db
 from app.core.deps import get_current_user
 from app.models.user import DataProject, User
-from app.schemas.data_project import DataProjectCreate, DataProjectOut, DataProjectUpdate
+from app.schemas.data_project import (
+    DataProjectCreate,
+    DataProjectOut,
+    DataProjectRun,
+    DataProjectUpdate,
+)
 
 router = APIRouter(prefix="/data-projects", tags=["data-projects"])
 
@@ -29,6 +35,30 @@ def create_data_project(
         records_processed=payload.records_processed,
     )
     db.add(data_project)
+    db.commit()
+    db.refresh(data_project)
+    return data_project
+
+
+@router.post("/{project_id}/run", response_model=DataProjectOut)
+def run_data_project(
+    project_id: int,
+    payload: DataProjectRun,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    data_project = (
+        db.query(DataProject)
+        .filter(DataProject.id == project_id, DataProject.user_id == current_user.id)
+        .first()
+    )
+    if not data_project:
+        raise HTTPException(status_code=404, detail="Data project not found")
+
+    data_project.pipeline_status = payload.pipeline_status
+    data_project.records_processed += payload.records_ingested
+    data_project.last_run_at = func.now()
+
     db.commit()
     db.refresh(data_project)
     return data_project

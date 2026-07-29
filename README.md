@@ -21,6 +21,7 @@ Phase 1 (auth, artist profiles, landing page) is built and running locally. See 
 - [x] Landing page
 - [x] Database design (Users, Artist Profiles)
 - [x] Artist profile view/edit
+- [x] Data project tracking and pipeline simulation
 - [ ] Portfolio uploads (Phase 2)
 - [ ] Creative feed (Phase 2)
 - [ ] Commission system (Phase 3)
@@ -236,6 +237,8 @@ Data engineering tasks include:
 - Analytics dashboards
 - Trend analysis
 - Recommendation datasets
+- Data project metadata and source tracking
+- Pipeline run simulation for operational readiness
 
 ---
 

@@ -20,6 +20,11 @@ class DataProjectUpdate(BaseModel):
     last_run_at: datetime | None = None
 
 
+class DataProjectRun(BaseModel):
+    records_ingested: int = 1000
+    pipeline_status: str = "Succeeded"
+
+
 class DataProjectOut(BaseModel):
     id: int
     name: str

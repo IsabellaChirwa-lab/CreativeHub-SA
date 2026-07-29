@@ -1,6 +1,11 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../api/AuthContext";
-import { createDataProject, getDataProjects, DataProject } from "../api/client";
+import {
+  createDataProject,
+  getDataProjects,
+  runDataProject,
+  DataProject,
+} from "../api/client";
 
 export default function DataProjects() {
   const { token } = useAuth();
@@ -34,6 +39,23 @@ export default function DataProjects() {
       setError(err instanceof Error ? err.message : "Could not create project");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleRunProject(projectId: number) {
+    if (!token) return;
+    setError(null);
+
+    try {
+      const updated = await runDataProject(token, projectId, {
+        records_ingested: 1200,
+        pipeline_status: "Succeeded",
+      });
+      setProjects((current) =>
+        current.map((project) => (project.id === projectId ? updated : project))
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not run pipeline");
     }
   }
 
@@ -128,11 +150,18 @@ export default function DataProjects() {
                   </span>
                 </div>
                 <p className="mt-4 text-zing/80 leading-7">{project.description}</p>
-                <div className="mt-6 flex flex-wrap gap-4 text-sm text-zing/70">
+                <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-zing/70">
                   <span>Records processed: {project.records_processed}</span>
                   <span>
                     Last run: {project.last_run_at ? new Date(project.last_run_at).toLocaleString() : "Not run yet"}
                   </span>
+                  <button
+                    type="button"
+                    onClick={() => handleRunProject(project.id)}
+                    className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-zing transition hover:bg-white/10"
+                  >
+                    Run pipeline
+                  </button>
                 </div>
               </div>
             ))
