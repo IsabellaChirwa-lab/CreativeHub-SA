@@ -6,6 +6,81 @@ CreativeHub SA is a cloud-powered platform built to help artists, designers, pho
 
 This project was developed as an original software engineering project for the **WeThinkCode_ Elective Programme**, demonstrating practical software engineering, cloud computing, data engineering and modern application development.
 
+> **Scope note:** this repo is submitted as the **Cloud Computing** elective project. The data engineering work (ETL pipelines, warehouse, analytics on this platform's data) lives in a separate repository so each elective has its own original, standalone proof of work.
+
+**Demo video:** _link goes here once recorded_
+
+---
+
+# Project Status
+
+Phase 1 (auth, artist profiles, landing page) is built and running locally. See [Getting Started](#getting-started) below.
+
+- [x] Project setup
+- [x] Authentication (JWT, register/login)
+- [x] Landing page
+- [x] Database design (Users, Artist Profiles)
+- [x] Artist profile view/edit
+- [ ] Portfolio uploads (Phase 2)
+- [ ] Creative feed (Phase 2)
+- [ ] Commission system (Phase 3)
+- [ ] Cloud deployment to AWS (Phase 4)
+
+---
+
+# Getting Started
+
+## Prerequisites
+
+- Python 3.11+
+- Node.js 18+
+- Docker (for local Postgres)
+
+## 1. Start the database
+
+```bash
+docker compose up -d
+```
+
+## 2. Run the backend
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate        # fish shell: source .venv/bin/activate.fish
+pip install -r requirements.txt --break-system-packages
+cp .env.example .env
+uvicorn app.main:app --reload
+```
+
+Backend runs at `http://localhost:8000`. Interactive API docs: `http://localhost:8000/docs`.
+
+## 3. Run the frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs at `http://localhost:5173`.
+
+## Architecture, at a glance
+
+```
+Browser (React, :5173)
+   │  fetch() with JSON + JWT bearer token
+   ▼
+FastAPI backend (:8000)
+   │  SQLAlchemy ORM
+   ▼
+PostgreSQL (Docker, :5432)
+```
+
+- **Register/Login** (`/auth/register`, `/auth/login`) issue a JWT signed with `SECRET_KEY`.
+- The frontend stores the token and attaches it as `Authorization: Bearer <token>` on requests that need to know who's asking.
+- **`/profiles/me`** reads the token, looks up the matching user, and returns/updates their `ArtistProfile` row.
+
 ---
 
 # The Problem
