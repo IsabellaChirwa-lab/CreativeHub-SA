@@ -4,8 +4,8 @@ import { loginUser } from "../api/client";
 import { useAuth } from "../api/AuthContext";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("demo@creativehub.sa");
+  const [password, setPassword] = useState("Password123!");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +19,7 @@ export default function Login() {
     try {
       const { access_token } = await loginUser({ email, password });
       setToken(access_token);
-      navigate("/profile");
+      navigate("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {

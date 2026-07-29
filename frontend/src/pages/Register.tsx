@@ -4,9 +4,9 @@ import { registerUser, loginUser } from "../api/client";
 import { useAuth } from "../api/AuthContext";
 
 export default function Register() {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("Demo Artist");
+  const [email, setEmail] = useState("demo+1@creativehub.sa");
+  const [password, setPassword] = useState("Password123!");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +22,7 @@ export default function Register() {
       // Register then log in immediately so the person lands straight in their profile.
       const { access_token } = await loginUser({ email, password });
       setToken(access_token);
-      navigate("/profile");
+      navigate("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -34,7 +34,7 @@ export default function Register() {
     <div className="max-w-md mx-auto px-6 py-16 text-white">
       <div className="rounded-3xl border border-white/10 bg-charcoal/95 p-10 shadow-[0_30px_90px_-40px_rgba(255,255,255,0.18)]">
         <h1 className="font-display font-bold text-3xl mb-2">Join CreativeHub SA</h1>
-        <p className="text-zing/70 mb-8">Free to create. Your first portfolio in minutes.</p>
+        <p className="text-zing/70 mb-8">Free to create. Your first portfolio in minutes. Use demo data and remove it later.</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

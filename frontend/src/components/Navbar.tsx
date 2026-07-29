@@ -18,6 +18,12 @@ export default function Navbar() {
       <div className="flex items-center gap-6 font-mono text-xs uppercase tracking-widest text-zing/70">
         {token ? (
           <>
+            <Link to="/dashboard" className="hover:text-white transition-colors">
+              Dashboard
+            </Link>
+            <Link to="/portfolio" className="hover:text-white transition-colors">
+              Portfolio
+            </Link>
             <Link to="/data-projects" className="hover:text-white transition-colors">
               Data Projects
             </Link>

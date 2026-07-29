@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import heroImage from "../assets/hero.svg";
+import handsImage from "../assets/hands.svg";
 
 const pins = [
-  { label: "Photographer", rotate: "-rotate-6", color: "bg-white/10" },
-  { label: "Illustrator", rotate: "rotate-3", color: "bg-white/10" },
-  { label: "UI/UX Designer", rotate: "-rotate-2", color: "bg-white/10" },
-  { label: "Musician", rotate: "rotate-6", color: "bg-white/10" },
-  { label: "Writer", rotate: "-rotate-3", color: "bg-white/10" },
-  { label: "Fashion Designer", rotate: "rotate-2", color: "bg-white/10" },
+  { label: "Photographer", color: "bg-white/10" },
+  { label: "Illustrator", color: "bg-white/10" },
+  { label: "UI/UX Designer", color: "bg-white/10" },
+  { label: "Musician", color: "bg-white/10" },
+  { label: "Writer", color: "bg-white/10" },
+  { label: "Fashion Designer", color: "bg-white/10" },
 ];
 
 const features = [
@@ -30,8 +30,8 @@ export default function Landing() {
     <div className="relative overflow-hidden min-h-screen bg-canvas text-white">
       <div className="pointer-events-none absolute inset-0 opacity-70">
         <img
-          src={heroImage}
-          alt="Creative network background"
+          src={handsImage}
+          alt="Creative collaboration background"
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/30 to-black/95" />
@@ -42,7 +42,7 @@ export default function Landing() {
           Built for South African creatives
         </p>
         <h1 className="font-display font-bold text-4xl md:text-6xl leading-[1.05] max-w-3xl">
-          Build the project mindset every data engineer needs.
+          Your work deserves a home that isn't an algorithm's afterthought.
         </h1>
         <p className="mt-6 max-w-xl text-zing text-lg leading-8">
           CreativeHub SA now supports data engineering workflows: capture dataset
@@ -68,7 +68,7 @@ export default function Landing() {
           {pins.map((pin) => (
             <div
               key={pin.label}
-              className={`${pin.rotate} bg-charcoal/95 text-white font-display font-bold px-6 py-8 rounded-2xl shadow-[0_20px_50px_-30px_rgba(255,255,255,0.25)] w-full md:w-auto hover:shadow-[0_25px_80px_-40px_rgba(255,255,255,0.25)] transition-all duration-300`}
+              className={`bg-charcoal/95 text-white font-display font-bold px-6 py-8 rounded-2xl shadow-[0_20px_50px_-30px_rgba(255,255,255,0.25)] w-full md:w-auto transition-all duration-300`}
             >
               {pin.label}
             </div>
