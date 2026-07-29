@@ -1,67 +1,74 @@
 import { Link } from "react-router-dom";
+import heroImage from "../assets/hero.svg";
 
-// A scattered "pinboard" of disciplines instead of a generic stat grid —
-// this is the signature visual element for the landing hero.
 const pins = [
-  { label: "Photographer", rotate: "-rotate-6", color: "bg-marigold" },
-  { label: "Illustrator", rotate: "rotate-3", color: "bg-teal" },
-  { label: "UI/UX Designer", rotate: "-rotate-2", color: "bg-coral" },
-  { label: "Musician", rotate: "rotate-6", color: "bg-marigold" },
-  { label: "Writer", rotate: "-rotate-3", color: "bg-teal" },
-  { label: "Fashion Designer", rotate: "rotate-2", color: "bg-coral" },
+  { label: "Photographer", rotate: "-rotate-6", color: "bg-white/10" },
+  { label: "Illustrator", rotate: "rotate-3", color: "bg-white/10" },
+  { label: "UI/UX Designer", rotate: "-rotate-2", color: "bg-white/10" },
+  { label: "Musician", rotate: "rotate-6", color: "bg-white/10" },
+  { label: "Writer", rotate: "-rotate-3", color: "bg-white/10" },
+  { label: "Fashion Designer", rotate: "rotate-2", color: "bg-white/10" },
 ];
 
 const features = [
   {
-    title: "Portfolio Builder",
-    body: "A page that actually looks like your work — no algorithm deciding who sees it.",
+    title: "Source Tracking",
+    body: "Log sources like S3, Kafka, PostgreSQL and understand where your data comes from.",
   },
   {
-    title: "Commission Marketplace",
-    body: "Clients find you. Requests land in one inbox, not five DMs across three apps.",
+    title: "Pipeline Status",
+    body: "Track ingestion, transformation and delivery status so your data workflows stay reliable.",
   },
   {
-    title: "Analytics Dashboard",
-    body: "Views, saves, and where your audience is actually growing — in plain numbers.",
+    title: "Metrics & Monitoring",
+    body: "Keep count of records processed, last run times, and readiness for downstream analytics.",
   },
 ];
 
 export default function Landing() {
   return (
-    <div className="text-paper">
-      {/* Hero */}
-      <section className="px-6 md:px-12 pt-12 pb-24 max-w-6xl mx-auto">
-        <p className="font-mono text-xs uppercase tracking-widest text-muted mb-4">
+    <div className="relative overflow-hidden min-h-screen bg-canvas text-white">
+      <div className="pointer-events-none absolute inset-0 opacity-70">
+        <img
+          src={heroImage}
+          alt="Creative network background"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/90 via-black/30 to-black/95" />
+      </div>
+
+      <section className="relative px-6 md:px-12 pt-24 pb-24 max-w-6xl mx-auto">
+        <p className="font-mono text-xs uppercase tracking-widest text-zing/70 mb-4">
           Built for South African creatives
         </p>
         <h1 className="font-display font-bold text-4xl md:text-6xl leading-[1.05] max-w-3xl">
-          Your work deserves a home that isn't an algorithm's afterthought.
+          Build the project mindset every data engineer needs.
         </h1>
-        <p className="mt-6 max-w-xl text-muted text-lg">
-          Portfolios, commissions, and community — built for artists, designers,
-          photographers, musicians, illustrators and writers across South Africa.
+        <p className="mt-6 max-w-xl text-zing text-lg leading-8">
+          CreativeHub SA now supports data engineering workflows: capture dataset
+          sources, monitor pipeline status, and track record throughput as your
+          data projects move from ingestion to insight.
         </p>
-        <div className="mt-8 flex gap-4">
+        <div className="mt-10 flex flex-wrap gap-4">
           <Link
             to="/register"
-            className="bg-marigold text-canvas font-medium px-6 py-3 rounded-sm hover:bg-coral hover:text-paper transition-colors"
+            className="bg-white text-canvas font-medium px-6 py-3 rounded-sm shadow-lg shadow-white/10 hover:bg-zing transition-colors"
           >
-            Create your portfolio
+            Start your portfolio
           </Link>
           <Link
             to="/login"
-            className="border border-muted px-6 py-3 rounded-sm hover:border-paper transition-colors"
+            className="border border-zing/50 text-zing px-6 py-3 rounded-sm hover:border-white hover:text-white transition-colors"
           >
-            I already have an account
+            Explore the studio
           </Link>
         </div>
 
-        {/* Pinboard */}
-        <div className="mt-20 flex flex-wrap gap-5">
+        <div className="mt-20 grid gap-5 md:grid-cols-3">
           {pins.map((pin) => (
             <div
               key={pin.label}
-              className={`${pin.rotate} ${pin.color} text-canvas font-display font-bold px-6 py-8 rounded-sm shadow-lg w-40 md:w-48 hover:rotate-0 transition-transform duration-300`}
+              className={`${pin.rotate} bg-charcoal/95 text-white font-display font-bold px-6 py-8 rounded-2xl shadow-[0_20px_50px_-30px_rgba(255,255,255,0.25)] w-full md:w-auto hover:shadow-[0_25px_80px_-40px_rgba(255,255,255,0.25)] transition-all duration-300`}
             >
               {pin.label}
             </div>
@@ -69,13 +76,14 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="px-6 md:px-12 py-20 bg-paper text-canvas">
+      <section className="relative px-6 md:px-12 py-20 bg-[#0d1014]/90">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
           {features.map((f) => (
-            <div key={f.title}>
-              <h3 className="font-display font-bold text-xl mb-2">{f.title}</h3>
-              <p className="text-canvas/70">{f.body}</p>
+            <div key={f.title} className="border border-white/10 rounded-3xl p-6 backdrop-blur-xl bg-white/5">
+              <h3 className="font-display font-bold text-xl mb-3 text-white">
+                {f.title}
+              </h3>
+              <p className="text-zing/80 leading-7">{f.body}</p>
             </div>
           ))}
         </div>

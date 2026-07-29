@@ -19,6 +19,22 @@ export interface ProfileData {
   portfolio_views: number;
 }
 
+export interface DataProject {
+  id: number;
+  name: string;
+  description: string;
+  source: string;
+  pipeline_status: string;
+  records_processed: number;
+  last_run_at: string | null;
+}
+
+export interface DataProjectCreatePayload {
+  name: string;
+  description: string;
+  source: string;
+}
+
 // A small helper so every call handles errors the same way instead of
 // repeating try/catch + response.ok checks in every component.
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -61,6 +77,20 @@ export function getMyProfile(token: string) {
 export function updateMyProfile(token: string, payload: Partial<ProfileData>) {
   return request<ProfileData>("/profiles/me", {
     method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify(payload),
+  });
+}
+
+export function getDataProjects(token: string) {
+  return request<DataProject[]>("/data-projects/me", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export function createDataProject(token: string, payload: DataProjectCreatePayload) {
+  return request<DataProject>("/data-projects/me", {
+    method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: JSON.stringify(payload),
   });

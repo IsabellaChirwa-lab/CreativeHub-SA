@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import Base, engine
-from app.routers import auth, profiles
+from app.routers import auth, profiles, data_projects
 
 # Phase 1: create tables directly from models on startup.
 # We'll move to Alembic migrations once the schema stabilises.
@@ -20,6 +20,7 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(profiles.router)
+app.include_router(data_projects.router)
 
 
 @app.get("/health")
