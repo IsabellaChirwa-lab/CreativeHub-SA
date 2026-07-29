@@ -3,12 +3,12 @@ import handsImage from "../assets/hands.svg";
 import { useAuth } from "../api/AuthContext";
 
 const pins = [
-  { label: "Photographer", color: "bg-white/10" },
-  { label: "Illustrator", color: "bg-white/10" },
-  { label: "UI/UX Designer", color: "bg-white/10" },
-  { label: "Musician", color: "bg-white/10" },
-  { label: "Writer", color: "bg-white/10" },
-  { label: "Fashion Designer", color: "bg-white/10" },
+  { label: "Photographer" },
+  { label: "Illustrator" },
+  { label: "UI/UX Designer" },
+  { label: "Musician" },
+  { label: "Writer" },
+  { label: "Fashion Designer" },
 ];
 
 const features = [
