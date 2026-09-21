@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Creative Hub ZA — South Africa's Creative Talent Network</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+  @layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } }
+  ::-webkit-scrollbar { display: none; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .modal-backdrop { display: none; }
+  .modal-backdrop.active { display: flex; }
+  .fade-in { animation: fadeIn .18s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .toast { animation: toastIn .25s ease-out, toastOut .25s ease-in 2.6s forwards; }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes toastOut { to { opacity: 0; transform: translateY(-6px); } }
+  [data-role-card].selected { border-color: #C4293D !important; background: rgba(229,9,20,0.08); }
+  input:focus, select:focus, textarea:focus { outline: none; }
+</style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: { extend: {
+      colors: {
+        "surface": "#121215", "background": "#0e0e11",
+        "surface-container-lowest": "#0a0a0c", "surface-container-low": "#16161a",
+        "surface-container": "#1d1d23", "surface-container-high": "#26262e",
+        "surface-container-highest": "#32323c",
+        "outline": "#3d3c47", "outline-variant": "#2b2a33",
+        "primary": "#C4293D", "primary-hover": "#D93A50", "primary-container": "#C4293D",
+        "on-primary": "#ffffff", "on-surface": "#f5f4f7", "on-surface-variant": "#a19fa9",
+      },
+      fontFamily: { sans: ["Manrope", "sans-serif"], display: ["Playfair Display", "serif"] }
+    } }
+  }
+</script>
+</head>
+<body class="bg-background font-sans text-on-surface antialiased selection:bg-primary selection:text-white">
+
+<!-- ============ APP DOWNLOAD BANNER ============ -->
+<aside class="w-full bg-[#18181e] border-b border-[#2a2a34] text-on-surface py-2.5 px-4 sm:px-8 relative z-50" id="mobile-app-banner">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm">
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-primary/20 text-primary border border-primary/40 font-bold shrink-0">
+        <span class="material-symbols-outlined text-[16px]">smartphone</span>
+      </span>
+      <p class="font-medium text-[#e3e1e8]"><strong class="text-white font-semibold">Get Creative Hub ZA on Mobile</strong> — Instant stem auditions, direct drop alerts &amp; studio bookings anywhere.</p>
+    </div>
+    <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+      <button onclick="toast('Opening the App Store…')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#24242d] hover:bg-[#2e2e3a] border border-[#393845] text-white text-xs font-semibold tracking-wide transition-all">
+        <span class="material-symbols-outlined text-[15px]">phone_iphone</span><span>iOS App</span>
+      </button>
+      <button onclick="toast('Opening Google Play…')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#24242d] hover:bg-[#2e2e3a] border border-[#393845] text-white text-xs font-semibold tracking-wide transition-all">
+        <span class="material-symbols-outlined text-[15px]">android</span><span>Android</span>
+      </button>
+      <button class="hidden lg:inline-flex items-center gap-1 text-xs text-on-surface-variant hover:text-white px-2 py-1 transition-colors" onclick="toast('SMS link sent to your device!')" type="button">
+        <span class="material-symbols-outlined text-[14px]">sms</span><span>Send SMS Link</span>
+      </button>
+      <button aria-label="Dismiss banner" class="p-1 rounded text-on-surface-variant hover:text-white hover:bg-[#252530] transition-colors ml-1" onclick="document.getElementById('mobile-app-banner').style.display='none'" type="button">
+        <span class="material-symbols-outlined text-[16px]">close</span>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="sticky top-0 left-0 right-0 z-40 bg-[#121215]/90 backdrop-blur-xl border-b border-[#25252d]">
+  <div class="max-w-7xl mx-auto h-20 px-4 sm:px-8 flex items-center justify-between gap-6">
+    <button class="flex items-center gap-3 shrink-0 group" onclick="navigate('home')">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-[#9e050d] flex items-center justify-center shadow-sm ring-1 ring-white/15">
+        <span class="material-symbols-outlined text-white text-[20px]">graphic_eq</span>
+      </div>
+      <div class="flex flex-col text-left">
+        <span class="font-bold tracking-tight text-lg text-white">CREATIVE HUB <span class="text-primary tracking-widest font-black text-base ml-0.5">ZA</span></span>
+        <span class="text-[9px] uppercase tracking-[0.25em] text-on-surface-variant font-medium -mt-1">Creative Network</span>
+      </div>
+    </button>
+
+    <nav class="hidden lg:flex items-center gap-1 bg-[#18181e] p-1.5 rounded-xl border border-[#2b2b35]" id="main-nav">
+      <button data-nav="home" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all bg-[#272731] text-white" onclick="navigate('home')">Discover Feed</button>
+      <button data-nav="briefs" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="navigate('briefs')">Briefs</button>
+      <button data-nav="labels" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="navigate('labels')">For Record Labels</button>
+      <button data-nav="radio" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="navigate('radio')">For Radio</button>
+      <button data-nav="artists" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="navigate('artists')">For Artists</button>
+      <button data-nav="portfolio" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="goToPortfolio()">My Portfolio</button>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <button class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-hover text-white rounded-lg text-sm font-semibold tracking-wide shadow-sm transition-all" type="button" onclick="openBriefModal()">
+        <span class="material-symbols-outlined text-[18px]">add_circle</span><span>Post Gig / Brief</span>
+      </button>
+
+      <div class="relative">
+        <button aria-label="Notifications" class="p-2.5 rounded-lg bg-[#1a1a20] border border-[#2c2c36] text-on-surface-variant hover:text-white transition-colors relative" type="button" onclick="toggleNotifications()">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span id="notif-dot" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary ring-2 ring-[#121215]"></span>
+        </button>
+        <div id="notif-panel" class="hidden fade-in absolute right-0 mt-2 w-80 bg-[#1a1a20] border border-[#2c2c36] rounded-xl shadow-2xl overflow-hidden z-50">
+          <div class="flex items-center justify-between px-4 py-3 border-b border-[#26262f]">
+            <span class="text-sm font-semibold text-white">Notifications</span>
+            <button class="text-xs text-primary font-semibold hover:underline" onclick="markNotifsRead()">Mark all read</button>
+          </div>
+          <div class="max-h-80 overflow-y-auto divide-y divide-[#22222a]">
+            <div class="px-4 py-3 text-xs text-on-surface-variant"><span class="text-white font-medium">Zara Ink Van Der Merwe</span> accepted your guest spot request.</div>
+            <div class="px-4 py-3 text-xs text-on-surface-variant"><span class="text-white font-medium">Universal Music Africa</span> viewed your master stems.</div>
+            <div class="px-4 py-3 text-xs text-on-surface-variant">Your escrow payout of <span class="text-white font-medium">R3,500</span> has cleared.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logged out state -->
+      <div id="auth-area-logged-out" class="flex items-center">
+        <button class="px-4 py-2.5 rounded-lg border border-[#2c2c36] text-white text-sm font-semibold hover:bg-[#1a1a20] transition-all" onclick="openAuth('signin')">Sign In</button>
+      </div>
+      <!-- Logged in state -->
+      <div id="auth-area-logged-in" class="relative hidden">
+        <button class="flex items-center gap-2 pl-2 border-l border-[#2c2c36]" onclick="toggleProfileMenu()">
+          <img id="profile-avatar" alt="Profile" class="w-9 h-9 rounded-full object-cover ring-1 ring-primary/25" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcZcKu-wucVcHW72yeP7crYTcEkDK2QoZcqmRK_DcHYV6xM4gq4j3bG3AJuL_lRnbjEDOy3DyQfoak7mYgL6-eWeEokBQrPNWK3aCsY5vE5Yky008XlpZcP4WSQ8j7oenJtml-8sjlnp1lK-DCzRQPGqloJO9wfm59wUXHR32lY5VWksUhmR3SgyBSKyjSa1Sm2ltCrStc_rrw-a_oAlfC_Py7B-LMenUioaauiqfPlB_LQaFttd0e"/>
+          <span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span>
+        </button>
+        <div id="profile-menu" class="hidden fade-in absolute right-0 mt-2 w-56 bg-[#1a1a20] border border-[#2c2c36] rounded-xl shadow-2xl overflow-hidden z-50">
+          <div class="px-4 py-3 border-b border-[#26262f]">
+            <div id="profile-menu-name" class="text-sm font-semibold text-white truncate">—</div>
+            <div id="profile-menu-role" class="text-[11px] text-primary font-medium uppercase tracking-wide">—</div>
+          </div>
+          <button class="w-full text-left px-4 py-2.5 text-sm text-on-surface-variant hover:text-white hover:bg-[#22222b] transition-colors" onclick="navigate('portfolio')">My Portfolio</button>
+          <button class="w-full text-left px-4 py-2.5 text-sm text-on-surface-variant hover:text-white hover:bg-[#22222b] transition-colors" onclick="toast('Settings coming soon.')">Settings</button>
+          <button class="w-full text-left px-4 py-2.5 text-sm text-primary hover:bg-[#22222b] transition-colors border-t border-[#26262f]" onclick="signOut()">Sign Out</button>
+        </div>
+      </div>
+
+      <!-- Mobile nav toggle -->
+      <button class="lg:hidden p-2.5 rounded-lg bg-[#1a1a20] border border-[#2c2c36] text-white" onclick="toggleMobileNav()">
+        <span class="material-symbols-outlined text-[20px]">menu</span>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile nav drawer -->
+  <div id="mobile-nav" class="hidden lg:hidden border-t border-[#22222a] bg-[#121215] px-4 py-3 flex flex-col gap-1">
+    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('home')">Discover Feed</button>
+    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('briefs')">Briefs</button>
+    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('labels')">For Record Labels</button>
+    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('radio')">For Radio</button>
+    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('artists')">For Artists</button>
+    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="goToPortfolio()">My Portfolio</button>
+  </div>
+</header>
+
+<main class="w-full">
+
+<!-- ======================================================= -->
+<!-- PAGE: WELCOME / SPLASH                                   -->
+<!-- ======================================================= -->
+<section class="page active" id="page-welcome">
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none select-none opacity-[0.35]" aria-hidden="true">
+      <div class="absolute top-[6%] left-[4%] w-40 sm:w-52 rotate-[-7deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm">
+        <span class="material-symbols-outlined text-primary text-[22px]">graphic_eq</span>
+        <p class="font-display text-white text-sm mt-2 leading-tight">Amapiano<br/>&amp; Afro-Tech</p>
+      </div>
+      <div class="absolute top-[10%] right-[6%] w-40 sm:w-56 rotate-[5deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm">
+        <span class="material-symbols-outlined text-primary text-[22px]">colorize</span>
+        <p class="font-display text-white text-sm mt-2 leading-tight">Fine-Line<br/>Tattoo Art</p>
+      </div>
+      <div class="absolute bottom-[16%] left-[8%] w-36 sm:w-48 rotate-[4deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm">
+        <span class="material-symbols-outlined text-primary text-[22px]">photo_camera</span>
+        <p class="font-display text-white text-sm mt-2 leading-tight">Editorial<br/>Photography</p>
+      </div>
+      <div class="absolute bottom-[10%] right-[10%] w-36 sm:w-48 rotate-[-5deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm">
+        <span class="material-symbols-outlined text-primary text-[22px]">palette</span>
+        <p class="font-display text-white text-sm mt-2 leading-tight">Contemporary<br/>Fine Art</p>
+      </div>
+      <div class="absolute top-[45%] left-[2%] w-32 sm:w-44 rotate-[3deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm hidden sm:block">
+        <span class="material-symbols-outlined text-primary text-[22px]">view_in_ar</span>
+        <p class="font-display text-white text-sm mt-2 leading-tight">3D &amp;<br/>VFX</p>
+      </div>
+      <div class="absolute top-[42%] right-[3%] w-32 sm:w-44 rotate-[-4deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm hidden sm:block">
+        <span class="material-symbols-outlined text-primary text-[22px]">radio</span>
+        <p class="font-display text-white text-sm mt-2 leading-tight">Radio &amp;<br/>Airplay</p>
+      </div>
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-background/60 via-background/85 to-background"></div>
+
+    <div class="relative z-10 max-w-2xl mx-auto text-center px-4 sm:px-8 py-24 sm:py-32">
+      <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-4">South Africa's Creative Network</span>
+      <h1 class="font-display text-4xl sm:text-6xl font-bold text-white leading-[1.05] mb-6">Welcome to<br/>Creative Hub ZA</h1>
+      <p class="text-on-surface-variant text-base sm:text-lg leading-relaxed mb-9">
+        One stage, every discipline. Producers dropping log drums, tattooists opening guest books, photographers, painters and 3D artists building worlds — all in one room, all verified, all bookable. We hold the deposit so the work always gets paid for. You just have to show up and create.
+      </p>
+      <button class="px-8 py-3.5 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm tracking-wide shadow-sm transition-all" onclick="navigate('home')">Enter the Hub</button>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- PAGE: HOME / DISCOVER FEED                               -->
+<!-- ======================================================= -->
+<section class="page" id="page-home">
+  <div class="w-full bg-[#111114] border-b border-[#212128] py-2.5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-wrap items-center justify-between gap-3 text-xs text-on-surface-variant">
+      <div class="flex items-center gap-3 font-medium">
+        <span class="inline-flex items-center gap-2 text-primary font-semibold tracking-wide">
+          <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>LIVE AUDITIONS
+        </span>
+        <span>•</span><span>84 Producers Sessions Open</span>
+        <span class="hidden sm:inline">•</span><span class="hidden sm:inline">29 Guest Tattoo Residencies</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-medium">
+        <span>Johannesburg</span><span>Cape Town</span><span>Durban</span>
+        <span class="text-white font-semibold">ZAR Escrow Direct</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 pt-10 pb-8">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[#22222a]">
+      <div>
+        <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-2">Curated South African Talent</span>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tracking-tight">Underground Grid &amp; Match</h1>
+        <p class="text-on-surface-variant text-base max-w-2xl mt-3 leading-relaxed">Find and book South Africa's best creatives — verified and ready to work.</p>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="px-5 py-3 rounded-xl bg-[#17171d] border border-[#272732] text-left">
+          <span class="block text-2xl font-bold text-white">1,240</span><span class="text-xs text-on-surface-variant">Active Creatives</span>
+        </div>
+        <div class="px-5 py-3 rounded-xl bg-[#17171d] border border-[#272732] text-left">
+          <span class="block text-2xl font-bold text-white">94.8%</span><span class="text-xs text-on-surface-variant">Verified Portfolio</span>
+        </div>
+        <div class="px-5 py-3 rounded-xl bg-[#17171d] border border-[#272732] text-left">
+          <span class="block text-2xl font-bold text-primary">R2.4M</span><span class="text-xs text-on-surface-variant">Payouts in 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-col gap-4">
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="category-filters">
+        <button data-cat="all" class="cat-btn px-4 py-2 rounded-lg font-semibold text-xs tracking-wide transition-all shrink-0">All Creatives (1,240)</button>
+        <button data-cat="music" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Musicians &amp; Producers (412)</button>
+        <button data-cat="tattoo" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Tattoo Artists (188)</button>
+        <button data-cat="photo" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Photographers (295)</button>
+        <button data-cat="fine-art" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Fine Artists (210)</button>
+        <button data-cat="3d" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Digital 3D &amp; VFX (135)</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-[#15151a] p-3 rounded-2xl border border-[#262630]">
+        <div class="md:col-span-5 relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+          <input id="search-input" oninput="applyFilters()" class="w-full pl-10 pr-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary focus:ring-1 focus:ring-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/70 transition-all" placeholder="Search by name, instrument, style, or studio..." type="text"/>
+        </div>
+        <div class="md:col-span-3">
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary text-[18px]">location_on</span>
+            <select id="city-filter" onchange="applyFilters()" aria-label="City Filter" class="w-full pl-9 pr-8 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-xs sm:text-sm text-white appearance-none cursor-pointer">
+              <option value="all">All Metro Hubs (Nationwide)</option>
+              <option value="jhb">Johannesburg (Maboneng / Braam)</option>
+              <option value="cpt">Cape Town (Woodstock / Kloof)</option>
+              <option value="dbn">Durban (Station Road)</option>
+              <option value="pta">Pretoria (Hatfield)</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[16px]">expand_more</span>
+          </div>
+        </div>
+        <div class="md:col-span-4 flex items-center justify-end gap-3 px-1">
+          <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-medium text-white select-none">
+            <input id="filter-available" checked onchange="applyFilters()" class="rounded border-[#3a3a48] text-primary focus:ring-primary bg-[#1e1e26]" type="checkbox"/><span>Available Now</span>
+          </label>
+          <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-medium text-on-surface-variant hover:text-white select-none">
+            <input id="filter-stems" onchange="applyFilters()" class="rounded border-[#3a3a48] text-primary focus:ring-primary bg-[#1e1e26]" type="checkbox"/><span>Has Stems</span>
+          </label>
+          <button class="p-2 rounded-xl bg-[#1e1e26] border border-[#2f2f3c] text-on-surface-variant hover:text-white transition-colors" title="More Filters" onclick="toast('More filters coming soon.')" type="button">
+            <span class="material-symbols-outlined text-[18px]">tune</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 mb-10">
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1b1b22] to-[#16161b] border border-[#2c2c38] p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
+      <div class="space-y-2 z-10">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/15 text-primary border border-primary/30 text-xs font-bold uppercase tracking-wider">Curated Monthly Spotlight</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Amapiano Log Drums &amp; Dark Surrealist Ink Exhibition</h2>
+        <p class="text-sm text-on-surface-variant max-w-xl">Selected in partnership with Universal Music Africa and Salon Tattoo Collective Cape Town.</p>
+      </div>
+      <div class="flex items-center gap-4 z-10 shrink-0">
+        <div class="text-right hidden sm:block">
+          <span class="text-xs uppercase tracking-wider text-on-surface-variant block">Audition Deadline</span>
+          <span class="text-sm font-bold text-white">Closing in 04 Days</span>
+        </div>
+        <button class="px-5 py-2.5 rounded-xl bg-white hover:bg-neutral-200 text-[#121215] font-semibold text-xs tracking-wide transition-all shadow-md" onclick="openBooking('Amapiano Log Drums &amp; Dark Surrealist Ink Exhibition','Apply to exhibit or audition','Apply Now')" type="button">View Exhibition</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 mb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8" id="creative-grid">
+
+      <article data-name="sipho vortex ndlovu amapiano afro-tech" data-category="music" data-available="true" data-stems="true" class="creative-card lg:col-span-7 rounded-2xl bg-[#16161b] border border-[#282834] p-6 sm:p-8 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-6">
+            <div class="flex items-center gap-4">
+              <img alt="Sipho Vortex Ndlovu" class="w-16 h-16 rounded-xl object-cover ring-1 ring-white/10 shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr6vifLQUCAE_kaQPLBYmcBZLI_48PTesP3VI8JOTCNlp4MhsdP8aV8MxN9FHGhD9zuvE0DUPemXQSigzwZuSGuVSjZAELE5anzIOr3EY2X3vgOVmA5nTjqodKPY9saUdr6aBQ-ohHtQ5f2sYRD7QmzL9SFp5s3TIh681ks3aiilQBsuVI7YwB3u_ZK2RbhStr0s-STFVAMTn9pSo6gKd4AwGQI7v0zBeY_5G7rOwMNFYwK8bWbxyk"/>
+              <div>
+                <div class="flex items-center gap-2"><h3 class="text-lg font-bold text-white">Sipho "Vortex" Ndlovu</h3><span class="material-symbols-outlined text-primary text-[18px]" title="Verified Creator">verified</span></div>
+                <p class="text-xs text-on-surface-variant mt-0.5">Amapiano &amp; Afro-Tech Master Synthesist • Soweto, JHB</p>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-md bg-[#22222c] border border-[#31313e] text-xs font-semibold text-white uppercase tracking-wider">JHB // SOWETO</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 mb-6">
+            <span class="px-2.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20 text-xs font-semibold">Available for Sync &amp; Master Stems</span>
+            <span class="px-2.5 py-1 rounded-md bg-[#22222c] border border-[#31313e] text-xs font-semibold text-on-surface-variant">FL Studio &amp; Logic Pro</span>
+            <span class="px-2.5 py-1 rounded-md bg-[#22222c] border border-[#31313e] text-xs font-semibold text-on-surface-variant">118 - 122 BPM</span>
+          </div>
+          <div class="space-y-3">
+            <div class="rounded-xl bg-[#111114] border border-[#24242f] p-3 flex items-center gap-3">
+              <button onclick="togglePlayer(this)" class="w-8 h-8 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[16px]">play_arrow</span></button>
+              <div class="flex-1 min-w-0"><p class="text-xs font-semibold text-white truncate">Amapiano Grooves Pt. 2 <span class="text-on-surface-variant font-normal">— Log Drum Stems • 44kHz Master</span></p><div class="mt-1.5 h-1 bg-[#262632] rounded-full overflow-hidden"><div class="h-full w-2/5 bg-primary rounded-full"></div></div></div>
+            </div>
+            <div class="rounded-xl bg-[#111114] border border-[#24242f] p-3 flex items-center gap-3">
+              <button onclick="togglePlayer(this)" class="w-8 h-8 rounded-full bg-[#22222c] hover:bg-primary text-white flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[16px]">play_arrow</span></button>
+              <div class="flex-1 min-w-0"><p class="text-xs font-semibold text-white truncate">Track 02: Braam Sunset <span class="text-on-surface-variant font-normal">— Afro-Tech Club Dubplate • 1:12</span></p><div class="mt-1.5 h-1 bg-[#262632] rounded-full overflow-hidden"><div class="h-full w-0 bg-primary rounded-full"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 pt-5 border-t border-[#262632] flex items-center justify-between gap-3">
+          <span class="inline-flex items-center gap-1.5 text-xs text-on-surface-variant"><span class="material-symbols-outlined text-[15px] text-primary">verified_user</span>Pre-cleared Commercial Licensing</span>
+          <div class="flex items-center gap-3">
+            <button class="px-4 py-2.5 rounded-lg bg-[#22222b] hover:bg-[#2b2b37] text-white text-xs font-semibold tracking-wide border border-[#323240] transition-colors" onclick="openBooking('Sipho \'Vortex\' Ndlovu','Request stem package','Send Request')" type="button">Request Stems</button>
+            <button class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-semibold tracking-wide shadow-sm transition-all" onclick="openBooking('Sipho \'Vortex\' Ndlovu','Book this producer','Send Booking Request')" type="button">Book Artist</button>
+          </div>
+        </div>
+      </article>
+
+      <article data-name="zara ink van der merwe tattoo" data-category="tattoo" data-available="true" data-stems="false" class="creative-card lg:col-span-5 rounded-2xl bg-[#16161b] border border-[#282834] p-6 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
+        <div>
+          <div class="flex items-start justify-between gap-2 mb-4">
+            <div><h3 class="text-base font-bold text-white flex items-center gap-1.5">Zara "Ink" Van Der Merwe <span class="text-primary text-[11px] font-bold bg-primary/10 border border-primary/30 rounded px-1.5 py-0.5 uppercase">Guest Spot Available</span></h3><p class="text-xs text-on-surface-variant mt-0.5">Dark Surrealism &amp; Micro Fine-Line Tattooer</p></div>
+            <span class="px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[11px] font-semibold text-white uppercase shrink-0">CPT // KLOOF</span>
+          </div>
+          <div class="flex items-center justify-between text-xs mb-4 bg-[#111114] border border-[#24242f] rounded-lg px-3 py-2">
+            <span class="text-on-surface-variant">Guest Rate: <strong class="text-white">R3,500 / Day</strong></span><span class="text-primary font-semibold">July Spot Open</span>
+          </div>
+          <div class="grid grid-cols-3 gap-3 mb-5">
+            <div class="relative aspect-square rounded-xl overflow-hidden bg-[#1f1f28] border border-[#2a2a36]"><img alt="Protea Fine Line" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDraZkuTZ2EXlAMep8NaBmc2BzRzl-QRFbTm8L8SXRCpTxYyh5FhTQp5ADO6ngMTj3WHceXAXfQAHP_-PX9K5mJBBMR_DFcBRULRhh2DhyzGDh39gKT4YqTJ37pC-_llV9jZaVsnn8hyBJ2Xurl0UhfLf54uJZxhPqSPTxrkSLeFm-vvD__MbFGUeUXW2lKso4ifYx3TrumUt0AxoftsRQFga6DMqBoZeQo0iBi1WYbn-4MCm--SLjV"/></div>
+            <div class="relative aspect-square rounded-xl overflow-hidden bg-[#1f1f28] border border-[#2a2a36]"><img alt="Crane Tattoo Art" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvbnC1Nj1yyE_SmW3_Ozr5vwNCpmN6aAr2bWw7uUFY3cxiNYquTAjA34tM_5h4EvU_-n_rAkc_CvqW0Q0qwV2MS1sUkJAk7cZkcejRTK0uSvwYBJWlWEYvFB4MeWn-rf6a8IJFoQcIJ-QfoPKbx1GcKloIxzKosBnz9q7Df3lv3VF04LSAQa0gp8sdYCzLPtfPCrgBYp_JeQee59y1qRngpTau8qqnObTex4Vps9_28t5oF23d2itW"/></div>
+            <div class="relative aspect-square rounded-xl overflow-hidden bg-[#1f1f28] border border-[#2a2a36]"><img alt="Back Anatomy Tattoo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARMxVEwdNZipZkW4irU2zY1D6n5bO2neHDQr34lyr8GOtjspkXuJ9Bh3AqwUZ2HmawmoP_4OTLkVV5deqMF221Xe4iRP5HH7YbzZGfll_jwtJ440dUjvAeebVqI5MmSJv0dypuT0XTj54ZVW_N3O8u1yRSqQ_cU3gqh3U2n9-jZDJeBWlwn4ONYRSwINwf2rlhb876gd9uYqCAruyDzuENYdhySpTX6AlXUqM3CfsnHNFmV0ALSE5S"/></div>
+          </div>
+          <div class="space-y-1.5 text-xs text-on-surface-variant bg-[#111114] p-3 rounded-xl border border-[#24242f]">
+            <div class="flex items-center justify-between"><span>Health &amp; Autoclave Certification</span><span class="text-white font-medium">Verified 2025</span></div>
+            <div class="flex items-center justify-between"><span>Studio Kit: Bishop Rotary Wand</span><span class="text-white font-medium">Ready</span></div>
+          </div>
+        </div>
+        <div class="mt-6 pt-5 border-t border-[#262632] flex items-center gap-3">
+          <button class="flex-1 py-2.5 rounded-lg bg-[#22222b] hover:bg-[#2b2b37] text-white text-xs font-semibold tracking-wide border border-[#323240] transition-colors" onclick="openBooking('Zara \'Ink\' Van Der Merwe','View flash sheet &amp; request design','Request Design')" type="button">Flash Sheet</button>
+          <button class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-semibold tracking-wide shadow-sm transition-all" onclick="openBooking('Zara \'Ink\' Van Der Merwe','Book a guest spot','Confirm Booking')" type="button">Book Spot</button>
+        </div>
+      </article>
+
+      <article data-name="kagiso molefe photographer fashion" data-category="photo" data-available="true" data-stems="false" class="creative-card lg:col-span-4 rounded-2xl bg-[#16161b] border border-[#282834] p-6 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
+        <div>
+          <div class="flex items-start justify-between gap-2 mb-4"><div><h3 class="text-base font-bold text-white">Kagiso Molefe</h3><p class="text-xs text-on-surface-variant">Editorial &amp; Street Fashion</p></div><span class="px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[11px] font-semibold text-white uppercase">JHB // BRAAM</span></div>
+          <div class="relative aspect-video rounded-xl overflow-hidden bg-[#1e1e26] border border-[#2b2b37] mb-4"><img alt="Fashion editorial" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZxie1iJM0Jcs6wX0QI6j4f2JeJBqIWsAsfiR4hBUfsDN5cNlGNw0HRZDgM18e10PhblqQvFNb8p8HWKPMF4zsZvatPjmTCLl1PaWyEutSOong3c5S_tIW-6oJ1feTh-JUaOHl4ReZyK8N6z2rC7uIqXxT6lSPe-ze-feW874x0n-_mXRRjRuLyyfGaONhVlxf1vhWFIhZ6VTzHQRDp8fH6jViBOjSxux6DzK6sXmkHCPXZwQ-ma0R"/><div class="absolute bottom-2 left-2 right-2 px-3 py-1.5 rounded-lg bg-[#0e0e11]/80 backdrop-blur-sm text-xs flex justify-between text-white font-medium"><span>Braam Odyssey</span><span class="text-primary font-bold">12 Looks</span></div></div>
+          <div class="space-y-1 text-xs text-on-surface-variant mb-4"><div class="flex justify-between"><span>Day Rate:</span><span class="text-white font-medium">R7,800 + Kit</span></div><div class="flex justify-between"><span>Kit:</span><span class="text-white font-medium">Sony FX3 / Hasselblad</span></div></div>
+        </div>
+        <button class="w-full py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-semibold tracking-wide transition-all shadow-sm" onclick="openBooking('Kagiso Molefe','Book a shoot','Confirm Shoot')" type="button">Book Shoot</button>
+      </article>
+
+      <article data-name="thandiwe biko fine artist painter" data-category="fine-art" data-available="true" data-stems="false" class="creative-card lg:col-span-4 rounded-2xl bg-[#16161b] border border-[#282834] p-6 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
+        <div>
+          <div class="flex items-start justify-between gap-2 mb-4"><div><h3 class="text-base font-bold text-white">Thandiwe Biko</h3><p class="text-xs text-on-surface-variant">Contemporary Acrylic &amp; Oil</p></div><span class="px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[11px] font-semibold text-white uppercase">DBN // COAST</span></div>
+          <div class="relative aspect-video rounded-xl overflow-hidden bg-[#1e1e26] border border-[#2b2b37] mb-4"><img alt="Oil painting ocean" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEQVRJc4jhGS8HaHZH_18ndpvSLvoaQ9OeGf014euYEwcOEbeUKhaotAIFN11K3saUA8w2xdh8exiNQUvs--oVLUe-GTiN1lROn9-SZSYtm4CEaFKDRI2-4mKpyfn00A-OBTDt4siQR4XLXxMzpHXgHuf0PUHuKvzeLAT6AWdB1FKo8z1xfDpIKaNZ3G362RKqUs7r5q76_5dABEw21mzqLTih3hCKoel6y9YNnJelVceiyrzrfMR2"/><div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-primary text-white text-[10px] font-bold uppercase tracking-wider">Original Available</div><div class="absolute bottom-2 left-2 right-2 px-3 py-1.5 rounded-lg bg-[#0e0e11]/80 backdrop-blur-sm text-xs flex justify-between text-white font-medium"><span>Echoes of the Coast</span><span class="text-on-surface-variant">180x120cm</span></div></div>
+          <div class="space-y-1 text-xs text-on-surface-variant mb-4"><div class="flex justify-between"><span>Gallery Rep:</span><span class="text-white font-medium">Independent</span></div><div class="flex justify-between"><span>Valuation:</span><span class="text-white font-medium">R14,000 - R45,000</span></div></div>
+        </div>
+        <button class="w-full py-2.5 rounded-lg bg-[#22222b] hover:bg-[#2b2b37] text-white text-xs font-semibold tracking-wide border border-[#323240] transition-colors" onclick="openBooking('Thandiwe Biko','Inquire about original works','Send Inquiry')" type="button">Inquire Works</button>
+      </article>
+
+      <article data-name="liam neo govender 3d vfx afrofuturism" data-category="3d" data-available="true" data-stems="false" class="creative-card lg:col-span-4 rounded-2xl bg-[#16161b] border border-[#282834] p-6 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
+        <div>
+          <div class="flex items-start justify-between gap-2 mb-4"><div><h3 class="text-base font-bold text-white">Liam 'Neo' Govender</h3><p class="text-xs text-on-surface-variant">Afrofuturism 3D &amp; VFX</p></div><span class="px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[11px] font-semibold text-white uppercase">PTA // GAUTENG</span></div>
+          <div class="relative aspect-video rounded-xl overflow-hidden bg-[#1e1e26] border border-[#2b2b37] mb-4"><img alt="Afrofuturism render" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVSvaXQmUxvOHCAkYQpZcOLMQfx9moBt5kuH4zhxSThoPb1tLFK6Bi6Pq8SnfzeXARkPlrW6JlgtDefTMEh5bSDKqX4xKXl-7baZvPMc4liyqvactX6lgZXCA3UE2-7z16y5x6rUrQ4Bd705pOE-7ifj2JodVXyG4pMrKmwTe-PjXQovNCQyrG4nalPK5cRdsCO2zF1Sm9oFjYjwTRNqeRLbS9eV0YOLERe99D1avom9NvMCxY1kpb"/><div class="absolute bottom-2 left-2 right-2 px-3 py-1.5 rounded-lg bg-[#0e0e11]/80 backdrop-blur-sm text-xs flex justify-between text-white font-medium"><span>Neo-Egoli 2088</span><span class="text-primary font-bold">Unreal Engine 5</span></div></div>
+          <div class="space-y-1 text-xs text-on-surface-variant mb-4"><div class="flex justify-between"><span>Licensing:</span><span class="text-white font-medium">Music / Film / Games</span></div><div class="flex justify-between"><span>Turnaround:</span><span class="text-white font-medium">5-10 Days</span></div></div>
+        </div>
+        <button class="w-full py-2.5 rounded-lg bg-[#22222b] hover:bg-[#2b2b37] text-white text-xs font-semibold tracking-wide border border-[#323240] transition-colors" onclick="openBooking('Liam \'Neo\' Govender','View full 3D pipeline &amp; commission','Request Commission')" type="button">View 3D Pipeline</button>
+      </article>
+
+      <p id="no-results" class="hidden lg:col-span-12 text-center text-on-surface-variant text-sm py-12">No creatives match your filters. Try clearing a filter or searching a different term.</p>
+    </div>
+  </section>
+
+  <section class="border-t border-[#22222a] bg-[#121216] py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <div><span class="text-primary text-xs font-semibold uppercase tracking-wider block">Metro Grid Directory</span><h2 class="text-xl font-bold text-white">Registered Creative Hubs &amp; Spaces</h2></div>
+        <button id="expand-studios-btn" class="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline" onclick="toggleStudios()"><span>Explore All 42 Spaces</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span></button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="studios-grid">
+        <div class="p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">JHB Central</span><span class="text-xs font-semibold text-primary">18 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Braamfontein soundlabs, Maboneng art lofts, and Newtown flash collectives.</p></div>
+        <div class="p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Cape Town</span><span class="text-xs font-semibold text-primary">14 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Woodstock industrial art spaces, Kloof tattoo lofts, and mix houses.</p></div>
+        <div class="p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Durban Station</span><span class="text-xs font-semibold text-primary">6 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Station Road creative precinct, Gqom mastering suites, and print ateliers.</p></div>
+        <div class="p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Gqeberha / PE</span><span class="text-xs font-semibold text-primary">4 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Central analog darkrooms, recording suites, and indie artist residencies.</p></div>
+        <div class="hidden extra-studio p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Pretoria</span><span class="text-xs font-semibold text-primary">9 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Hatfield rehearsal rooms, Sunnyside print studios, and design collectives.</p></div>
+        <div class="hidden extra-studio p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Bloemfontein</span><span class="text-xs font-semibold text-primary">5 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Free State artist residencies and regional broadcast suites.</p></div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ======================================================= -->
+<!-- PAGE: BRIEFS BOARD                                       -->
+<!-- ======================================================= -->
+<section class="page" id="page-briefs">
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div>
+        <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-1">Open Work</span>
+        <h1 class="text-2xl sm:text-3xl font-bold font-display text-white">Briefs</h1>
+      </div>
+      <button class="px-4 py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold shadow-sm transition-all" onclick="openBriefModal()">Post a Brief</button>
+    </div>
+    <div id="briefs-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    <p class="text-[11px] text-on-surface-variant mt-6">Demo only — briefs are saved to this browser, not a shared server.</p>
+  </section>
+</section>
+
+<!-- ======================================================= -->
+<!-- PAGE: FOR RECORD LABELS                                  -->
+<!-- ======================================================= -->
+<section class="page" id="page-labels">
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 pt-14 pb-10 border-b border-[#22222a]">
+    <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-3">For Record Labels</span>
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tracking-tight max-w-3xl">Scout South Africa's next generation before anyone else does.</h1>
+    <p class="text-on-surface-variant text-base max-w-2xl mt-4 leading-relaxed">Search verified talent, license direct, pay safely through escrow.</p>
+    <div class="flex flex-wrap items-center gap-3 mt-7">
+      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all" onclick="openAuth('signup','label')">Create a Label Account</button>
+      <button class="px-6 py-3 rounded-lg border border-[#2c2c36] text-white font-semibold text-sm hover:bg-[#1a1a20] transition-all" onclick="navigate('home')">Browse Talent Grid</button>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14 grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-[#22222a]">
+    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">library_music</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Verified rosters</h3><p class="text-sm text-on-surface-variant leading-relaxed">ID-verified, rights-checked talent.</p></div>
+    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">payments</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Escrow-protected offers</h3><p class="text-sm text-on-surface-variant leading-relaxed">Funds released only on delivery.</p></div>
+    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">forum</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Direct A&amp;R messaging</h3><p class="text-sm text-on-surface-variant leading-relaxed">One inbox, no middlemen.</p></div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
+    <h2 class="text-xl font-bold text-white mb-8">How it works for labels</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div><span class="text-primary font-display text-3xl font-bold">1</span><h3 class="text-white font-semibold mt-2 mb-1">Create your label account</h3><p class="text-sm text-on-surface-variant">Tell us your genres and metros so we can surface the right roster.</p></div>
+      <div><span class="text-primary font-display text-3xl font-bold">2</span><h3 class="text-white font-semibold mt-2 mb-1">Audition &amp; shortlist</h3><p class="text-sm text-on-surface-variant">Stream master stems, filter by BPM and region, and save shortlists.</p></div>
+      <div><span class="text-primary font-display text-3xl font-bold">3</span><h3 class="text-white font-semibold mt-2 mb-1">License through escrow</h3><p class="text-sm text-on-surface-variant">Send an offer, agree terms, and pay safely with milestone release.</p></div>
+    </div>
+    <div class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#1b1b22] to-[#16161b] border border-[#2c2c38] flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-white font-medium">Ready to build your next roster?</p>
+      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all shrink-0" onclick="openAuth('signup','label')">Get Started as a Label</button>
+    </div>
+  </section>
+</section>
+
+<!-- ======================================================= -->
+<!-- PAGE: FOR RADIO                                          -->
+<!-- ======================================================= -->
+<section class="page" id="page-radio">
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 pt-14 pb-10 border-b border-[#22222a]">
+    <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-3">For Radio Stations</span>
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tracking-tight max-w-3xl">Fill your playlist with cleared, rotation-ready local music.</h1>
+    <p class="text-on-surface-variant text-base max-w-2xl mt-4 leading-relaxed">One queue, pre-cleared tracks, no more email back-and-forth.</p>
+    <div class="flex flex-wrap items-center gap-3 mt-7">
+      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all" onclick="openAuth('signup','radio')">Register Your Station</button>
+      <button class="px-6 py-3 rounded-lg border border-[#2c2c36] text-white font-semibold text-sm hover:bg-[#1a1a20] transition-all" onclick="navigate('home')">Browse Submitted Tracks</button>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14 grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-[#22222a]">
+    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">queue_music</span><h3 class="text-white font-bold text-lg mt-3 mb-2">One submission queue</h3><p class="text-sm text-on-surface-variant leading-relaxed">Sorted by genre and region.</p></div>
+    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">trending_up</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Rotation tracking</h3><p class="text-sm text-on-surface-variant leading-relaxed">Artists see their confirmed spins.</p></div>
+    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">gavel</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Cleared for airplay</h3><p class="text-sm text-on-surface-variant leading-relaxed">No paperwork chasing.</p></div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
+    <h2 class="text-xl font-bold text-white mb-8">How it works for stations</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div><span class="text-primary font-display text-3xl font-bold">1</span><h3 class="text-white font-semibold mt-2 mb-1">Register your station</h3><p class="text-sm text-on-surface-variant">Add your call sign, coverage area and the genres you play.</p></div>
+      <div><span class="text-primary font-display text-3xl font-bold">2</span><h3 class="text-white font-semibold mt-2 mb-1">Open your submission queue</h3><p class="text-sm text-on-surface-variant">Artists submit directly; you accept, reject, or shortlist for review.</p></div>
+      <div><span class="text-primary font-display text-3xl font-bold">3</span><h3 class="text-white font-semibold mt-2 mb-1">Log spins &amp; rotation</h3><p class="text-sm text-on-surface-variant">Confirm plays so artists get credit and can track their own reach.</p></div>
+    </div>
+    <div class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#1b1b22] to-[#16161b] border border-[#2c2c38] flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-white font-medium">Ready to open your submission queue?</p>
+      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all shrink-0" onclick="openAuth('signup','radio')">Get Started as a Station</button>
+    </div>
+  </section>
+</section>
+
+<!-- ======================================================= -->
+<!-- PAGE: FOR ARTISTS (PAID COLLABORATION)                   -->
+<!-- ======================================================= -->
+<section class="page" id="page-artists">
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 pt-14 pb-10 border-b border-[#22222a]">
+    <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-3">For Artists &amp; Creators</span>
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tracking-tight max-w-3xl">Turn your craft into paid collaboration.</h1>
+    <p class="text-on-surface-variant text-base max-w-2xl mt-4 leading-relaxed">Build your portfolio, get booked, get paid — safely.</p>
+    <div class="flex flex-wrap items-center gap-3 mt-7">
+      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all" onclick="openAuth('signup','artist')">Create Your Portfolio</button>
+      <button class="px-6 py-3 rounded-lg border border-[#2c2c36] text-white font-semibold text-sm hover:bg-[#1a1a20] transition-all" onclick="navigate('home')">See Who's Booking</button>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14 grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-[#22222a]">
+    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">badge</span><h3 class="text-white font-bold text-lg mt-3 mb-2">A verified profile</h3><p class="text-sm text-on-surface-variant leading-relaxed">Get the badge, get seen first.</p></div>
+    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">handshake</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Direct paid briefs</h3><p class="text-sm text-on-surface-variant leading-relaxed">Gigs land straight in your inbox.</p></div>
+    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">account_balance_wallet</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Guaranteed payout</h3><p class="text-sm text-on-surface-variant leading-relaxed">Held in escrow until you deliver.</p></div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
+    <h2 class="text-xl font-bold text-white mb-8">How it works for creators</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div><span class="text-primary font-display text-3xl font-bold">1</span><h3 class="text-white font-semibold mt-2 mb-1">Build your portfolio</h3><p class="text-sm text-on-surface-variant">Upload your best work, set your rate, and mark yourself available.</p></div>
+      <div><span class="text-primary font-display text-3xl font-bold">2</span><h3 class="text-white font-semibold mt-2 mb-1">Get discovered</h3><p class="text-sm text-on-surface-variant">Labels, stations and brands search and reach out directly.</p></div>
+      <div><span class="text-primary font-display text-3xl font-bold">3</span><h3 class="text-white font-semibold mt-2 mb-1">Deliver &amp; get paid</h3><p class="text-sm text-on-surface-variant">Funds release from escrow the moment the brief is marked complete.</p></div>
+    </div>
+    <div class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#1b1b22] to-[#16161b] border border-[#2c2c38] flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-white font-medium">Ready to get booked?</p>
+      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all shrink-0" onclick="openAuth('signup','artist')">Create Your Portfolio</button>
+    </div>
+  </section>
+</section>
+
+<!-- ======================================================= -->
+<!-- PAGE: MY PORTFOLIO / DASHBOARD                           -->
+<!-- ======================================================= -->
+<section class="page" id="page-portfolio">
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-5 mb-10 pb-8 border-b border-[#22222a]">
+      <img alt="Profile" class="w-20 h-20 rounded-2xl object-cover ring-1 ring-primary/25" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcZcKu-wucVcHW72yeP7crYTcEkDK2QoZcqmRK_DcHYV6xM4gq4j3bG3AJuL_lRnbjEDOy3DyQfoak7mYgL6-eWeEokBQrPNWK3aCsY5vE5Yky008XlpZcP4WSQ8j7oenJtml-8sjlnp1lK-DCzRQPGqloJO9wfm59wUXHR32lY5VWksUhmR3SgyBSKyjSa1Sm2ltCrStc_rrw-a_oAlfC_Py7B-LMenUioaauiqfPlB_LQaFttd0e"/>
+      <div>
+        <h1 id="portfolio-name" class="text-2xl sm:text-3xl font-bold font-display text-white">—</h1>
+        <span id="portfolio-role" class="inline-block mt-1 text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 border border-primary/30 rounded px-2 py-1">—</span>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+      <div class="p-5 rounded-xl bg-[#17171d] border border-[#272732]"><span class="block text-2xl font-bold text-white">0</span><span class="text-xs text-on-surface-variant">Active Bookings</span></div>
+      <div class="p-5 rounded-xl bg-[#17171d] border border-[#272732]"><span class="block text-2xl font-bold text-white">0</span><span class="text-xs text-on-surface-variant">Profile Views (7d)</span></div>
+      <div class="p-5 rounded-xl bg-[#17171d] border border-[#272732]"><span class="block text-2xl font-bold text-primary">R0</span><span class="text-xs text-on-surface-variant">Escrow Balance</span></div>
+    </div>
+    <div id="portfolio-empty-state" class="p-8 rounded-2xl bg-[#16161b] border border-[#282834] text-center">
+      <span class="material-symbols-outlined text-primary text-[32px] mb-3 inline-block">rocket_launch</span>
+      <h3 class="text-white font-bold text-lg mb-2">Your portfolio is empty</h3>
+      <p class="text-sm text-on-surface-variant max-w-md mx-auto mb-5">Add a track, design, shoot or render so people can find and book you.</p>
+      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all" onclick="navigate('gallery')">Add Your First Upload</button>
+    </div>
+    <div id="portfolio-preview" class="hidden">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-white font-bold text-lg">Your Files</h3>
+        <button class="text-xs font-semibold text-primary hover:underline" onclick="navigate('gallery')">Manage in Gallery →</button>
+      </div>
+      <div id="portfolio-preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+    </div>
+  </section>
+</section>
+
+<!-- ======================================================= -->
+<!-- PAGE: MY GALLERY / FILES                                 -->
+<!-- ======================================================= -->
+<section class="page" id="page-gallery">
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-1">My Portfolio</span>
+        <h1 class="text-2xl sm:text-3xl font-bold font-display text-white">Gallery &amp; Files</h1>
+      </div>
+      <button class="px-4 py-2.5 rounded-lg border border-[#2c2c36] text-white text-sm font-semibold hover:bg-[#1a1a20] transition-all" onclick="navigate('portfolio')">Back to Portfolio</button>
+    </div>
+
+    <label id="upload-dropzone" for="file-upload-input" class="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-[#33333f] hover:border-primary/60 rounded-2xl py-12 cursor-pointer transition-all mb-8 bg-[#15151a]">
+      <span class="material-symbols-outlined text-primary text-[30px]">cloud_upload</span>
+      <p class="text-white font-semibold text-sm">Click to upload, or drag files here</p>
+      <p class="text-xs text-on-surface-variant">Images, audio previews, or video clips</p>
+      <input id="file-upload-input" type="file" accept="image/*,audio/*,video/*" multiple class="hidden" onchange="handleFileUpload(event)"/>
+    </label>
+
+    <div id="gallery-empty" class="text-center py-10 text-on-surface-variant text-sm">No files yet — upload your first piece above.</div>
+    <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+  </section>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="w-full bg-[#0d0d10] border-t border-[#202028] py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2.5"><div class="w-7 h-7 rounded-md bg-primary flex items-center justify-center text-white"><span class="material-symbols-outlined text-[16px]">graphic_eq</span></div><span class="font-bold tracking-tight text-white">CREATIVE HUB <span class="text-primary">ZA</span></span></div>
+        <p class="text-xs text-on-surface-variant leading-relaxed">South Africa's dedicated talent discovery and booking network for independent and signed creators.</p>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Get Started</h4>
+        <ul class="space-y-1.5 text-xs text-on-surface-variant">
+          <li><button class="hover:text-white transition-colors" onclick="navigate('artists')">For Artists</button></li>
+          <li><button class="hover:text-white transition-colors" onclick="navigate('labels')">For Record Labels</button></li>
+          <li><button class="hover:text-white transition-colors" onclick="navigate('radio')">For Radio Stations</button></li>
+          <li><button class="hover:text-white transition-colors" onclick="openAuth('signin')">Sign In</button></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Major Metros</h4>
+        <ul class="space-y-1.5 text-xs text-on-surface-variant"><li>Johannesburg // Gauteng</li><li>Cape Town // Western Cape</li><li>Durban // KwaZulu-Natal</li><li>Pretoria // Gauteng</li></ul>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Platform &amp; Apps</h4>
+        <ul class="space-y-1.5 text-xs text-on-surface-variant"><li>iOS &amp; Android Downloads</li><li>ZAR Escrow Milestone Protection</li><li>Creator Verification Criteria</li><li>Terms &amp; Intellectual Rights</li></ul>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-[#1c1c24] text-xs text-on-surface-variant gap-3">
+      <p>© 2025 Creative Hub ZA Ltd. Built for the Republic of South Africa.</p>
+      <span class="text-white font-medium">Direct Web &amp; Mobile Architecture</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ AUTH MODAL ============ -->
+<div id="auth-modal" class="modal-backdrop fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm items-center justify-center p-4">
+  <div class="fade-in w-full max-w-md bg-[#16161b] border border-[#282834] rounded-2xl shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between px-6 pt-6">
+      <div class="flex bg-[#1e1e26] rounded-lg p-1 border border-[#2c2c36]">
+        <button id="tab-signin" class="auth-tab px-4 py-1.5 rounded-md text-xs font-semibold transition-all" onclick="setAuthTab('signin')">Sign In</button>
+        <button id="tab-signup" class="auth-tab px-4 py-1.5 rounded-md text-xs font-semibold transition-all" onclick="setAuthTab('signup')">Sign Up</button>
+      </div>
+      <button class="text-on-surface-variant hover:text-white" onclick="closeModal('auth-modal')"><span class="material-symbols-outlined">close</span></button>
+    </div>
+
+    <!-- Sign up: role picker -->
+    <div id="signup-role-step" class="hidden px-6 pt-5 pb-6">
+      <h3 class="text-white font-bold text-lg mb-1">Join Creative Hub ZA</h3>
+      <p class="text-xs text-on-surface-variant mb-4">Choose the account type that fits you best.</p>
+      <div class="grid grid-cols-2 gap-3">
+        <button data-role-card="artist" class="role-card text-left p-3.5 rounded-xl bg-[#1e1e26] border border-[#2c2c36] hover:border-[#454556] transition-all" onclick="pickRole('artist')"><span class="material-symbols-outlined text-primary text-[20px]">brush</span><div class="text-white font-semibold text-sm mt-1.5">Artist / Creator</div><div class="text-[11px] text-on-surface-variant">Get booked &amp; paid</div></button>
+        <button data-role-card="label" class="role-card text-left p-3.5 rounded-xl bg-[#1e1e26] border border-[#2c2c36] hover:border-[#454556] transition-all" onclick="pickRole('label')"><span class="material-symbols-outlined text-primary text-[20px]">library_music</span><div class="text-white font-semibold text-sm mt-1.5">Record Label</div><div class="text-[11px] text-on-surface-variant">Scout &amp; sign talent</div></button>
+        <button data-role-card="radio" class="role-card text-left p-3.5 rounded-xl bg-[#1e1e26] border border-[#2c2c36] hover:border-[#454556] transition-all" onclick="pickRole('radio')"><span class="material-symbols-outlined text-primary text-[20px]">radio</span><div class="text-white font-semibold text-sm mt-1.5">Radio Station</div><div class="text-[11px] text-on-surface-variant">Source airplay music</div></button>
+        <button data-role-card="brand" class="role-card text-left p-3.5 rounded-xl bg-[#1e1e26] border border-[#2c2c36] hover:border-[#454556] transition-all" onclick="pickRole('brand')"><span class="material-symbols-outlined text-primary text-[20px]">storefront</span><div class="text-white font-semibold text-sm mt-1.5">Brand / Business</div><div class="text-[11px] text-on-surface-variant">Commission creators</div></button>
+      </div>
+    </div>
+
+    <!-- Sign up: details form -->
+    <form id="signup-form-step" class="hidden px-6 pt-5 pb-6" onsubmit="return submitSignup(event)">
+      <button type="button" class="text-xs text-on-surface-variant hover:text-white mb-3 inline-flex items-center gap-1" onclick="backToRoleStep()"><span class="material-symbols-outlined text-[16px]">arrow_back</span>Change account type</button>
+      <h3 class="text-white font-bold text-lg mb-4">Create your <span id="signup-role-label" class="text-primary">account</span></h3>
+      <div class="space-y-3">
+        <input required placeholder="Full name or studio name" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text"/>
+        <input required placeholder="Email address" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="email"/>
+        <input required minlength="6" placeholder="Password" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="password"/>
+      </div>
+      <button type="submit" class="w-full mt-5 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all">Create Account</button>
+      <p class="text-[11px] text-on-surface-variant text-center mt-3">By continuing you agree to Creative Hub ZA's Terms &amp; Creator Verification Criteria.</p>
+    </form>
+
+    <!-- Sign in -->
+    <form id="signin-form-step" class="hidden px-6 pt-5 pb-6" onsubmit="return submitSignin(event)">
+      <h3 class="text-white font-bold text-lg mb-4">Welcome back</h3>
+      <div class="space-y-3">
+        <input required placeholder="Email address" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="email"/>
+        <input required placeholder="Password" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="password"/>
+      </div>
+      <div class="flex items-center justify-between mt-3">
+        <button type="button" class="text-xs text-on-surface-variant hover:text-white" onclick="toast('Password reset link sent if the account exists.')">Forgot password?</button>
+      </div>
+      <button type="submit" class="w-full mt-4 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all">Sign In</button>
+      <p class="text-xs text-on-surface-variant text-center mt-4">Don't have an account? <button type="button" class="text-primary font-semibold hover:underline" onclick="setAuthTab('signup')">Sign up</button></p>
+    </form>
+  </div>
+</div>
+
+<!-- ============ BOOKING MODAL ============ -->
+<div id="booking-modal" class="modal-backdrop fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm items-center justify-center p-4">
+  <div class="fade-in w-full max-w-md bg-[#16161b] border border-[#282834] rounded-2xl shadow-2xl overflow-hidden">
+    <div class="flex items-start justify-between px-6 pt-6">
+      <div><h3 id="booking-title" class="text-white font-bold text-lg">—</h3><p id="booking-subtitle" class="text-xs text-on-surface-variant mt-0.5">—</p></div>
+      <button class="text-on-surface-variant hover:text-white shrink-0" onclick="closeModal('booking-modal')"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <form class="px-6 pt-4 pb-6" onsubmit="return submitBooking(event)">
+      <div class="space-y-3">
+        <input placeholder="Preferred date" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text" onfocus="(this.type='date')"/>
+        <input id="booking-budget-input" oninput="updateDeposit()" placeholder="Budget (ZAR)" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="number" min="0"/>
+        <textarea required placeholder="Tell them what you need…" rows="3" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60 resize-none"></textarea>
+      </div>
+      <div class="mt-3 flex items-center justify-between px-4 py-3 rounded-xl bg-[#111114] border border-[#24242f] text-xs">
+        <span class="text-on-surface-variant">Deposit held in escrow (25%)</span>
+        <span id="booking-deposit-amount" class="text-white font-bold">R0</span>
+      </div>
+      <button id="booking-submit-btn" type="submit" class="w-full mt-4 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all">Send Request</button>
+      <p class="text-[11px] text-on-surface-variant text-center mt-2">Released to the creative once the work is delivered and confirmed.</p>
+    </form>
+  </div>
+</div>
+
+<!-- ============ POST BRIEF MODAL ============ -->
+<div id="brief-modal" class="modal-backdrop fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm items-center justify-center p-4">
+  <div class="fade-in w-full max-w-lg bg-[#16161b] border border-[#282834] rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+    <div class="flex items-start justify-between px-6 pt-6">
+      <div><h3 class="text-white font-bold text-lg">Post a Gig / Brief</h3><p class="text-xs text-on-surface-variant mt-0.5">Reach verified creatives across South Africa.</p></div>
+      <button class="text-on-surface-variant hover:text-white shrink-0" onclick="closeModal('brief-modal')"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <form class="px-6 pt-4 pb-6" onsubmit="return submitBrief(event)">
+      <div class="space-y-3">
+        <input required placeholder="Brief title (e.g. Album cover art commission)" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text"/>
+        <select class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white">
+          <option>Music Production</option><option>Tattoo Residency</option><option>Photography</option><option>Fine Art Commission</option><option>3D / VFX</option>
+        </select>
+        <div class="grid grid-cols-2 gap-3">
+          <input placeholder="Budget (ZAR)" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text"/>
+          <input placeholder="Deadline" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text" onfocus="(this.type='date')"/>
+        </div>
+        <textarea required placeholder="Describe what you need delivered…" rows="4" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60 resize-none"></textarea>
+      </div>
+      <button type="submit" class="w-full mt-4 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all">Post Brief</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ TOAST CONTAINER ============ -->
+<div id="toast-container" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[80] flex flex-col items-center gap-2 pointer-events-none"></div>
+
+<script>
+  /* ---------- state ---------- */
+  let currentUser = null;
+  let pendingRole = 'artist';
+  let bookingTarget = '';
+  let applyBriefId = '';
+
+  const roleLabels = { artist: 'Artist / Creator account', label: 'Record Label account', radio: 'Radio Station account', brand: 'Brand / Business account' };
+  const roleBadges = { artist: 'Artist / Creator', label: 'Record Label', radio: 'Radio Station', brand: 'Brand / Business' };
+
+  /* ---------- init ---------- */
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      const saved = localStorage.getItem('chza_user');
+      if (saved) { currentUser = JSON.parse(saved); }
+    } catch (e) {}
+    renderAuthState();
+    applyFilters();
+    setActiveCatButton('all');
+    getBriefs();
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#notif-panel') && !e.target.closest('[onclick="toggleNotifications()"]')) document.getElementById('notif-panel').classList.add('hidden');
+      if (!e.target.closest('#profile-menu') && !e.target.closest('#auth-area-logged-in')) document.getElementById('profile-menu').classList.add('hidden');
+    });
+  });
+
+  /* ---------- toast ---------- */
+  function toast(msg) {
+    const c = document.getElementById('toast-container');
+    const el = document.createElement('div');
+    el.className = 'toast pointer-events-auto px-4 py-3 rounded-xl bg-[#1e1e26] border border-primary/40 text-white text-sm shadow-2xl max-w-xs text-center';
+    el.textContent = msg;
+    c.appendChild(el);
+    setTimeout(() => el.remove(), 3000);
+  }
+
+  /* ---------- navigation ---------- */
+  function navigate(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-link, .nav-link-mobile').forEach(b => b.classList.remove('bg-[#272731]', 'text-white'));
+    document.querySelectorAll('[data-nav="' + page + '"]').forEach(b => b.classList.add('bg-[#272731]', 'text-white'));
+    document.getElementById('mobile-nav').classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (page === 'portfolio') renderPortfolio();
+    if (page === 'gallery') renderGallery();
+    if (page === 'briefs') renderBriefs();
+    updateNavStyles();
+  }
+  function updateNavStyles() {
+    document.querySelectorAll('.nav-link').forEach(b => {
+      if (!b.classList.contains('bg-[#272731]')) b.classList.add('text-on-surface-variant');
+    });
+  }
+  function goToPortfolio() {
+    if (!currentUser) { toast('Sign in to view your portfolio.'); openAuth('signin'); return; }
+    navigate('portfolio');
+  }
+  function renderPortfolio() {
+    if (!currentUser) return;
+    document.getElementById('portfolio-name').textContent = currentUser.name;
+    document.getElementById('portfolio-role').textContent = roleBadges[currentUser.role] || 'Creative';
+    const files = getGalleryFiles();
+    document.getElementById('portfolio-empty-state').classList.toggle('hidden', files.length > 0);
+    document.getElementById('portfolio-preview').classList.toggle('hidden', files.length === 0);
+    const grid = document.getElementById('portfolio-preview-grid');
+    grid.innerHTML = files.slice(0, 4).map(f => galleryThumbHtml(f, false)).join('');
+  }
+
+  /* ---------- gallery / files ---------- */
+  function galleryKey() { return 'chza_gallery_' + (currentUser ? currentUser.email : 'guest'); }
+  function getGalleryFiles() {
+    try { return JSON.parse(localStorage.getItem(galleryKey()) || '[]'); } catch (e) { return []; }
+  }
+  function saveGalleryFiles(files) { localStorage.setItem(galleryKey(), JSON.stringify(files)); }
+  function galleryThumbHtml(f, removable) {
+    const media = f.type.startsWith('image/')
+      ? '<img src="' + f.data + '" class="w-full h-full object-cover"/>'
+      : '<div class="w-full h-full flex flex-col items-center justify-center gap-1 bg-[#1c1c24]"><span class="material-symbols-outlined text-primary text-[26px]">' + (f.type.startsWith('audio/') ? 'graphic_eq' : 'movie') + '</span><span class="text-[10px] text-on-surface-variant px-2 truncate w-full text-center">' + f.name + '</span></div>';
+    const removeBtn = removable ? '<button onclick="removeGalleryFile(\'' + f.id + '\')" class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 hover:bg-primary text-white flex items-center justify-center"><span class="material-symbols-outlined text-[14px]">close</span></button>' : '';
+    return '<div class="relative aspect-square rounded-xl overflow-hidden border border-[#282834] bg-[#16161b]">' + media + removeBtn + '</div>';
+  }
+  function renderGallery() {
+    const files = getGalleryFiles();
+    document.getElementById('gallery-empty').classList.toggle('hidden', files.length > 0);
+    document.getElementById('gallery-grid').innerHTML = files.map(f => galleryThumbHtml(f, true)).join('');
+  }
+  function handleFileUpload(e) {
+    if (!currentUser) { toast('Sign in to build your portfolio.'); openAuth('signin'); return; }
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    const existing = getGalleryFiles();
+    let remaining = files.length;
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        existing.push({ id: Date.now() + '-' + Math.random().toString(36).slice(2), name: file.name, type: file.type, data: reader.result });
+        remaining--;
+        if (remaining === 0) { saveGalleryFiles(existing); renderGallery(); toast(files.length + ' file(s) added to your gallery.'); }
+      };
+      reader.readAsDataURL(file);
+    });
+    e.target.value = '';
+  }
+  function removeGalleryFile(id) {
+    const files = getGalleryFiles().filter(f => f.id !== id);
+    saveGalleryFiles(files);
+    renderGallery();
+  }
+  function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
+
+  /* ---------- notifications / profile menu ---------- */
+  function toggleNotifications() {
+    document.getElementById('profile-menu').classList.add('hidden');
+    document.getElementById('notif-panel').classList.toggle('hidden');
+  }
+  function markNotifsRead() { document.getElementById('notif-dot').classList.add('hidden'); document.getElementById('notif-panel').classList.add('hidden'); toast('All notifications marked as read.'); }
+  function toggleProfileMenu() {
+    document.getElementById('notif-panel').classList.add('hidden');
+    document.getElementById('profile-menu').classList.toggle('hidden');
+  }
+
+  /* ---------- auth ---------- */
+  function renderAuthState() {
+    const out = document.getElementById('auth-area-logged-out');
+    const inn = document.getElementById('auth-area-logged-in');
+    if (currentUser) {
+      out.classList.add('hidden'); inn.classList.remove('hidden');
+      document.getElementById('profile-menu-name').textContent = currentUser.name;
+      document.getElementById('profile-menu-role').textContent = roleBadges[currentUser.role] || 'Creative';
+    } else {
+      out.classList.remove('hidden'); inn.classList.add('hidden');
+    }
+  }
+  function openAuth(tab, role) {
+    document.getElementById('auth-modal').classList.add('active');
+    if (role) pendingRole = role;
+    setAuthTab(tab || 'signin', !!role);
+  }
+  function setAuthTab(tab, roleAlreadyChosen) {
+    document.getElementById('tab-signin').classList.toggle('bg-primary', tab === 'signin');
+    document.getElementById('tab-signin').classList.toggle('text-white', tab === 'signin');
+    document.getElementById('tab-signin').classList.toggle('text-on-surface-variant', tab !== 'signin');
+    document.getElementById('tab-signup').classList.toggle('bg-primary', tab === 'signup');
+    document.getElementById('tab-signup').classList.toggle('text-white', tab === 'signup');
+    document.getElementById('tab-signup').classList.toggle('text-on-surface-variant', tab !== 'signup');
+    document.getElementById('signin-form-step').classList.toggle('hidden', tab !== 'signin');
+    document.getElementById('signup-role-step').classList.toggle('hidden', !(tab === 'signup' && !roleAlreadyChosen));
+    document.getElementById('signup-form-step').classList.toggle('hidden', !(tab === 'signup' && roleAlreadyChosen));
+    if (tab === 'signup' && roleAlreadyChosen) fillRoleLabel();
+  }
+  function pickRole(role) {
+    pendingRole = role;
+    document.querySelectorAll('[data-role-card]').forEach(c => c.classList.remove('selected'));
+    document.querySelector('[data-role-card="' + role + '"]').classList.add('selected');
+    setTimeout(() => setAuthTab('signup', true), 120);
+  }
+  function backToRoleStep() { setAuthTab('signup', false); }
+  function fillRoleLabel() { document.getElementById('signup-role-label').textContent = roleLabels[pendingRole] || 'account'; }
+  function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+  function submitSignup(e) {
+    e.preventDefault();
+    const inputs = e.target.querySelectorAll('input');
+    const name = inputs[0].value.trim() || 'New Creative';
+    currentUser = { name: name, email: inputs[1].value.trim(), role: pendingRole };
+    localStorage.setItem('chza_user', JSON.stringify(currentUser));
+    renderAuthState();
+    closeModal('auth-modal');
+    e.target.reset();
+    toast('Welcome to Creative Hub ZA, ' + name.split(' ')[0] + '!');
+    navigate(pendingRole === 'artist' ? 'portfolio' : 'home');
+    return false;
+  }
+  function submitSignin(e) {
+    e.preventDefault();
+    const inputs = e.target.querySelectorAll('input');
+    const email = inputs[0].value.trim();
+    const namePart = email.split('@')[0] || 'Creative';
+    currentUser = currentUser && currentUser.email === email ? currentUser : { name: namePart.charAt(0).toUpperCase() + namePart.slice(1), email: email, role: (currentUser && currentUser.role) || 'artist' };
+    localStorage.setItem('chza_user', JSON.stringify(currentUser));
+    renderAuthState();
+    closeModal('auth-modal');
+    e.target.reset();
+    toast('Welcome back, ' + currentUser.name.split(' ')[0] + '!');
+    return false;
+  }
+  function signOut() {
+    currentUser = null;
+    localStorage.removeItem('chza_user');
+    renderAuthState();
+    document.getElementById('profile-menu').classList.add('hidden');
+    toast('You have been signed out.');
+    navigate('home');
+  }
+
+  /* ---------- booking modal ---------- */
+  function openBooking(name, subtitle, cta) {
+    if (!currentUser) { toast('Sign in to send a booking request.'); openAuth('signin'); return; }
+    bookingTarget = name;
+    applyBriefId = '';
+    document.getElementById('booking-title').textContent = name;
+    document.getElementById('booking-subtitle').textContent = subtitle;
+    document.getElementById('booking-submit-btn').textContent = cta;
+    document.getElementById('booking-budget-input').value = '';
+    document.getElementById('booking-deposit-amount').textContent = 'R0';
+    document.getElementById('booking-modal').classList.add('active');
+  }
+  function updateDeposit() {
+    const budget = parseFloat(document.getElementById('booking-budget-input').value) || 0;
+    document.getElementById('booking-deposit-amount').textContent = 'R' + Math.round(budget * 0.25).toLocaleString();
+  }
+  function submitBooking(e) {
+    e.preventDefault();
+    const budget = parseFloat(document.getElementById('booking-budget-input').value) || 0;
+    if (applyBriefId) {
+      const apps = getApplications();
+      apps.push({ briefId: applyBriefId, applicant: currentUser.email, name: currentUser.name });
+      localStorage.setItem('chza_applications', JSON.stringify(apps));
+      renderBriefs();
+    }
+    closeModal('booking-modal');
+    e.target.reset();
+    if (applyBriefId) {
+      toast('Application sent for "' + bookingTarget + '".');
+    } else if (budget > 0) {
+      toast('Deposit of R' + Math.round(budget * 0.25).toLocaleString() + ' authorized. Request sent to ' + bookingTarget + '.');
+    } else {
+      toast('Request sent to ' + bookingTarget + '. They typically reply within 24 hours.');
+    }
+    applyBriefId = '';
+    return false;
+  }
+
+  /* ---------- brief modal ---------- */
+  function openBriefModal() {
+    if (!currentUser) { toast('Sign in to post a gig or brief.'); openAuth('signin'); return; }
+    document.getElementById('brief-modal').classList.add('active');
+  }
+  function submitBrief(e) {
+    e.preventDefault();
+    const f = e.target;
+    const brief = {
+      id: 'b' + Date.now(),
+      title: f.querySelector('input[type="text"]').value.trim(),
+      category: f.querySelector('select').value,
+      budget: f.querySelectorAll('input[type="text"]')[1].value.trim() || 'Not specified',
+      deadline: f.querySelectorAll('input')[2].value || 'Flexible',
+      description: f.querySelector('textarea').value.trim(),
+      postedBy: currentUser.name
+    };
+    const briefs = getBriefs();
+    briefs.unshift(brief);
+    saveBriefs(briefs);
+    closeModal('brief-modal');
+    f.reset();
+    toast('Brief posted! Verified creatives will start applying shortly.');
+    renderBriefs();
+    return false;
+  }
+
+  /* ---------- briefs board ---------- */
+  function getBriefs() {
+    try {
+      const raw = localStorage.getItem('chza_briefs');
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    const seed = [
+      { id: 'seed1', title: 'Album cover art — Amapiano EP', category: 'Fine Art Commission', budget: 'R6,000', deadline: 'Flexible', description: 'Looking for a bold, Afrofuturist cover for a 6-track EP.', postedBy: 'Kasi Sounds Records' },
+      { id: 'seed2', title: 'Guest tattoo residency — August', category: 'Tattoo Residency', budget: 'R3,500/day', deadline: 'Flexible', description: 'One-week guest spot, fine-line specialists preferred.', postedBy: 'Salon Tattoo Collective' },
+      { id: 'seed3', title: '3 radio jingles — 15 sec each', category: 'Music Production', budget: 'R4,500', deadline: 'Flexible', description: 'Upbeat, local-language jingles for drive-time slots.', postedBy: 'Vibe FM' }
+    ];
+    saveBriefs(seed);
+    return seed;
+  }
+  function saveBriefs(briefs) { localStorage.setItem('chza_briefs', JSON.stringify(briefs)); }
+  function getApplications() {
+    try { return JSON.parse(localStorage.getItem('chza_applications') || '[]'); } catch (e) { return []; }
+  }
+  function hasApplied(briefId) {
+    if (!currentUser) return false;
+    return getApplications().some(a => a.briefId === briefId && a.applicant === currentUser.email);
+  }
+  function renderBriefs() {
+    const briefs = getBriefs();
+    document.getElementById('briefs-list').innerHTML = briefs.map(b => {
+      const applied = hasApplied(b.id);
+      return '<div class="rounded-2xl bg-[#16161b] border border-[#282834] p-5 flex flex-col justify-between">' +
+        '<div>' +
+        '<div class="flex items-start justify-between gap-2 mb-2"><h3 class="text-white font-bold text-base">' + escapeHtml(b.title) + '</h3><span class="shrink-0 px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[10px] font-semibold text-on-surface-variant uppercase">' + escapeHtml(b.category) + '</span></div>' +
+        '<p class="text-xs text-on-surface-variant mb-3">' + escapeHtml(b.description) + '</p>' +
+        '<div class="flex items-center justify-between text-xs text-on-surface-variant mb-4"><span>Budget: <strong class="text-white">' + escapeHtml(b.budget) + '</strong></span><span>' + escapeHtml(b.postedBy) + '</span></div>' +
+        '</div>' +
+        (applied
+          ? '<button disabled class="w-full py-2.5 rounded-lg bg-[#1c1c24] text-on-surface-variant text-xs font-semibold border border-[#282834] cursor-default">Applied ✓</button>'
+          : '<button class="w-full py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-semibold shadow-sm transition-all" onclick="openApply(\'' + b.id + '\',\'' + escapeAttr(b.title) + '\')">Apply</button>') +
+        '</div>';
+    }).join('');
+  }
+  function escapeHtml(s) { return (s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  function escapeAttr(s) { return escapeHtml(s).replace(/'/g, "\\'"); }
+
+  function openApply(briefId, title) {
+    if (!currentUser) { toast('Sign in to apply for briefs.'); openAuth('signin'); return; }
+    openBooking(title, 'Apply for this brief', 'Send Application');
+    applyBriefId = briefId;
+  }
+
+  /* ---------- discover feed filters ---------- */
+  let activeCategory = 'all';
+  function setActiveCatButton(cat) {
+    document.querySelectorAll('.cat-btn').forEach(b => {
+      const isActive = b.dataset.cat === cat;
+      b.classList.toggle('bg-primary', isActive);
+      b.classList.toggle('text-white', isActive);
+      b.classList.toggle('shadow-md', isActive);
+      b.classList.toggle('shadow-primary/20', isActive);
+      b.classList.toggle('bg-[#18181f]', !isActive);
+      b.classList.toggle('text-on-surface-variant', !isActive);
+      b.classList.toggle('border', !isActive);
+      b.classList.toggle('border-[#292934]', !isActive);
+    });
+  }
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.cat-btn');
+    if (btn) { activeCategory = btn.dataset.cat; setActiveCatButton(activeCategory); applyFilters(); }
+  });
+  function applyFilters() {
+    const term = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
+    const availableOnly = document.getElementById('filter-available')?.checked;
+    const stemsOnly = document.getElementById('filter-stems')?.checked;
+    let visibleCount = 0;
+    document.querySelectorAll('.creative-card').forEach(card => {
+      const matchesCat = activeCategory === 'all' || card.dataset.category === activeCategory;
+      const matchesTerm = !term || card.dataset.name.includes(term);
+      const matchesAvailable = !availableOnly || card.dataset.available === 'true';
+      const matchesStems = !stemsOnly || card.dataset.stems === 'true';
+      const show = matchesCat && matchesTerm && matchesAvailable && matchesStems;
+      card.classList.toggle('hidden', !show);
+      if (show) visibleCount++;
+    });
+    document.getElementById('no-results').classList.toggle('hidden', visibleCount > 0);
+  }
+
+  /* ---------- studios expand ---------- */
+  let studiosExpanded = false;
+  function toggleStudios() {
+    studiosExpanded = !studiosExpanded;
+    document.querySelectorAll('.extra-studio').forEach(el => el.classList.toggle('hidden', !studiosExpanded));
+    document.getElementById('expand-studios-btn').querySelector('span').textContent = studiosExpanded ? 'Show Fewer Spaces' : 'Explore All 42 Spaces';
+  }
+
+  /* ---------- track preview (inline bar on each card, no fixed dock) ---------- */
+  function togglePlayer(btn) {
+    const row = btn.closest('.rounded-xl');
+    const bar = row ? row.querySelector('.h-full.bg-primary') : null;
+    const icon = btn.querySelector('.material-symbols-outlined');
+    const playing = icon.textContent === 'pause';
+    icon.textContent = playing ? 'play_arrow' : 'pause';
+    if (bar && !playing) {
+      let w = parseFloat(bar.style.width) || 0;
+      const id = setInterval(() => {
+        w = Math.min(w + 4, 100);
+        bar.style.width = w + '%';
+        if (w >= 100) { clearInterval(id); icon.textContent = 'play_arrow'; }
+      }, 250);
+    }
+  }
+</script>
+</body>
+</html>
