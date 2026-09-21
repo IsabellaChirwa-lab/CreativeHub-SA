@@ -1,6 +1,6 @@
 # Creative Hub ZA
 
-A concept platform connecting South African creatives — musicians, tattoo artists, photographers, fine artists and 3D/VFX artists — with record labels, radio stations, and brands looking to book paid work.
+A concept platform connecting South African creatives musicians, tattoo artists, photographers, fine artists and 3D/VFX artists with record labels, radio stations, and brands looking to book paid work.
 
 **Live demo:** open `index.html` in any browser, or check the published artifact link shared in the project.
 
