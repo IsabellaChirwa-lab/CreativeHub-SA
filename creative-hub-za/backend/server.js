@@ -11,8 +11,8 @@ app.use(express.json());
 // This uses the SERVICE ROLE key — this file must only ever run on a server
 // you control (Render/Railway/Fly/your own VM), never in a browser.
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.sb_publishable_7rxDvCulknQLAnw6WV5Z3w_FK_vInfk,
+  process.env.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo
 );
 
 app.get('/', (req, res) => res.json({ status: 'Creative Hub ZA API is running' }));
