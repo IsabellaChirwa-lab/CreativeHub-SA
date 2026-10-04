@@ -123,7 +123,7 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 
 <script>
 /* Publishable keys only. Never put a secret / service_role key here. */
-const C={URL:'YOUR_SUPABASE_URL',KEY:'YOUR_SUPABASE_ANON_KEY',YOCO:'YOUR_YOCO_PUBLIC_KEY',API:'http://localhost:5000'};
+const C={URL:'https://xbqmsgufdhqfpkkelcas.supabase.co',KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo',YOCO:'YOUR_YOCO_PUBLIC_KEY',API:'http://localhost:5000'};
 const db=C.URL.startsWith('http')?supabase.createClient(C.URL,C.KEY):null;
 const yoco=C.YOCO.startsWith('pk_')&&window.YocoSDK?new YocoSDK({publicKey:C.YOCO}):null;
 const CATS=['Music','Tattoo','Photography','Fine art','3D / VFX','Film & video','Design'];
