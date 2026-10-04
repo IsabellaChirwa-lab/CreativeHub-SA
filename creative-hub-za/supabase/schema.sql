@@ -7,6 +7,14 @@ create table if not exists profiles (
   full_name text,
   role text check (role in ('artist','label','radio','brand','admin')) default 'artist',
   email text,
+  portfolio_url text, -- URL to portfolio/website
+  portfolio_description text, -- Brief description of portfolio
+  avatar_url text, -- Profile picture URL
+  bio text, -- Short bio
+  location text, -- City/area
+  skills text[], -- Array of skills (for artists)
+  genres text[], -- Array of music genres (for musicians)
+  portfolio_completed boolean default false, -- Tracks if portfolio is completed
   created_at timestamptz default now()
 );
 

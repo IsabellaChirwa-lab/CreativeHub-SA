@@ -1,1187 +1,428 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en" class="dark">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Creative Hub ZA — South Africa's Creative Talent Network</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-  @layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } }
-  ::-webkit-scrollbar { display: none; }
-  .page { display: none; }
-  .page.active { display: block; }
-  .modal-backdrop { display: none; }
-  .modal-backdrop.active { display: flex; }
-  .fade-in { animation: fadeIn .18s ease-out; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-  .toast { animation: toastIn .25s ease-out, toastOut .25s ease-in 2.6s forwards; }
-  @keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes toastOut { to { opacity: 0; transform: translateY(-6px); } }
-  [data-role-card].selected { border-color: #C4293D !important; background: rgba(229,9,20,0.08); }
-  input:focus, select:focus, textarea:focus { outline: none; }
-  .material-symbols-outlined { vertical-align: middle; line-height: 1; }
-</style>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: { extend: {
-      colors: {
-        "surface": "#121215", "background": "#0e0e11",
-        "surface-container-lowest": "#0a0a0c", "surface-container-low": "#16161a",
-        "surface-container": "#1d1d23", "surface-container-high": "#26262e",
-        "surface-container-highest": "#32323c",
-        "outline": "#3d3c47", "outline-variant": "#2b2a33",
-        "primary": "#C4293D", "primary-hover": "#D93A50", "primary-container": "#C4293D",
-        "on-primary": "#ffffff", "on-surface": "#f5f4f7", "on-surface-variant": "#a19fa9",
-      },
-      fontFamily: { sans: ["Manrope", "sans-serif"], display: ["Playfair Display", "serif"] }
-    } }
-  }</script>
-
-<!-- ============ SUPABASE & YOCO SDKs ============ -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Creative Hub ZA — South Africa's Local Creative Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{bg:'#0e0e11',card:'#16161b',line:'#26262f',mute:'#a19fa9',primary:'#C4293D'},fontFamily:{sans:['Manrope','sans-serif'],display:['Playfair Display','serif']}}}}</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://js.yoco.com/sdk/v1/yoco.js"></script>
+<style>
+body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
+.m{font-family:'Material Symbols Outlined';font-size:20px;line-height:1;vertical-align:middle}
+.card{background:#16161b;border:1px solid #26262f;border-radius:14px}
+.inp{width:100%;padding:.7rem .9rem;background:#1d1d23;border:1px solid #2f2f3c;border-radius:10px;font-size:.875rem;color:#fff}
+.inp:focus{outline:none;border-color:#C4293D}
+.btn{background:#C4293D;color:#fff;font-weight:600;font-size:.875rem;padding:.65rem 1.1rem;border-radius:10px}.btn:hover{background:#D93A50}
+.btn2{border:1px solid #33333f;color:#fff;font-weight:600;font-size:.875rem;padding:.65rem 1.1rem;border-radius:10px}.btn2:hover{background:#1d1d23}
+.chip{padding:.4rem .9rem;border-radius:99px;font-size:.8rem;font-weight:600;border:1px solid #2f2f3c;color:#a19fa9;white-space:nowrap}
+.chip.on{background:#fff;color:#0e0e11;border-color:#fff}
+.nav{position:relative;display:flex;align-items:center;gap:.75rem;padding:.6rem .8rem;border-radius:10px;color:#a19fa9;font-weight:600;font-size:.9rem}
+.nav:hover{color:#fff;background:#16161b}.nav.on{color:#fff;background:#1d1d23}
+.tile{position:relative;overflow:hidden;background:#1d1d23}
+.tile img,.tile .ph{width:100%;height:100%;object-fit:cover}
+.wall .tile img,.wall .tile .ph{filter:grayscale(.5) brightness(.7);transition:.3s}
+.wall .tile:hover img,.wall .tile:hover .ph{filter:none;transform:scale(1.05)}
+.tile .n{position:absolute;left:.5rem;bottom:.4rem;font-size:.7rem;font-weight:700;opacity:0;transition:.2s;text-shadow:0 1px 6px #000}.tile:hover .n{opacity:1}
+.ph{display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
+.modal{display:none}.modal.on{display:flex}
+.bdg{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:99px;background:#C4293D;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
+::-webkit-scrollbar{display:none}
+@keyframes up{from{opacity:0;transform:translateY(10px)}}.up{animation:up .35s ease both}
+@media(prefers-reduced-motion:reduce){.up{animation:none}}
+</style>
 </head>
-<body class="bg-background font-sans text-on-surface antialiased selection:bg-primary selection:text-white">
+<body class="font-sans antialiased">
 
-<!-- ============ APP DOWNLOAD BANNER ============ -->
-<aside class="w-full bg-[#18181e] border-b border-[#2a2a34] text-on-surface py-2.5 px-4 sm:px-8 relative z-50" id="mobile-app-banner">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm">
+<!-- WELCOME: live photo wall -->
+<section id="welcome" class="fixed inset-0 z-30 overflow-hidden">
+  <div id="wall" class="wall absolute inset-0 grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8" style="grid-auto-rows:1fr"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/80 pointer-events-none"></div>
+  <header class="absolute top-0 inset-x-0 flex items-center justify-between px-5 md:px-10 pb-5 pt-[max(1.25rem,env(safe-area-inset-top))]">
+    <div class="font-extrabold tracking-tight text-lg">CREATIVE HUB <span class="text-primary">ZA</span></div>
+    <div id="w-btns" class="flex gap-2"></div>
+  </header>
+  <div class="absolute inset-x-0 bottom-0 px-5 md:px-10 pb-[max(2rem,env(safe-area-inset-bottom))] pointer-events-none">
+    <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] max-w-3xl">Book local talent, <br class="hidden md:block"/>straight from the source.</h1>
+    <p class="text-white/80 mt-4 max-w-lg">Musicians, tattooists, photographers, painters and 3D artists across South Africa. Tap a face to see their work.</p>
+    <div class="flex gap-3 mt-6 pointer-events-auto"><button class="btn" onclick="me?enterApp('dashboard'):openOnboard()">Onboard</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('discover')">Explore creatives</button></div>
+  </div>
+</section>
+
+<!-- APP -->
+<div id="app" class="hidden">
+  <aside class="hidden md:flex fixed inset-y-0 left-0 w-60 flex-col border-r border-line bg-bg p-4">
+    <button class="font-extrabold tracking-tight text-lg px-2 py-3 text-left" onclick="showWelcome()">CREATIVE HUB <span class="text-primary">ZA</span></button>
+    <nav id="side" class="flex flex-col gap-1 mt-4"></nav>
+    <div class="mt-auto"><button class="btn w-full mb-3" onclick="openBrief()">Post a brief</button><div id="who-side"></div></div>
+  </aside>
+  <header class="md:ml-60 sticky top-0 z-20 bg-bg/90 backdrop-blur border-b border-line flex items-center justify-between px-4 md:px-8 h-14 pt-[env(safe-area-inset-top)] box-content">
+    <button class="md:hidden font-extrabold tracking-tight" onclick="showWelcome()">CH <span class="text-primary">ZA</span></button>
+    <h2 id="title" class="hidden md:block font-bold"></h2>
     <div class="flex items-center gap-3">
-      <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-primary/20 text-primary border border-primary/40 font-bold shrink-0">
-        <span class="material-symbols-outlined text-[16px]">smartphone</span>
-      </span>
-      <p class="font-medium text-[#e3e1e8]"><strong class="text-white font-semibold">Get Creative Hub ZA on Mobile</strong> — Instant stem auditions, direct drop alerts &amp; studio bookings anywhere.</p>
+      <button class="btn md:hidden !py-2" onclick="openBrief()">Post</button>
+      <button id="bellb" class="relative hidden" onclick="toggleNp()" aria-label="Notifications"><span class="m">notifications</span><span id="bdg" class="bdg hidden">0</span></button>
+      <div id="who-top"></div>
     </div>
-    <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
-      <button onclick="toast('Opening the App Store…')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#24242d] hover:bg-[#2e2e3a] border border-[#393845] text-white text-xs font-semibold tracking-wide transition-all">
-        <span class="material-symbols-outlined text-[15px]">phone_iphone</span><span>iOS App</span>
-      </button>
-      <button onclick="toast('Opening Google Play…')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#24242d] hover:bg-[#2e2e3a] border border-[#393845] text-white text-xs font-semibold tracking-wide transition-all">
-        <span class="material-symbols-outlined text-[15px]">android</span><span>Android</span>
-      </button>
-      <button class="hidden lg:inline-flex items-center gap-1 text-xs text-on-surface-variant hover:text-white px-2 py-1 transition-colors" onclick="toast('SMS link sent to your device!')" type="button">
-        <span class="material-symbols-outlined text-[14px]">sms</span><span>Send SMS Link</span>
-      </button>
-      <button aria-label="Dismiss banner" class="p-1 rounded text-on-surface-variant hover:text-white hover:bg-[#252530] transition-colors ml-1" onclick="document.getElementById('mobile-app-banner').style.display='none'" type="button">
-        <span class="material-symbols-outlined text-[16px]">close</span>
-      </button>
-    </div>
-  </div>
-</aside>
+  </header>
+  <div id="np" class="hidden fixed right-3 top-14 z-40 w-80 max-w-[calc(100vw-1.5rem)] card shadow-2xl max-h-96 overflow-y-auto"></div>
+  <main id="main" class="md:ml-60 px-4 md:px-8 py-6 pb-28 md:pb-10 max-w-5xl"></main>
+  <nav id="tabs" class="md:hidden fixed bottom-0 inset-x-0 z-20 bg-bg/95 backdrop-blur border-t border-line grid grid-cols-6 pb-[env(safe-area-inset-bottom)]"></nav>
+</div>
 
-<!-- ============ HEADER / NAV ============ -->
-<header class="sticky top-0 left-0 right-0 z-40 bg-[#121215]/90 backdrop-blur-xl border-b border-[#25252d]">
-  <div class="max-w-7xl mx-auto h-20 px-4 sm:px-8 flex items-center justify-between gap-6">
-    <button class="flex items-center gap-3 shrink-0 group" onclick="navigate('home')">
-      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-[#9e050d] flex items-center justify-center shadow-sm ring-1 ring-white/15">
-        <span class="material-symbols-outlined text-white text-[20px]">graphic_eq</span>
-      </div>
-      <div class="flex flex-col text-left">
-        <span class="font-bold tracking-tight text-lg text-white">CREATIVE HUB <span class="text-primary tracking-widest font-black text-base ml-0.5">ZA</span></span>
-        <span class="text-[9px] uppercase tracking-[0.25em] text-on-surface-variant font-medium -mt-1">Creative Network</span>
-      </div>
-    </button>
-
-    <nav class="hidden lg:flex items-center gap-1 bg-[#18181e] p-1.5 rounded-xl border border-[#2b2b35]" id="main-nav">
-      <button data-nav="home" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all bg-[#272731] text-white" onclick="navigate('home')">Discover Feed</button>
-      <button data-nav="briefs" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="navigate('briefs')">Briefs</button>
-      <button data-nav="labels" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="navigate('labels')">For Record Labels</button>
-      <button data-nav="radio" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="navigate('radio')">For Radio</button>
-      <button data-nav="artists" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="navigate('artists')">For Artists</button>
-      <button data-nav="portfolio" class="nav-link px-4 py-2 rounded-lg font-medium text-sm transition-all" onclick="goToPortfolio()">My Portfolio</button>
-    </nav>
-
-    <div class="flex items-center gap-3">
-      <button class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-hover text-white rounded-lg text-sm font-semibold tracking-wide shadow-sm transition-all" type="button" onclick="openBriefModal()">
-        <span class="material-symbols-outlined text-[18px]">add_circle</span><span>Post Gig / Brief</span>
-      </button>
-
-      <div class="relative">
-        <button aria-label="Notifications" class="p-2.5 rounded-lg bg-[#1a1a20] border border-[#2c2c36] text-on-surface-variant hover:text-white transition-colors relative" type="button" onclick="toggleNotifications()">
-          <span class="material-symbols-outlined text-[20px]">notifications</span>
-          <span id="notif-dot" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary ring-2 ring-[#121215]"></span>
-        </button>
-        <div id="notif-panel" class="hidden fade-in absolute right-0 mt-2 w-80 bg-[#1a1a20] border border-[#2c2c36] rounded-xl shadow-2xl overflow-hidden z-50">
-          <div class="flex items-center justify-between px-4 py-3 border-b border-[#26262f]">
-            <span class="text-sm font-semibold text-white">Notifications</span>
-            <button class="text-xs text-primary font-semibold hover:underline" onclick="markNotifsRead()">Mark all read</button>
-          </div>
-          <div class="max-h-80 overflow-y-auto divide-y divide-[#22222a]">
-            <div class="px-4 py-3 text-xs text-on-surface-variant"><span class="text-white font-medium">Zara Ink Van Der Merwe</span> accepted your guest spot request.</div>
-            <div class="px-4 py-3 text-xs text-on-surface-variant"><span class="text-white font-medium">Universal Music Africa</span> viewed your master stems.</div>
-            <div class="px-4 py-3 text-xs text-on-surface-variant">Your escrow payout of <span class="text-white font-medium">R3,500</span> has cleared.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Logged out state -->
-      <div id="auth-area-logged-out" class="flex items-center">
-        <button class="px-4 py-2.5 rounded-lg border border-[#2c2c36] text-white text-sm font-semibold hover:bg-[#1a1a20] transition-all" onclick="openAuth('signin')">Sign In</button>
-      </div>
-      <!-- Logged in state -->
-      <div id="auth-area-logged-in" class="relative hidden">
-        <button class="flex items-center gap-2 pl-2 border-l border-[#2c2c36]" onclick="toggleProfileMenu()">
-          <img id="profile-avatar" alt="Profile" class="w-9 h-9 rounded-full object-cover ring-1 ring-primary/25" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcZcKu-wucVcHW72yeP7crYTcEkDK2QoZcqmRK_DcHYV6xM4gq4j3bG3AJuL_lRnbjEDOy3DyQfoak7mYgL6-eWeEokBQrPNWK3aCsY5vE5Yky008XlpZcP4WSQ8j7oenJtml-8sjlnp1lK-DCzRQPGqloJO9wfm59wUXHR32lY5VWksUhmR3SgyBSKyjSa1Sm2ltCrStc_rrw-a_oAlfC_Py7B-LMenUioaauiqfPlB_LQaFttd0e"/>
-          <span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span>
-        </button>
-        <div id="profile-menu" class="hidden fade-in absolute right-0 mt-2 w-56 bg-[#1a1a20] border border-[#2c2c36] rounded-xl shadow-2xl overflow-hidden z-50">
-          <div class="px-4 py-3 border-b border-[#26262f]">
-            <div id="profile-menu-name" class="text-sm font-semibold text-white truncate">—</div>
-            <div id="profile-menu-role" class="text-[11px] text-primary font-medium uppercase tracking-wide">—</div>
-          </div>
-          <button class="w-full text-left px-4 py-2.5 text-sm text-on-surface-variant hover:text-white hover:bg-[#22222b] transition-colors" onclick="navigate('portfolio')">My Portfolio</button>
-          <button class="w-full text-left px-4 py-2.5 text-sm text-on-surface-variant hover:text-white hover:bg-[#22222b] transition-colors" onclick="toast('Settings coming soon.')">Settings</button>
-          <button class="w-full text-left px-4 py-2.5 text-sm text-primary hover:bg-[#22222b] transition-colors border-t border-[#26262f]" onclick="signOut()">Sign Out</button>
-        </div>
-      </div>
-
-      <!-- Mobile nav toggle -->
-      <button class="lg:hidden p-2.5 rounded-lg bg-[#1a1a20] border border-[#2c2c36] text-white" onclick="toggleMobileNav()">
-        <span class="material-symbols-outlined text-[20px]">menu</span>
-      </button>
-    </div>
-  </div>
-  <!-- Mobile nav drawer -->
-  <div id="mobile-nav" class="hidden lg:hidden border-t border-[#22222a] bg-[#121215] px-4 py-3 flex flex-col gap-1">
-    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('home')">Discover Feed</button>
-    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('briefs')">Briefs</button>
-    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('labels')">For Record Labels</button>
-    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('radio')">For Radio</button>
-    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="navigate('artists')">For Artists</button>
-    <button class="nav-link-mobile text-left px-3 py-2.5 rounded-lg text-sm font-medium text-on-surface-variant" onclick="goToPortfolio()">My Portfolio</button>
-  </div>
-</header>
-
-<main class="w-full">
-
-<!-- ======================================================= -->
-<!-- PAGE: WELCOME / SPLASH                                   -->
-<!-- ======================================================= -->
-<section class="page active" id="page-welcome">
-  <div class="relative overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none select-none opacity-[0.35]" aria-hidden="true">
-      <div class="absolute top-[6%] left-[4%] w-40 sm:w-52 rotate-[-7deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm">
-        <span class="material-symbols-outlined text-primary text-[22px]">graphic_eq</span>
-        <p class="font-display text-white text-sm mt-2 leading-tight">Amapiano<br/>&amp; Afro-Tech</p>
-      </div>
-      <div class="absolute top-[10%] right-[6%] w-40 sm:w-56 rotate-[5deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm">
-        <span class="material-symbols-outlined text-primary text-[22px]">colorize</span>
-        <p class="font-display text-white text-sm mt-2 leading-tight">Fine-Line<br/>Tattoo Art</p>
-      </div>
-      <div class="absolute bottom-[16%] left-[8%] w-36 sm:w-48 rotate-[4deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm">
-        <span class="material-symbols-outlined text-primary text-[22px]">photo_camera</span>
-        <p class="font-display text-white text-sm mt-2 leading-tight">Editorial<br/>Photography</p>
-      </div>
-      <div class="absolute bottom-[10%] right-[10%] w-36 sm:w-48 rotate-[-5deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm">
-        <span class="material-symbols-outlined text-primary text-[22px]">palette</span>
-        <p class="font-display text-white text-sm mt-2 leading-tight">Contemporary<br/>Fine Art</p>
-      </div>
-      <div class="absolute top-[45%] left-[2%] w-32 sm:w-44 rotate-[3deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm hidden sm:block">
-        <span class="material-symbols-outlined text-primary text-[22px]">view_in_ar</span>
-        <p class="font-display text-white text-sm mt-2 leading-tight">3D &amp;<br/>VFX</p>
-      </div>
-      <div class="absolute top-[42%] right-[3%] w-32 sm:w-44 rotate-[-4deg] bg-[#17171d] border border-[#2c2c38] rounded-lg p-4 shadow-sm hidden sm:block">
-        <span class="material-symbols-outlined text-primary text-[22px]">radio</span>
-        <p class="font-display text-white text-sm mt-2 leading-tight">Radio &amp;<br/>Airplay</p>
-      </div>
-    </div>
-    <div class="absolute inset-0 bg-gradient-to-b from-background/60 via-background/85 to-background"></div>
-
-    <div class="relative z-10 max-w-2xl mx-auto text-center px-4 sm:px-8 py-24 sm:py-32">
-      <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-4">South Africa's Creative Network</span>
-      <h1 class="font-display text-4xl sm:text-6xl font-bold text-white leading-[1.05] mb-6">Welcome to<br/>Creative Hub ZA</h1>
-      <p class="text-on-surface-variant text-base sm:text-lg leading-relaxed mb-9">
-        One stage, every discipline. Producers dropping log drums, tattooists opening guest books, photographers, painters and 3D artists building worlds — all in one room, all verified, all bookable. We hold the deposit so the work always gets paid for. You just have to show up and create.
-      </p>
-      <button class="px-8 py-3.5 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm tracking-wide shadow-sm transition-all" onclick="navigate('home')">Enter the Hub</button>
-    </div>
-  </div>
-</section>
-
-<!-- ======================================================= -->
-<!-- PAGE: HOME / DISCOVER FEED                               -->
-<!-- ======================================================= -->
-<section class="page" id="page-home">
-  <div class="w-full bg-[#111114] border-b border-[#212128] py-2.5">
-    <div class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-wrap items-center justify-between gap-3 text-xs text-on-surface-variant">
-      <div class="flex items-center gap-3 font-medium">
-        <span class="inline-flex items-center gap-2 text-primary font-semibold tracking-wide">
-          <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>LIVE AUDITIONS
-        </span>
-        <span>•</span><span>84 Producers Sessions Open</span>
-        <span class="hidden sm:inline">•</span><span class="hidden sm:inline">29 Guest Tattoo Residencies</span>
-      </div>
-      <div class="flex items-center gap-4 text-xs font-medium">
-        <span>Johannesburg</span><span>Cape Town</span><span>Durban</span>
-        <span class="text-white font-semibold">ZAR Escrow Direct</span>
-      </div>
-    </div>
-  </div>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 pt-10 pb-8">
-    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-[#22222a]">
-      <div>
-        <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-2">Curated South African Talent</span>
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tracking-tight">Underground Grid &amp; Match</h1>
-        <p class="text-on-surface-variant text-base max-w-2xl mt-3 leading-relaxed">Find and book South Africa's best creatives — verified and ready to work.</p>
-      </div>
-      <div class="flex items-center gap-3 shrink-0">
-        <div class="px-5 py-3 rounded-xl bg-[#17171d] border border-[#272732] text-left">
-          <span class="block text-2xl font-bold text-white">1,240</span><span class="text-xs text-on-surface-variant">Active Creatives</span>
-        </div>
-        <div class="px-5 py-3 rounded-xl bg-[#17171d] border border-[#272732] text-left">
-          <span class="block text-2xl font-bold text-white">94.8%</span><span class="text-xs text-on-surface-variant">Verified Portfolio</span>
-        </div>
-        <div class="px-5 py-3 rounded-xl bg-[#17171d] border border-[#272732] text-left">
-          <span class="block text-2xl font-bold text-primary">R2.4M</span><span class="text-xs text-on-surface-variant">Payouts in 2024</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-8 flex flex-col gap-4">
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="category-filters">
-        <button data-cat="all" class="cat-btn px-4 py-2 rounded-lg font-semibold text-xs tracking-wide transition-all shrink-0">All Creatives (1,240)</button>
-        <button data-cat="music" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Musicians &amp; Producers (412)</button>
-        <button data-cat="tattoo" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Tattoo Artists (188)</button>
-        <button data-cat="photo" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Photographers (295)</button>
-        <button data-cat="fine-art" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Fine Artists (210)</button>
-        <button data-cat="3d" class="cat-btn px-4 py-2 rounded-lg font-medium text-xs tracking-wide transition-all shrink-0">Digital 3D &amp; VFX (135)</button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-[#15151a] p-3 rounded-2xl border border-[#262630]">
-        <div class="md:col-span-5 relative">
-          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
-          <input id="search-input" oninput="applyFilters()" class="w-full pl-10 pr-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary focus:ring-1 focus:ring-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/70 transition-all" placeholder="Search by name, instrument, style, or studio..." type="text"/>
-        </div>
-        <div class="md:col-span-3">
-          <div class="relative">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary text-[18px]">location_on</span>
-            <select id="city-filter" onchange="applyFilters()" aria-label="City Filter" class="w-full pl-9 pr-8 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-xs sm:text-sm text-white appearance-none cursor-pointer">
-              <option value="all">All Metro Hubs (Nationwide)</option>
-              <option value="jhb">Johannesburg (Maboneng / Braam)</option>
-              <option value="cpt">Cape Town (Woodstock / Kloof)</option>
-              <option value="dbn">Durban (Station Road)</option>
-              <option value="pta">Pretoria (Hatfield)</option>
-            </select>
-            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[16px]">expand_more</span>
-          </div>
-        </div>
-        <div class="md:col-span-4 flex items-center justify-end gap-3 px-1">
-          <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-medium text-white select-none">
-            <input id="filter-available" checked onchange="applyFilters()" class="rounded border-[#3a3a48] text-primary focus:ring-primary bg-[#1e1e26]" type="checkbox"/><span>Available Now</span>
-          </label>
-          <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-medium text-on-surface-variant hover:text-white select-none">
-            <input id="filter-stems" onchange="applyFilters()" class="rounded border-[#3a3a48] text-primary focus:ring-primary bg-[#1e1e26]" type="checkbox"/><span>Has Stems</span>
-          </label>
-          <button class="p-2 rounded-xl bg-[#1e1e26] border border-[#2f2f3c] text-on-surface-variant hover:text-white transition-colors" title="More Filters" onclick="toast('More filters coming soon.')" type="button">
-            <span class="material-symbols-outlined text-[18px]">tune</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 mb-10">
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1b1b22] to-[#16161b] border border-[#2c2c38] p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
-      <div class="space-y-2 z-10">
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/15 text-primary border border-primary/30 text-xs font-bold uppercase tracking-wider">Curated Monthly Spotlight</span>
-        <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Amapiano Log Drums &amp; Dark Surrealist Ink Exhibition</h2>
-        <p class="text-sm text-on-surface-variant max-w-xl">Selected in partnership with Universal Music Africa and Salon Tattoo Collective Cape Town.</p>
-      </div>
-      <div class="flex items-center gap-4 z-10 shrink-0">
-        <div class="text-right hidden sm:block">
-          <span class="text-xs uppercase tracking-wider text-on-surface-variant block">Audition Deadline</span>
-          <span class="text-sm font-bold text-white">Closing in 04 Days</span>
-        </div>
-        <button class="px-5 py-2.5 rounded-xl bg-white hover:bg-neutral-200 text-[#121215] font-semibold text-xs tracking-wide transition-all shadow-md" onclick="openBooking('Amapiano Log Drums &amp; Dark Surrealist Ink Exhibition','Apply to exhibit or audition','Apply Now')" type="button">View Exhibition</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 mb-16">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8" id="creative-grid">
-
-      <article data-name="sipho vortex ndlovu amapiano afro-tech" data-category="music" data-available="true" data-stems="true" class="creative-card lg:col-span-7 rounded-2xl bg-[#16161b] border border-[#282834] p-6 sm:p-8 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
-        <div>
-          <div class="flex items-start justify-between gap-4 mb-6">
-            <div class="flex items-center gap-4">
-              <img alt="Sipho Vortex Ndlovu" class="w-16 h-16 rounded-xl object-cover ring-1 ring-white/10 shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr6vifLQUCAE_kaQPLBYmcBZLI_48PTesP3VI8JOTCNlp4MhsdP8aV8MxN9FHGhD9zuvE0DUPemXQSigzwZuSGuVSjZAELE5anzIOr3EY2X3vgOVmA5nTjqodKPY9saUdr6aBQ-ohHtQ5f2sYRD7QmzL9SFp5s3TIh681ks3aiilQBsuVI7YwB3u_ZK2RbhStr0s-STFVAMTn9pSo6gKd4AwGQI7v0zBeY_5G7rOwMNFYwK8bWbxyk"/>
-              <div>
-                <div class="flex items-center gap-2"><h3 class="text-lg font-bold text-white">Sipho "Vortex" Ndlovu</h3><span class="material-symbols-outlined text-primary text-[18px]" title="Verified Creator">verified</span></div>
-                <p class="text-xs text-on-surface-variant mt-0.5">Amapiano &amp; Afro-Tech Master Synthesist • Soweto, JHB</p>
-              </div>
-            </div>
-            <span class="px-2.5 py-1 rounded-md bg-[#22222c] border border-[#31313e] text-xs font-semibold text-white uppercase tracking-wider">JHB // SOWETO</span>
-          </div>
-          <div class="flex flex-wrap items-center gap-2 mb-6">
-            <span class="px-2.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20 text-xs font-semibold">Available for Sync &amp; Master Stems</span>
-            <span class="px-2.5 py-1 rounded-md bg-[#22222c] border border-[#31313e] text-xs font-semibold text-on-surface-variant">FL Studio &amp; Logic Pro</span>
-            <span class="px-2.5 py-1 rounded-md bg-[#22222c] border border-[#31313e] text-xs font-semibold text-on-surface-variant">118 - 122 BPM</span>
-          </div>
-          <div class="space-y-3">
-            <div class="rounded-xl bg-[#111114] border border-[#24242f] p-3 flex items-center gap-3">
-              <button onclick="toggleTrackPlay(this)" class="track-play-btn w-8 h-8 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[16px]">play_arrow</span></button>
-              <div class="flex-1 min-w-0"><p class="text-xs font-semibold text-white truncate">Amapiano Grooves Pt. 2 <span class="text-on-surface-variant font-normal">— Log Drum Stems • 44kHz Master</span></p><div class="mt-1.5 h-1 bg-[#262632] rounded-full overflow-hidden"><div class="track-bar h-full w-2/5 bg-primary rounded-full transition-all"></div></div></div>
-            </div>
-            <div class="rounded-xl bg-[#111114] border border-[#24242f] p-3 flex items-center gap-3">
-              <button onclick="toggleTrackPlay(this)" class="track-play-btn w-8 h-8 rounded-full bg-[#22222c] hover:bg-primary text-white flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[16px]">play_arrow</span></button>
-              <div class="flex-1 min-w-0"><p class="text-xs font-semibold text-white truncate">Track 02: Braam Sunset <span class="text-on-surface-variant font-normal">— Afro-Tech Club Dubplate • 1:12</span></p><div class="mt-1.5 h-1 bg-[#262632] rounded-full overflow-hidden"><div class="track-bar h-full w-0 bg-primary rounded-full transition-all"></div></div></div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-6 pt-5 border-t border-[#262632] flex items-center justify-between gap-3">
-          <span class="inline-flex items-center gap-1.5 text-xs text-on-surface-variant"><span class="material-symbols-outlined text-[15px] text-primary">verified_user</span>Pre-cleared Commercial Licensing</span>
-          <div class="flex items-center gap-3">
-            <button class="px-4 py-2.5 rounded-lg bg-[#22222b] hover:bg-[#2b2b37] text-white text-xs font-semibold tracking-wide border border-[#323240] transition-colors" onclick="openBooking('Sipho \'Vortex\' Ndlovu','Request stem package','Send Request')" type="button">Request Stems</button>
-            <button class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-semibold tracking-wide shadow-sm transition-all" onclick="openBooking('Sipho \'Vortex\' Ndlovu','Book this producer','Send Booking Request')" type="button">Book Artist</button>
-          </div>
-        </div>
-      </article>
-
-      <article data-name="zara ink van der merwe tattoo" data-category="tattoo" data-available="true" data-stems="false" class="creative-card lg:col-span-5 rounded-2xl bg-[#16161b] border border-[#282834] p-6 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
-        <div>
-          <div class="flex items-start justify-between gap-2 mb-4">
-            <div><h3 class="text-base font-bold text-white flex items-center gap-1.5">Zara "Ink" Van Der Merwe <span class="text-primary text-[11px] font-bold bg-primary/10 border border-primary/30 rounded px-1.5 py-0.5 uppercase">Guest Spot Available</span></h3><p class="text-xs text-on-surface-variant mt-0.5">Dark Surrealism &amp; Micro Fine-Line Tattooer</p></div>
-            <span class="px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[11px] font-semibold text-white uppercase shrink-0">CPT // KLOOF</span>
-          </div>
-          <div class="flex items-center justify-between text-xs mb-4 bg-[#111114] border border-[#24242f] rounded-lg px-3 py-2">
-            <span class="text-on-surface-variant">Guest Rate: <strong class="text-white">R3,500 / Day</strong></span><span class="text-primary font-semibold">July Spot Open</span>
-          </div>
-          <div class="grid grid-cols-3 gap-3 mb-5">
-            <div class="relative aspect-square rounded-xl overflow-hidden bg-[#1f1f28] border border-[#2a2a36]"><img alt="Protea Fine Line" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDraZkuTZ2EXlAMep8NaBmc2BzRzl-QRFbTm8L8SXRCpTxYyh5FhTQp5ADO6ngMTj3WHceXAXfQAHP_-PX9K5mJBBMR_DFcBRULRhh2DhyzGDh39gKT4YqTJ37pC-_llV9jZaVsnn8hyBJ2Xurl0UhfLf54uJZxhPqSPTxrkSLeFm-vvD__MbFGUeUXW2lKso4ifYx3TrumUt0AxoftsRQFga6DMqBoZeQo0iBi1WYbn-4MCm--SLjV"/></div>
-            <div class="relative aspect-square rounded-xl overflow-hidden bg-[#1f1f28] border border-[#2a2a36]"><img alt="Crane Tattoo Art" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvbnC1Nj1yyE_SmW3_Ozr5vwNCpmN6aAr2bWw7uUFY3cxiNYquTAjA34tM_5h4EvU_-n_rAkc_CvqW0Q0qwV2MS1sUkJAk7cZkcejRTK0uSvwYBJWlWEYvFB4MeWn-rf6a8IJFoQcIJ-QfoPKbx1GcKloIxzKosBnz9q7Df3lv3VF04LSAQa0gp8sdYCzLPtfPCrgBYp_JeQee59y1qRngpTau8qqnObTex4Vps9_28t5oF23d2itW"/></div>
-            <div class="relative aspect-square rounded-xl overflow-hidden bg-[#1f1f28] border border-[#2a2a36]"><img alt="Back Anatomy Tattoo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARMxVEwdNZipZkW4irU2zY1D6n5bO2neHDQr34lyr8GOtjspkXuJ9Bh3AqwUZ2HmawmoP_4OTLkVV5deqMF221Xe4iRP5HH7YbzZGfll_jwtJ440dUjvAeebVqI5MmSJv0dypuT0XTj54ZVW_N3O8u1yRSqQ_cU3gqh3U2n9-jZDJeBWlwn4ONYRSwINwf2rlhb876gd9uYqCAruyDzuENYdhySpTX6AlXUqM3CfsnHNFmV0ALSE5S"/></div>
-          </div>
-          <div class="space-y-1.5 text-xs text-on-surface-variant bg-[#111114] p-3 rounded-xl border border-[#24242f]">
-            <div class="flex items-center justify-between"><span>Health &amp; Autoclave Certification</span><span class="text-white font-medium">Verified 2025</span></div>
-            <div class="flex items-center justify-between"><span>Studio Kit: Bishop Rotary Wand</span><span class="text-white font-medium">Ready</span></div>
-          </div>
-        </div>
-        <div class="mt-6 pt-5 border-t border-[#262632] flex items-center gap-3">
-          <button class="flex-1 py-2.5 rounded-lg bg-[#22222b] hover:bg-[#2b2b37] text-white text-xs font-semibold tracking-wide border border-[#323240] transition-colors" onclick="openBooking('Zara \'Ink\' Van Der Merwe','View flash sheet &amp; request design','Request Design')" type="button">Flash Sheet</button>
-          <button class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-semibold tracking-wide shadow-sm transition-all" onclick="openBooking('Zara \'Ink\' Van Der Merwe','Book a guest spot','Confirm Booking')" type="button">Book Spot</button>
-        </div>
-      </article>
-
-      <article data-name="kagiso molefe photographer fashion" data-category="photo" data-available="true" data-stems="false" class="creative-card lg:col-span-4 rounded-2xl bg-[#16161b] border border-[#282834] p-6 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
-        <div>
-          <div class="flex items-start justify-between gap-2 mb-4"><div><h3 class="text-base font-bold text-white">Kagiso Molefe</h3><p class="text-xs text-on-surface-variant">Editorial &amp; Street Fashion</p></div><span class="px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[11px] font-semibold text-white uppercase">JHB // BRAAM</span></div>
-          <div class="relative aspect-video rounded-xl overflow-hidden bg-[#1e1e26] border border-[#2b2b37] mb-4"><img alt="Fashion editorial" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZxie1iJM0Jcs6wX0QI6j4f2JeJBqIWsAsfiR4hBUfsDN5cNlGNw0HRZDgM18e10PhblqQvFNb8p8HWKPMF4zsZvatPjmTCLl1PaWyEutSOong3c5S_tIW-6oJ1feTh-JUaOHl4ReZyK8N6z2rC7uIqXxT6lSPe-ze-feW874x0n-_mXRRjRuLyyfGaONhVlxf1vhWFIhZ6VTzHQRDp8fH6jViBOjSxux6DzK6sXmkHCPXZwQ-ma0R"/><div class="absolute bottom-2 left-2 right-2 px-3 py-1.5 rounded-lg bg-[#0e0e11]/80 backdrop-blur-sm text-xs flex justify-between text-white font-medium"><span>Braam Odyssey</span><span class="text-primary font-bold">12 Looks</span></div></div>
-          <div class="space-y-1 text-xs text-on-surface-variant mb-4"><div class="flex justify-between"><span>Day Rate:</span><span class="text-white font-medium">R7,800 + Kit</span></div><div class="flex justify-between"><span>Kit:</span><span class="text-white font-medium">Sony FX3 / Hasselblad</span></div></div>
-        </div>
-        <button class="w-full py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-semibold tracking-wide transition-all shadow-sm" onclick="openBooking('Kagiso Molefe','Book a shoot','Confirm Shoot')" type="button">Book Shoot</button>
-      </article>
-
-      <article data-name="thandiwe biko fine artist painter" data-category="fine-art" data-available="true" data-stems="false" class="creative-card lg:col-span-4 rounded-2xl bg-[#16161b] border border-[#282834] p-6 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
-        <div>
-          <div class="flex items-start justify-between gap-2 mb-4"><div><h3 class="text-base font-bold text-white">Thandiwe Biko</h3><p class="text-xs text-on-surface-variant">Contemporary Acrylic &amp; Oil</p></div><span class="px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[11px] font-semibold text-white uppercase">DBN // COAST</span></div>
-          <div class="relative aspect-video rounded-xl overflow-hidden bg-[#1e1e26] border border-[#2b2b37] mb-4"><img alt="Oil painting ocean" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEQVRJc4jhGS8HaHZH_18ndpvSLvoaQ9OeGf014euYEwcOEbeUKhaotAIFN11K3saUA8w2xdh8exiNQUvs--oVLUe-GTiN1lROn9-SZSYtm4CEaFKDRI2-4mKpyfn00A-OBTDt4siQR4XLXxMzpHXgHuf0PUHuKvzeLAT6AWdB1FKo8z1xfDpIKaNZ3G362RKqUs7r5q76_5dABEw21mzqLTih3hCKoel6y9YNnJelVceiyrzrfMR2"/><div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-primary text-white text-[10px] font-bold uppercase tracking-wider">Original Available</div><div class="absolute bottom-2 left-2 right-2 px-3 py-1.5 rounded-lg bg-[#0e0e11]/80 backdrop-blur-sm text-xs flex justify-between text-white font-medium"><span>Echoes of the Coast</span><span class="text-on-surface-variant">180x120cm</span></div></div>
-          <div class="space-y-1 text-xs text-on-surface-variant mb-4"><div class="flex justify-between"><span>Gallery Rep:</span><span class="text-white font-medium">Independent</span></div><div class="flex justify-between"><span>Valuation:</span><span class="text-white font-medium">R14,000 - R45,000</span></div></div>
-        </div>
-        <button class="w-full py-2.5 rounded-lg bg-[#22222b] hover:bg-[#2b2b37] text-white text-xs font-semibold tracking-wide border border-[#323240] transition-colors" onclick="openBooking('Thandiwe Biko','Inquire about original works','Send Inquiry')" type="button">Inquire Works</button>
-      </article>
-
-      <article data-name="liam neo govender 3d vfx afrofuturism" data-category="3d" data-available="true" data-stems="false" class="creative-card lg:col-span-4 rounded-2xl bg-[#16161b] border border-[#282834] p-6 flex flex-col justify-between hover:border-[#383848] transition-all shadow-lg">
-        <div>
-          <div class="flex items-start justify-between gap-2 mb-4"><div><h3 class="text-base font-bold text-white">Liam 'Neo' Govender</h3><p class="text-xs text-on-surface-variant">Afrofuturism 3D &amp; VFX</p></div><span class="px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[11px] font-semibold text-white uppercase">PTA // GAUTENG</span></div>
-          <div class="relative aspect-video rounded-xl overflow-hidden bg-[#1e1e26] border border-[#2b2b37] mb-4"><img alt="Afrofuturism render" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVSvaXQmUxvOHCAkYQpZcOLMQfx9moBt5kuH4zhxSThoPb1tLFK6Bi6Pq8SnfzeXARkPlrW6JlgtDefTMEh5bSDKqX4xKXl-7baZvPMc4liyqvactX6lgZXCA3UE2-7z16y5x6rUrQ4Bd705pOE-7ifj2JodVXyG4pMrKmwTe-PjXQovNCQyrG4nalPK5cRdsCO2zF1Sm9oFjYjwTRNqeRLbS9eV0YOLERe99D1avom9NvMCxY1kpb"/><div class="absolute bottom-2 left-2 right-2 px-3 py-1.5 rounded-lg bg-[#0e0e11]/80 backdrop-blur-sm text-xs flex justify-between text-white font-medium"><span>Neo-Egoli 2088</span><span class="text-primary font-bold">Unreal Engine 5</span></div></div>
-          <div class="space-y-1 text-xs text-on-surface-variant mb-4"><div class="flex justify-between"><span>Licensing:</span><span class="text-white font-medium">Music / Film / Games</span></div><div class="flex justify-between"><span>Turnaround:</span><span class="text-white font-medium">5-10 Days</span></div></div>
-        </div>
-        <button class="w-full py-2.5 rounded-lg bg-[#22222b] hover:bg-[#2b2b37] text-white text-xs font-semibold tracking-wide border border-[#323240] transition-colors" onclick="openBooking('Liam \'Neo\' Govender','View full 3D pipeline &amp; commission','Request Commission')" type="button">View 3D Pipeline</button>
-      </article>
-
-      <p id="no-results" class="hidden lg:col-span-12 text-center text-on-surface-variant text-sm py-12">No creatives match your filters. Try clearing a filter or searching a different term.</p>
-    </div>
-  </section>
-
-  <section class="border-t border-[#22222a] bg-[#121216] py-14">
-    <div class="max-w-7xl mx-auto px-4 sm:px-8">
-      <div class="flex items-center justify-between mb-8">
-        <div><span class="text-primary text-xs font-semibold uppercase tracking-wider block">Metro Grid Directory</span><h2 class="text-xl font-bold text-white">Registered Creative Hubs &amp; Spaces</h2></div>
-        <button id="expand-studios-btn" class="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline" onclick="toggleStudios()"><span>Explore All 42 Spaces</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span></button>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="studios-grid">
-        <div class="p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">JHB Central</span><span class="text-xs font-semibold text-primary">18 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Braamfontein soundlabs, Maboneng art lofts, and Newtown flash collectives.</p></div>
-        <div class="p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Cape Town</span><span class="text-xs font-semibold text-primary">14 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Woodstock industrial art spaces, Kloof tattoo lofts, and mix houses.</p></div>
-        <div class="p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Durban Station</span><span class="text-xs font-semibold text-primary">6 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Station Road creative precinct, Gqom mastering suites, and print ateliers.</p></div>
-        <div class="p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Gqeberha / PE</span><span class="text-xs font-semibold text-primary">4 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Central analog darkrooms, recording suites, and indie artist residencies.</p></div>
-        <div class="hidden extra-studio p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Pretoria</span><span class="text-xs font-semibold text-primary">9 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Hatfield rehearsal rooms, Sunnyside print studios, and design collectives.</p></div>
-        <div class="hidden extra-studio p-5 rounded-xl bg-[#17171d] border border-[#272733] hover:border-[#3b3b4d] transition-all"><div class="flex items-center justify-between mb-2"><span class="font-bold text-white text-base">Bloemfontein</span><span class="text-xs font-semibold text-primary">5 Studios</span></div><p class="text-xs text-on-surface-variant leading-relaxed">Free State artist residencies and regional broadcast suites.</p></div>
-      </div>
-    </div>
-  </section>
-</section>
-
-<!-- ======================================================= -->
-<!-- PAGE: BRIEFS BOARD                                       -->
-<!-- ======================================================= -->
-<section class="page" id="page-briefs">
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-      <div>
-        <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-1">Open Work</span>
-        <h1 class="text-2xl sm:text-3xl font-bold font-display text-white">Briefs</h1>
-      </div>
-      <button class="px-4 py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold shadow-sm transition-all" onclick="openBriefModal()">Post a Brief</button>
-    </div>
-    <div id="briefs-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-    <p class="text-[11px] text-on-surface-variant mt-6">Demo only — briefs are saved to this browser, not a shared server.</p>
-  </section>
-</section>
-
-<!-- ======================================================= -->
-<!-- PAGE: FOR RECORD LABELS                                  -->
-<!-- ======================================================= -->
-<section class="page" id="page-labels">
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 pt-14 pb-10 border-b border-[#22222a]">
-    <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-3">For Record Labels</span>
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tracking-tight max-w-3xl">Scout South Africa's next generation before anyone else does.</h1>
-    <p class="text-on-surface-variant text-base max-w-2xl mt-4 leading-relaxed">Search verified talent, license direct, pay safely through escrow.</p>
-    <div class="flex flex-wrap items-center gap-3 mt-7">
-      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all" onclick="openAuth('signup','label')">Create a Label Account</button>
-      <button class="px-6 py-3 rounded-lg border border-[#2c2c36] text-white font-semibold text-sm hover:bg-[#1a1a20] transition-all" onclick="navigate('home')">Browse Talent Grid</button>
-    </div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14 grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-[#22222a]">
-    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">library_music</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Verified rosters</h3><p class="text-sm text-on-surface-variant leading-relaxed">ID-verified, rights-checked talent.</p></div>
-    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">payments</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Escrow-protected offers</h3><p class="text-sm text-on-surface-variant leading-relaxed">Funds released only on delivery.</p></div>
-    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">forum</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Direct A&amp;R messaging</h3><p class="text-sm text-on-surface-variant leading-relaxed">One inbox, no middlemen.</p></div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
-    <h2 class="text-xl font-bold text-white mb-8">How it works for labels</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div><span class="text-primary font-display text-3xl font-bold">1</span><h3 class="text-white font-semibold mt-2 mb-1">Create your label account</h3><p class="text-sm text-on-surface-variant">Tell us your genres and metros so we can surface the right roster.</p></div>
-      <div><span class="text-primary font-display text-3xl font-bold">2</span><h3 class="text-white font-semibold mt-2 mb-1">Audition &amp; shortlist</h3><p class="text-sm text-on-surface-variant">Stream master stems, filter by BPM and region, and save shortlists.</p></div>
-      <div><span class="text-primary font-display text-3xl font-bold">3</span><h3 class="text-white font-semibold mt-2 mb-1">License through escrow</h3><p class="text-sm text-on-surface-variant">Send an offer, agree terms, and pay safely with milestone release.</p></div>
-    </div>
-    <div class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#1b1b22] to-[#16161b] border border-[#2c2c38] flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-white font-medium">Ready to build your next roster?</p>
-      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all shrink-0" onclick="openAuth('signup','label')">Get Started as a Label</button>
-    </div>
-  </section>
-</section>
-
-<!-- ======================================================= -->
-<!-- PAGE: FOR RADIO                                          -->
-<!-- ======================================================= -->
-<section class="page" id="page-radio">
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 pt-14 pb-10 border-b border-[#22222a]">
-    <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-3">For Radio Stations</span>
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tracking-tight max-w-3xl">Fill your playlist with cleared, rotation-ready local music.</h1>
-    <p class="text-on-surface-variant text-base max-w-2xl mt-4 leading-relaxed">One queue, pre-cleared tracks, no more email back-and-forth.</p>
-    <div class="flex flex-wrap items-center gap-3 mt-7">
-      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all" onclick="openAuth('signup','radio')">Register Your Station</button>
-      <button class="px-6 py-3 rounded-lg border border-[#2c2c36] text-white font-semibold text-sm hover:bg-[#1a1a20] transition-all" onclick="navigate('home')">Browse Submitted Tracks</button>
-    </div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14 grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-[#22222a]">
-    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">queue_music</span><h3 class="text-white font-bold text-lg mt-3 mb-2">One submission queue</h3><p class="text-sm text-on-surface-variant leading-relaxed">Sorted by genre and region.</p></div>
-    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">trending_up</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Rotation tracking</h3><p class="text-sm text-on-surface-variant leading-relaxed">Artists see their confirmed spins.</p></div>
-    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">gavel</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Cleared for airplay</h3><p class="text-sm text-on-surface-variant leading-relaxed">No paperwork chasing.</p></div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
-    <h2 class="text-xl font-bold text-white mb-8">How it works for stations</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div><span class="text-primary font-display text-3xl font-bold">1</span><h3 class="text-white font-semibold mt-2 mb-1">Register your station</h3><p class="text-sm text-on-surface-variant">Add your call sign, coverage area and the genres you play.</p></div>
-      <div><span class="text-primary font-display text-3xl font-bold">2</span><h3 class="text-white font-semibold mt-2 mb-1">Open your submission queue</h3><p class="text-sm text-on-surface-variant">Artists submit directly; you accept, reject, or shortlist for review.</p></div>
-      <div><span class="text-primary font-display text-3xl font-bold">3</span><h3 class="text-white font-semibold mt-2 mb-1">Log spins &amp; rotation</h3><p class="text-sm text-on-surface-variant">Confirm plays so artists get credit and can track their own reach.</p></div>
-    </div>
-    <div class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#1b1b22] to-[#16161b] border border-[#2c2c38] flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-white font-medium">Ready to open your submission queue?</p>
-      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all shrink-0" onclick="openAuth('signup','radio')">Get Started as a Station</button>
-    </div>
-  </section>
-</section>
-
-<!-- ======================================================= -->
-<!-- PAGE: FOR ARTISTS (PAID COLLABORATION)                   -->
-<!-- ======================================================= -->
-<section class="page" id="page-artists">
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 pt-14 pb-10 border-b border-[#22222a]">
-    <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-3">For Artists &amp; Creators</span>
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white tracking-tight max-w-3xl">Turn your craft into paid collaboration.</h1>
-    <p class="text-on-surface-variant text-base max-w-2xl mt-4 leading-relaxed">Build your portfolio, get booked, get paid — safely.</p>
-    <div class="flex flex-wrap items-center gap-3 mt-7">
-      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all" onclick="openAuth('signup','artist')">Create Your Portfolio</button>
-      <button class="px-6 py-3 rounded-lg border border-[#2c2c36] text-white font-semibold text-sm hover:bg-[#1a1a20] transition-all" onclick="navigate('home')">See Who's Booking</button>
-    </div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14 grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-[#22222a]">
-    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">badge</span><h3 class="text-white font-bold text-lg mt-3 mb-2">A verified profile</h3><p class="text-sm text-on-surface-variant leading-relaxed">Get the badge, get seen first.</p></div>
-    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">handshake</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Direct paid briefs</h3><p class="text-sm text-on-surface-variant leading-relaxed">Gigs land straight in your inbox.</p></div>
-    <div class="p-6 rounded-2xl bg-[#16161b] border border-[#282834]"><span class="material-symbols-outlined text-primary text-[26px]">account_balance_wallet</span><h3 class="text-white font-bold text-lg mt-3 mb-2">Guaranteed payout</h3><p class="text-sm text-on-surface-variant leading-relaxed">Held in escrow until you deliver.</p></div>
-  </section>
-
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
-    <h2 class="text-xl font-bold text-white mb-8">How it works for creators</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div><span class="text-primary font-display text-3xl font-bold">1</span><h3 class="text-white font-semibold mt-2 mb-1">Build your portfolio</h3><p class="text-sm text-on-surface-variant">Upload your best work, set your rate, and mark yourself available.</p></div>
-      <div><span class="text-primary font-display text-3xl font-bold">2</span><h3 class="text-white font-semibold mt-2 mb-1">Get discovered</h3><p class="text-sm text-on-surface-variant">Labels, stations and brands search and reach out directly.</p></div>
-      <div><span class="text-primary font-display text-3xl font-bold">3</span><h3 class="text-white font-semibold mt-2 mb-1">Deliver &amp; get paid</h3><p class="text-sm text-on-surface-variant">Funds release from escrow the moment the brief is marked complete.</p></div>
-    </div>
-    <div class="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#1b1b22] to-[#16161b] border border-[#2c2c38] flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-white font-medium">Ready to get booked?</p>
-      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all shrink-0" onclick="openAuth('signup','artist')">Create Your Portfolio</button>
-    </div>
-  </section>
-</section>
-
-<!-- ======================================================= -->
-<!-- PAGE: MY PORTFOLIO / DASHBOARD                           -->
-<!-- ======================================================= -->
-<section class="page" id="page-portfolio">
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
-    <div class="flex flex-col sm:flex-row sm:items-center gap-5 mb-10 pb-8 border-b border-[#22222a]">
-      <img alt="Profile" class="w-20 h-20 rounded-2xl object-cover ring-1 ring-primary/25" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcZcKu-wucVcHW72yeP7crYTcEkDK2QoZcqmRK_DcHYV6xM4gq4j3bG3AJuL_lRnbjEDOy3DyQfoak7mYgL6-eWeEokBQrPNWK3aCsY5vE5Yky008XlpZcP4WSQ8j7oenJtml-8sjlnp1lK-DCzRQPGqloJO9wfm59wUXHR32lY5VWksUhmR3SgyBSKyjSa1Sm2ltCrStc_rrw-a_oAlfC_Py7B-LMenUioaauiqfPlB_LQaFttd0e"/>
-      <div>
-        <h1 id="portfolio-name" class="text-2xl sm:text-3xl font-bold font-display text-white">—</h1>
-        <span id="portfolio-role" class="inline-block mt-1 text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 border border-primary/30 rounded px-2 py-1">—</span>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-      <div class="p-5 rounded-xl bg-[#17171d] border border-[#272732]"><span class="block text-2xl font-bold text-white">0</span><span class="text-xs text-on-surface-variant">Active Bookings</span></div>
-      <div class="p-5 rounded-xl bg-[#17171d] border border-[#272732]"><span class="block text-2xl font-bold text-white">0</span><span class="text-xs text-on-surface-variant">Profile Views (7d)</span></div>
-      <div class="p-5 rounded-xl bg-[#17171d] border border-[#272732]"><span class="block text-2xl font-bold text-primary">R0</span><span class="text-xs text-on-surface-variant">Escrow Balance</span></div>
-    </div>
-    <div id="portfolio-empty-state" class="p-8 rounded-2xl bg-[#16161b] border border-[#282834] text-center">
-      <span class="material-symbols-outlined text-primary text-[32px] mb-3 inline-block">rocket_launch</span>
-      <h3 class="text-white font-bold text-lg mb-2">Your portfolio is empty</h3>
-      <p class="text-sm text-on-surface-variant max-w-md mx-auto mb-5">Add a track, design, shoot or render so people can find and book you.</p>
-      <button class="px-6 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all" onclick="navigate('gallery')">Add Your First Upload</button>
-    </div>
-    <div id="portfolio-preview" class="hidden">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-white font-bold text-lg">Your Files</h3>
-        <button class="text-xs font-semibold text-primary hover:underline" onclick="navigate('gallery')">Manage in Gallery →</button>
-      </div>
-      <div id="portfolio-preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
-    </div>
-  </section>
-</section>
-
-<!-- ======================================================= -->
-<!-- PAGE: MY GALLERY / FILES                                 -->
-<!-- ======================================================= -->
-<section class="page" id="page-gallery">
-  <section class="max-w-7xl mx-auto px-4 sm:px-8 py-14">
-    <div class="flex items-center justify-between mb-6">
-      <div>
-        <span class="inline-block text-primary font-semibold text-xs uppercase tracking-widest mb-1">My Portfolio</span>
-        <h1 class="text-2xl sm:text-3xl font-bold font-display text-white">Gallery &amp; Files</h1>
-      </div>
-      <button class="px-4 py-2.5 rounded-lg border border-[#2c2c36] text-white text-sm font-semibold hover:bg-[#1a1a20] transition-all" onclick="navigate('portfolio')">Back to Portfolio</button>
-    </div>
-
-    <label id="upload-dropzone" for="file-upload-input" class="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-[#33333f] hover:border-primary/60 rounded-2xl py-12 cursor-pointer transition-all mb-8 bg-[#15151a]">
-      <span class="material-symbols-outlined text-primary text-[30px]">cloud_upload</span>
-      <p class="text-white font-semibold text-sm">Click to upload, or drag files here</p>
-      <p class="text-xs text-on-surface-variant">Images, audio previews, or video clips</p>
-      <input id="file-upload-input" type="file" accept="image/*,audio/*,video/*" multiple class="hidden" onchange="handleFileUpload(event)"/>
-    </label>
-
-    <div id="gallery-empty" class="text-center py-10 text-on-surface-variant text-sm">No files yet — upload your first piece above.</div>
-    <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-  </section>
-</section>
-
-</main>
-
-<!-- ============ FOOTER ============ -->
-<footer class="w-full bg-[#0d0d10] border-t border-[#202028] py-12">
-  <div class="max-w-7xl mx-auto px-4 sm:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
-      <div class="space-y-3">
-        <div class="flex items-center gap-2.5"><div class="w-7 h-7 rounded-md bg-primary flex items-center justify-center text-white"><span class="material-symbols-outlined text-[16px]">graphic_eq</span></div><span class="font-bold tracking-tight text-white">CREATIVE HUB <span class="text-primary">ZA</span></span></div>
-        <p class="text-xs text-on-surface-variant leading-relaxed">South Africa's dedicated talent discovery and booking network for independent and signed creators.</p>
-      </div>
-      <div>
-        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Get Started</h4>
-        <ul class="space-y-1.5 text-xs text-on-surface-variant">
-          <li><button class="hover:text-white transition-colors" onclick="navigate('artists')">For Artists</button></li>
-          <li><button class="hover:text-white transition-colors" onclick="navigate('labels')">For Record Labels</button></li>
-          <li><button class="hover:text-white transition-colors" onclick="navigate('radio')">For Radio Stations</button></li>
-          <li><button class="hover:text-white transition-colors" onclick="openAuth('signin')">Sign In</button></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Major Metros</h4>
-        <ul class="space-y-1.5 text-xs text-on-surface-variant"><li>Johannesburg // Gauteng</li><li>Cape Town // Western Cape</li><li>Durban // KwaZulu-Natal</li><li>Pretoria // Gauteng</li></ul>
-      </div>
-      <div>
-        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Platform &amp; Apps</h4>
-        <ul class="space-y-1.5 text-xs text-on-surface-variant"><li>iOS &amp; Android Downloads</li><li>ZAR Escrow Milestone Protection</li><li>Creator Verification Criteria</li><li>Terms &amp; Intellectual Rights</li></ul>
-      </div>
-    </div>
-    <div class="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-[#1c1c24] text-xs text-on-surface-variant gap-3">
-      <p>© 2025 Creative Hub ZA Ltd. Built for the Republic of South Africa.</p>
-      <span class="text-white font-medium">Direct Web &amp; Mobile Architecture</span>
-    </div>
-  </div>
-</footer>
-
-<!-- ============ AUTH MODAL ============ -->
-<div id="auth-modal" class="modal-backdrop fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm items-center justify-center p-4">
-  <div class="fade-in w-full max-w-md bg-[#16161b] border border-[#282834] rounded-2xl shadow-2xl overflow-hidden">
-    <div class="flex items-center justify-between px-6 pt-6">
-      <div class="flex bg-[#1e1e26] rounded-lg p-1 border border-[#2c2c36]">
-        <button id="tab-signin" class="auth-tab px-4 py-1.5 rounded-md text-xs font-semibold transition-all" onclick="setAuthTab('signin')">Sign In</button>
-        <button id="tab-signup" class="auth-tab px-4 py-1.5 rounded-md text-xs font-semibold transition-all" onclick="setAuthTab('signup')">Sign Up</button>
-      </div>
-      <button class="text-on-surface-variant hover:text-white" onclick="closeModal('auth-modal')"><span class="material-symbols-outlined">close</span></button>
-    </div>
-
-    <!-- Sign up: role picker -->
-    <div id="signup-role-step" class="hidden px-6 pt-5 pb-6">
-      <h3 class="text-white font-bold text-lg mb-1">Join Creative Hub ZA</h3>
-      <p class="text-xs text-on-surface-variant mb-4">Choose the account type that fits you best.</p>
-      <div class="grid grid-cols-2 gap-3">
-        <button data-role-card="artist" class="role-card text-left p-3.5 rounded-xl bg-[#1e1e26] border border-[#2c2c36] hover:border-[#454556] transition-all" onclick="pickRole('artist')"><span class="material-symbols-outlined text-primary text-[20px]">brush</span><div class="text-white font-semibold text-sm mt-1.5">Artist / Creator</div><div class="text-[11px] text-on-surface-variant">Get booked &amp; paid</div></button>
-        <button data-role-card="label" class="role-card text-left p-3.5 rounded-xl bg-[#1e1e26] border border-[#2c2c36] hover:border-[#454556] transition-all" onclick="pickRole('label')"><span class="material-symbols-outlined text-primary text-[20px]">library_music</span><div class="text-white font-semibold text-sm mt-1.5">Record Label</div><div class="text-[11px] text-on-surface-variant">Scout &amp; sign talent</div></button>
-        <button data-role-card="radio" class="role-card text-left p-3.5 rounded-xl bg-[#1e1e26] border border-[#2c2c36] hover:border-[#454556] transition-all" onclick="pickRole('radio')"><span class="material-symbols-outlined text-primary text-[20px]">radio</span><div class="text-white font-semibold text-sm mt-1.5">Radio Station</div><div class="text-[11px] text-on-surface-variant">Source airplay music</div></button>
-        <button data-role-card="brand" class="role-card text-left p-3.5 rounded-xl bg-[#1e1e26] border border-[#2c2c36] hover:border-[#454556] transition-all" onclick="pickRole('brand')"><span class="material-symbols-outlined text-primary text-[20px]">storefront</span><div class="text-white font-semibold text-sm mt-1.5">Brand / Business</div><div class="text-[11px] text-on-surface-variant">Commission creators</div></button>
-      </div>
-    </div>
-
-    <!-- Sign up: details form -->
-    <form id="signup-form-step" class="hidden px-6 pt-5 pb-6" onsubmit="return submitSignup(event)">
-      <button type="button" class="text-xs text-on-surface-variant hover:text-white mb-3 inline-flex items-center gap-1" onclick="backToRoleStep()"><span class="material-symbols-outlined text-[16px]">arrow_back</span>Change account type</button>
-      <h3 class="text-white font-bold text-lg mb-4">Create your <span id="signup-role-label" class="text-primary">account</span></h3>
-      <div class="space-y-3">
-        <input required placeholder="Full name or studio name" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text"/>
-        <input required placeholder="Email address" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="email"/>
-        <input required minlength="6" placeholder="Password" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="password"/>
-      </div>
-      <button type="submit" class="w-full mt-5 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all">Create Account</button>
-      <p class="text-[11px] text-on-surface-variant text-center mt-3">By continuing you agree to Creative Hub ZA's Terms &amp; Creator Verification Criteria.</p>
-    </form>
-
-    <!-- Sign in -->
-    <form id="signin-form-step" class="hidden px-6 pt-5 pb-6" onsubmit="return submitSignin(event)">
-      <h3 class="text-white font-bold text-lg mb-4">Welcome back</h3>
-      <div class="space-y-3">
-        <input required placeholder="Email address" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="email"/>
-        <input required placeholder="Password" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="password"/>
-      </div>
-      <div class="flex items-center justify-between mt-3">
-        <button type="button" class="text-xs text-on-surface-variant hover:text-white" onclick="toast('Password reset link sent if the account exists.')">Forgot password?</button>
-      </div>
-      <button type="submit" class="w-full mt-4 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all">Sign In</button>
-      <p class="text-xs text-on-surface-variant text-center mt-4">Don't have an account? <button type="button" class="text-primary font-semibold hover:underline" onclick="setAuthTab('signup')">Sign up</button></p>
+<!-- MODALS -->
+<div id="auth" class="modal fixed inset-0 z-50 bg-black/75 items-end sm:items-center justify-center sm:p-4">
+  <div class="card w-full sm:max-w-md max-h-[92vh] overflow-y-auto p-6">
+    <div class="flex justify-between items-center mb-4"><h3 id="auth-h" class="font-bold text-lg"></h3><button onclick="closeM('auth')"><span class="m">close</span></button></div>
+    <form id="f-in" onsubmit="return signin(event)" class="space-y-3">
+      <input id="si-e" class="inp" type="email" placeholder="Email" required/><input id="si-p" class="inp" type="password" placeholder="Password" required/>
+      <button class="btn w-full">Sign in</button>
+      <p class="text-xs text-mute text-center">New here? <button type="button" class="text-primary font-semibold" onclick="openAuth('signup')">Create an account</button></p>
     </form>
   </div>
 </div>
 
-<!-- ============ BOOKING MODAL ============ -->
-<div id="booking-modal" class="modal-backdrop fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm items-center justify-center p-4">
-  <div class="fade-in w-full max-w-md bg-[#16161b] border border-[#282834] rounded-2xl shadow-2xl overflow-hidden">
-    <div class="flex items-start justify-between px-6 pt-6">
-      <div><h3 id="booking-title" class="text-white font-bold text-lg">—</h3><p id="booking-subtitle" class="text-xs text-on-surface-variant mt-0.5">—</p></div>
-      <button class="text-on-surface-variant hover:text-white shrink-0" onclick="closeModal('booking-modal')"><span class="material-symbols-outlined">close</span></button>
-    </div>
-    <form class="px-6 pt-4 pb-6" onsubmit="return submitBooking(event)">
-      <div class="space-y-3">
-        <input placeholder="Preferred date" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text" onfocus="(this.type='date')"/>
-        <input id="booking-budget-input" oninput="updateDeposit()" placeholder="Budget (ZAR)" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="number" min="0"/>
-        <textarea required placeholder="Tell them what you need…" rows="3" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60 resize-none"></textarea>
-      </div>
-      <div class="mt-3 flex items-center justify-between px-4 py-3 rounded-xl bg-[#111114] border border-[#24242f] text-xs">
-        <span class="text-on-surface-variant">Deposit held in escrow (25%)</span>
-        <span id="booking-deposit-amount" class="text-white font-bold">R0</span>
-      </div>
-      <button id="booking-submit-btn" type="submit" class="w-full mt-4 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all">Send Request</button>
-      <p class="text-[11px] text-on-surface-variant text-center mt-2">Released to the creative once the work is delivered and confirmed.</p>
-    </form>
-  </div>
+<div id="book" class="modal fixed inset-0 z-50 bg-black/75 items-end sm:items-center justify-center sm:p-4">
+  <form onsubmit="return submitBooking(event)" class="card w-full sm:max-w-md p-6 space-y-3">
+    <div class="flex justify-between"><div><h3 id="book-h" class="font-bold text-lg"></h3><p class="text-xs text-mute">Pay a 25% deposit held in escrow, or leave the budget empty to just send a message.</p></div><button type="button" onclick="closeM('book')"><span class="m">close</span></button></div>
+    <input id="bk-d" class="inp" type="date"/><input id="bk-b" oninput="dep()" class="inp" type="number" min="0" placeholder="Budget (ZAR)"/>
+    <textarea id="bk-n" class="inp" rows="3" required placeholder="What do you need?"></textarea>
+    <div class="flex justify-between text-sm card p-3"><span class="text-mute">Escrow deposit (25%)</span><b id="book-d">R0</b></div>
+    <button class="btn w-full">Send request</button>
+  </form>
 </div>
 
-<!-- ============ POST BRIEF MODAL ============ -->
-<div id="brief-modal" class="modal-backdrop fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm items-center justify-center p-4">
-  <div class="fade-in w-full max-w-lg bg-[#16161b] border border-[#282834] rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
-    <div class="flex items-start justify-between px-6 pt-6">
-      <div><h3 class="text-white font-bold text-lg">Post a Gig / Brief</h3><p class="text-xs text-on-surface-variant mt-0.5">Reach verified creatives across South Africa.</p></div>
-      <button class="text-on-surface-variant hover:text-white shrink-0" onclick="closeModal('brief-modal')"><span class="material-symbols-outlined">close</span></button>
-    </div>
-    <form class="px-6 pt-4 pb-6" onsubmit="return submitBrief(event)">
-      <div class="space-y-3">
-        <input required placeholder="Brief title (e.g. Album cover art commission)" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text"/>
-        <select class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white">
-          <option>Music Production</option><option>Tattoo Residency</option><option>Photography</option><option>Fine Art Commission</option><option>3D / VFX</option>
-        </select>
-        <div class="grid grid-cols-2 gap-3">
-          <input placeholder="Budget (ZAR)" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text"/>
-          <input placeholder="Deadline" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60" type="text" onfocus="(this.type='date')"/>
-        </div>
-        <textarea required placeholder="Describe what you need delivered…" rows="4" class="w-full px-4 py-2.5 bg-[#1e1e26] border border-[#2f2f3c] focus:border-primary rounded-xl text-sm text-white placeholder:text-on-surface-variant/60 resize-none"></textarea>
-      </div>
-      <button type="submit" class="w-full mt-4 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-sm transition-all">Post Brief</button>
-    </form>
+<div id="brief" class="modal fixed inset-0 z-50 bg-black/75 items-end sm:items-center justify-center sm:p-4">
+  <form onsubmit="return submitBrief(event)" class="card w-full sm:max-w-md p-6 space-y-3">
+    <div class="flex justify-between"><h3 class="font-bold text-lg">Post a brief</h3><button type="button" onclick="closeM('brief')"><span class="m">close</span></button></div>
+    <input class="inp" id="b-t" placeholder="Title (e.g. Album cover art)" required/>
+    <select class="inp" id="b-c"></select>
+    <div class="grid grid-cols-2 gap-3"><input class="inp" id="b-b" type="number" min="1" placeholder="Budget (ZAR)" required/><input class="inp" id="b-d" type="date"/></div>
+    <textarea class="inp" id="b-x" rows="3" required placeholder="What should be delivered?"></textarea>
+    <button class="btn w-full">Post brief</button>
+  </form>
+</div>
+<div id="ob" class="modal fixed inset-0 z-[60] bg-bg overflow-y-auto">
+  <div class="w-full min-h-full grid md:grid-cols-[1fr_520px]">
+    <aside class="hidden md:flex relative overflow-hidden flex-col justify-end p-10">
+      <div id="ob-bg" class="wall absolute inset-0 grid grid-cols-3 opacity-40" style="grid-auto-rows:1fr"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-bg/70"></div>
+      <div class="relative"><h2 class="font-display text-5xl font-bold leading-tight">Your face on South Africa's creative wall.</h2><p class="text-white/70 mt-4 max-w-sm">Join the local creatives, labels, stations and brands booking each other directly.</p></div>
+    </aside>
+    <section class="flex flex-col p-5 md:p-10 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      <div class="flex justify-between items-center"><div class="font-extrabold tracking-tight">CREATIVE HUB <span class="text-primary">ZA</span></div><button onclick="closeOb()" aria-label="Close"><span class="m">close</span></button></div>
+      <div class="h-1 bg-line rounded mt-6"><div id="ob-bar" class="h-1 bg-primary rounded transition-all duration-500"></div></div>
+      <p id="ob-step" class="text-xs text-mute mt-2"></p>
+      <div id="ob-body" class="flex-1 mt-6 max-w-md w-full"></div>
+    </section>
   </div>
 </div>
-
-<!-- ============ TOAST CONTAINER ============ -->
-<div id="toast-container" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[80] flex flex-col items-center gap-2 pointer-events-none"></div>
+<div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-24 md:bottom-8 z-[70] flex flex-col gap-2 items-center pointer-events-none"></div>
 
 <script>
-  /* =========================================================
-     CONFIG — put your real keys here. These are all SAFE to
-     expose in frontend code (publishable/anon keys only —
-     never put a service_role or secret key in this file).
-     ========================================================= */
-  const CONFIG = {
-    SUPABASE_URL: 'YOUR_SUPABASE_URL',        // e.g. https://xxxxxxxx.supabase.co
-    SUPABASE_ANON_KEY: 'YOUR_SUPABASE_ANON_KEY',
-    YOCO_PUBLIC_KEY: 'YOUR_YOCO_PUBLIC_KEY',   // starts with pk_test_ or pk_live_
-    API_BASE_URL: 'http://localhost:5000'      // your deployed backend URL in production
-  };
-  const supabaseReady = CONFIG.SUPABASE_URL.startsWith('http') && !CONFIG.SUPABASE_URL.includes('YOUR_');
-  const yocoReady = CONFIG.YOCO_PUBLIC_KEY.startsWith('pk_') && !CONFIG.YOCO_PUBLIC_KEY.includes('YOUR_');
-  const supa = supabaseReady && window.supabase ? window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY) : null;
-  const yoco = yocoReady && window.YocoSDK ? new window.YocoSDK({ publicKey: CONFIG.YOCO_PUBLIC_KEY }) : null;
-  if (!supabaseReady) console.warn('Creative Hub ZA: Supabase not configured — running in local demo mode (see CONFIG at top of script).');
-  if (!yocoReady) console.warn('Creative Hub ZA: Yoco not configured — payments run in demo mode (see CONFIG at top of script).');
+/* Publishable keys only. Never put a secret / service_role key here. */
+const C={URL:'YOUR_SUPABASE_URL',KEY:'YOUR_SUPABASE_ANON_KEY',YOCO:'YOUR_YOCO_PUBLIC_KEY',API:'http://localhost:5000'};
+const db=C.URL.startsWith('http')?supabase.createClient(C.URL,C.KEY):null;
+const yoco=C.YOCO.startsWith('pk_')&&window.YocoSDK?new YocoSDK({publicKey:C.YOCO}):null;
+const CATS=['Music','Tattoo','Photography','Fine art','3D / VFX','Film & video','Design'];
+const CITIES=['Johannesburg','Cape Town','Durban','Pretoria','Gqeberha','Bloemfontein'];
+const ROLES={artist:['Artist / Creator','brush'],label:['Record label','library_music'],radio:['Radio station','radio'],brand:['Brand / business','storefront']};
+const NAV=[['discover','Discover','explore'],['briefs','Briefs','work'],['chat','Messages','chat'],['dashboard','Dashboard','space_dashboard'],['analytics','Analytics','monitoring'],['profile','Profile','person']];
+let me=null,view='discover',cat='All',q='',people=[],P={},msgs=[],notifs=[],BR=[],chatWith=null,draft='',sel=[],photo=null,bk=null,role='artist',chan=null;
 
-  /* ---------- state ---------- */
-  let currentUser = null;
-  let pendingRole = 'artist';
-  let bookingTarget = '';
-  let applyBriefId = '';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const R=n=>'R'+Math.round(Number(n)||0).toLocaleString('en-ZA');
+const hm=t=>new Date(t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+function toast(t){const e=document.createElement('div');e.className='bg-[#1d1d23] border border-primary/40 px-4 py-3 rounded-xl text-sm shadow-2xl max-w-xs text-center';e.textContent=t;$('toast').appendChild(e);setTimeout(()=>e.remove(),3500)}
+const openM=id=>$(id).classList.add('on'),closeM=id=>$(id).classList.remove('on');
+const hue=s=>[...String(s)].reduce((a,c)=>a+c.charCodeAt(0),0)%360;
+const pic=p=>p?.avatar_url?`<img src="${esc(p.avatar_url)}" alt="${esc(p.full_name)}" loading="lazy"/>`:`<div class="ph" style="background:linear-gradient(135deg,hsl(${hue(p?.full_name)} 55% 28%),#16161b)">${esc((p?.full_name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase())}</div>`;
+const tags=p=>(p.categories||[]).map(c=>`<span class="text-[11px] px-2 py-0.5 rounded-full bg-[#1d1d23] border border-line text-mute">${esc(c)}</span>`).join(' ');
+const head=(t,s)=>`<div class="mb-6"><h1 class="font-display text-3xl font-bold md:hidden">${t}</h1><p class="text-mute text-sm mt-1">${s}</p></div>`;
+const load=t=>$('main').innerHTML=head(t,'Loading…');
+async function who(ids){const need=[...new Set(ids)].filter(i=>i&&!P[i]);if(!need.length||!db)return;const{data}=await db.from('public_profiles').select('*').in('id',need);(data||[]).forEach(p=>P[p.id]=p)}
 
-  const roleLabels = { artist: 'Artist / Creator account', label: 'Record Label account', radio: 'Radio Station account', brand: 'Brand / Business account' };
-  const roleBadges = { artist: 'Artist / Creator', label: 'Record Label', radio: 'Radio Station', brand: 'Brand / Business' };
+/* ---------- welcome wall ---------- */
+async function loadPeople(){if(!db){wall();return}const{data}=await db.from('public_profiles').select('*').eq('role','artist').limit(300);people=data||[];people.forEach(p=>P[p.id]=p);wall()}
+function wall(){
+  const l=[...people.filter(p=>p.avatar_url),...people.filter(p=>!p.avatar_url)].slice(0,24);
+  let h=l.map(p=>`<button class="tile" onclick="enterApp('person','${p.id}')" aria-label="${esc(p.full_name)}">${pic(p)}<span class="n">${esc(p.full_name)}</span></button>`).join('');
+  for(let i=l.length;i<24;i++)h+=`<button class="tile" onclick="openAuth('signup')" aria-label="Join"><div class="ph !text-white/25"><span class="m !text-3xl">add</span></div></button>`;
+  $('wall').innerHTML=h;
+}
+function showWelcome(){$('welcome').classList.remove('hidden');$('app').classList.add('hidden');loadPeople()}
+function enterApp(v,a){$('welcome').classList.add('hidden');$('app').classList.remove('hidden');go(v,a)}
 
-  /* ---------- init ---------- */
-  document.addEventListener('DOMContentLoaded', () => {
-    try {
-      const saved = localStorage.getItem('chza_user');
-      if (saved) { currentUser = JSON.parse(saved); }
-    } catch (e) {}
-    renderAuthState();
-    applyFilters();
-    setActiveCatButton('all');
-    getBriefs();
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('#notif-panel') && !e.target.closest('[onclick="toggleNotifications()"]')) document.getElementById('notif-panel').classList.add('hidden');
-      if (!e.target.closest('#profile-menu') && !e.target.closest('#auth-area-logged-in')) document.getElementById('profile-menu').classList.add('hidden');
-    });
-  });
+/* ---------- navigation ---------- */
+const uMsg=()=>me?msgs.filter(m=>m.recipient_id===me.id&&!m.read_at).length:0;
+function nav(){
+  const on=view==='person'?'discover':view,u=uMsg();
+  const b=n=>n[0]==='chat'&&u?`<span class="bdg">${u}</span>`:'';
+  $('side').innerHTML=NAV.map(n=>`<button class="nav ${n[0]===on?'on':''}" onclick="go('${n[0]}')"><span class="m">${n[2]}</span>${n[1]}${b(n)}</button>`).join('');
+  $('tabs').innerHTML=NAV.map(n=>`<button class="relative flex flex-col items-center gap-0.5 py-2 text-[10px] font-semibold ${n[0]===on?'text-white':'text-mute'}" onclick="go('${n[0]}')"><span class="m">${n[2]}</span>${n[1]}${b(n)}</button>`).join('');
+  $('title').textContent=(NAV.find(n=>n[0]===on)||[])[1]||'';
+}
+async function go(v,a){
+  if(['chat','dashboard','analytics','profile'].includes(v)&&!me){toast('Sign in to open this page.');openAuth('signin');return}
+  view=v;if(v==='chat')chatWith=a||null;window.scrollTo(0,0);$('np').classList.add('hidden');nav();
+  try{await({discover:rDiscover,briefs:rBriefs,chat:rChat,dashboard:rDash,analytics:rAna,profile:rProfile,person:()=>rPerson(a)})[v]()}catch(e){console.error(e);toast('Something went wrong loading this page.')}
+}
+function renderWho(){
+  const t=me?`<button onclick="go('profile')" class="flex items-center gap-2 text-left"><span class="w-8 h-8 rounded-full overflow-hidden tile shrink-0">${pic(me)}</span><span class="hidden md:block text-sm"><b>${esc(me.full_name)}</b><br/><span class="text-xs text-mute">${ROLES[me.role]?.[0]||'Admin'}</span></span></button>`:'';
+  $('who-top').innerHTML=me?'':`<button class="btn2 !py-2" onclick="openAuth('signin')">Sign in</button>`;
+  $('who-side').innerHTML=me?t+`<button class="text-xs text-mute mt-3" onclick="signOut()">Sign out</button>`:`<button class="btn2 w-full" onclick="openAuth('signin')">Sign in</button>`;
+  $('bellb').classList.toggle('hidden',!me);
+  $('w-btns').innerHTML=me?`<button class="btn" onclick="enterApp('dashboard')">Open app</button>`:`<button class="btn2 bg-black/40 backdrop-blur" onclick="openAuth('signin')">Sign in</button><button class="btn" onclick="openOnboard()">Onboard</button>`;
+  nav();bell();
+}
 
-  /* ---------- toast ---------- */
-  function toast(msg) {
-    const c = document.getElementById('toast-container');
-    const el = document.createElement('div');
-    el.className = 'toast pointer-events-auto px-4 py-3 rounded-xl bg-[#1e1e26] border border-primary/40 text-white text-sm shadow-2xl max-w-xs text-center';
-    el.textContent = msg;
-    c.appendChild(el);
-    setTimeout(() => el.remove(), 3000);
-  }
+/* ---------- discover & profiles ---------- */
+async function rDiscover(){
+  $('main').innerHTML=head('Discover','Local creatives, booked directly.')+
+  `<input class="inp mb-4" placeholder="Search by name, craft or city" value="${esc(q)}" oninput="q=this.value;list()"/>
+   <div class="flex gap-2 overflow-x-auto pb-4">${['All',...CATS].map(c=>`<button class="chip ${c===cat?'on':''}" onclick="cat='${c}';rDiscover()">${c}</button>`).join('')}</div><div id="plist" class="grid sm:grid-cols-2 gap-4"></div>`;
+  if(!people.length)await loadPeople();list();
+}
+function list(){
+  const k=q.toLowerCase(),r=people.filter(p=>(cat==='All'||(p.categories||[]).includes(cat))&&(!k||[p.full_name,p.craft,p.metro].join(' ').toLowerCase().includes(k)));
+  $('plist').innerHTML=r.map(p=>`<button onclick="go('person','${p.id}')" class="card p-4 flex gap-4 text-left hover:border-[#3b3b4d]"><div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 tile">${pic(p)}</div><div class="min-w-0"><b class="block truncate">${esc(p.full_name)}</b><span class="text-sm text-mute block truncate">${esc(p.craft||'Creative')}</span><span class="text-xs text-mute">${esc(p.metro||'')}</span><div class="flex flex-wrap gap-1 mt-2">${tags(p)}</div></div></button>`).join('')||'<p class="text-mute text-sm">No creatives yet in this category. Be the first to join.</p>';
+}
+async function rPerson(id){
+  await who([id]);const p=P[id];
+  if(!p){$('main').innerHTML='<p class="text-mute">This profile could not be found.</p>';return}
+  if(!me||me.id!==id)db?.from('profile_views').insert({profile_id:id,viewer_id:me?.id||null}).then(()=>{});
+  const mine=me?.id===id;
+  $('main').innerHTML=`<button class="text-sm text-mute mb-4" onclick="go('discover')"><span class="m">arrow_back</span> Back</button>
+  <div class="grid md:grid-cols-[280px_1fr] gap-6"><div class="tile aspect-square rounded-2xl">${pic(p)}</div><div>
+  <h1 class="font-display text-3xl font-bold">${esc(p.full_name)}</h1><p class="text-mute mt-1">${esc(p.craft||ROLES[p.role]?.[0]||'')} · ${esc(p.metro||'South Africa')}</p>
+  <div class="flex flex-wrap gap-1 mt-3">${tags(p)}</div>
+  <p class="mt-4 leading-relaxed max-w-prose whitespace-pre-wrap">${esc(p.bio||'This creative is new to the hub.')}</p>
+  ${portfolio(p)}<div class="flex gap-3 mt-6">${mine?`<button class="btn" onclick="go('profile')">Edit profile</button>`:`<button class="btn" onclick="openBooking('${id}')">Book</button><button class="btn2" onclick="openChat('${id}')"><span class="m">chat</span> Message</button>`}</div></div></div>`;
+}
 
-  /* ---------- navigation ---------- */
-  function navigate(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    document.querySelectorAll('.nav-link, .nav-link-mobile').forEach(b => b.classList.remove('bg-[#272731]', 'text-white'));
-    document.querySelectorAll('[data-nav="' + page + '"]').forEach(b => b.classList.add('bg-[#272731]', 'text-white'));
-    document.getElementById('mobile-nav').classList.add('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (page === 'portfolio') renderPortfolio();
-    if (page === 'gallery') renderGallery();
-    if (page === 'briefs') renderBriefs();
-    updateNavStyles();
-  }
-  function updateNavStyles() {
-    document.querySelectorAll('.nav-link').forEach(b => {
-      if (!b.classList.contains('bg-[#272731]')) b.classList.add('text-on-surface-variant');
-    });
-  }
-  function goToPortfolio() {
-    if (!currentUser) { toast('Sign in to view your portfolio.'); openAuth('signin'); return; }
-    navigate('portfolio');
-  }
-  function renderPortfolio() {
-    if (!currentUser) return;
-    document.getElementById('portfolio-name').textContent = currentUser.name;
-    document.getElementById('portfolio-role').textContent = roleBadges[currentUser.role] || 'Creative';
-    const files = getGalleryFiles();
-    document.getElementById('portfolio-empty-state').classList.toggle('hidden', files.length > 0);
-    document.getElementById('portfolio-preview').classList.toggle('hidden', files.length === 0);
-    const grid = document.getElementById('portfolio-preview-grid');
-    grid.innerHTML = files.slice(0, 4).map(f => galleryThumbHtml(f, false)).join('');
-  }
+/* ---------- briefs ---------- */
+async function rBriefs(){
+  load('Briefs');const{data}=await db.from('briefs').select('*').order('created_at',{ascending:false}).limit(100);BR=data||[];await who(BR.map(b=>b.created_by));
+  $('main').innerHTML=head('Briefs','Open work from local labels, stations and brands.')+`<div class="grid gap-3">${BR.map(b=>`<div class="card p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><b>${esc(b.title)}</b><p class="text-sm text-mute mt-1">${esc(b.description)}</p><p class="text-xs text-mute mt-2">${esc(P[b.created_by]?.full_name||'Member')} · ${esc(b.category)} · <span class="text-white font-semibold">${R(b.budget)}</span>${b.deadline?' · due '+esc(b.deadline):''}</p></div>${me?.id===b.created_by?'<span class="text-sm text-mute">Your brief</span>':`<button class="btn shrink-0" onclick="applyBrief('${b.id}')">Apply</button>`}</div>`).join('')||'<p class="text-sm text-mute card p-4">No briefs yet. Post the first one.</p>'}</div>`;
+}
+function applyBrief(id){if(!me){toast('Sign in to apply.');openAuth('signin');return}const b=BR.find(x=>x.id===id);openChat(b.created_by,`Hi, I'd like to apply for your brief "${b.title}".`)}
+function openBrief(){if(!me){toast('Sign in to post a brief.');openAuth('signin');return}$('b-c').innerHTML=CATS.map(c=>`<option>${c}</option>`).join('');openM('brief')}
+async function submitBrief(e){e.preventDefault();const{error}=await db.from('briefs').insert({created_by:me.id,title:$('b-t').value,category:$('b-c').value,budget:+$('b-b').value,deadline:$('b-d').value||null,description:$('b-x').value});if(error){toast(error.message);return false}e.target.reset();closeM('brief');toast('Brief posted.');go('briefs');return false}
 
-  /* ---------- gallery / files ---------- */
-  function galleryKey() { return 'chza_gallery_' + (currentUser ? currentUser.email : 'guest'); }
-  function getGalleryFiles() {
-    try { return JSON.parse(localStorage.getItem(galleryKey()) || '[]'); } catch (e) { return []; }
-  }
-  function saveGalleryFiles(files) { localStorage.setItem(galleryKey(), JSON.stringify(files)); }
-  function galleryThumbHtml(f, removable) {
-    const media = f.type.startsWith('image/')
-      ? '<img src="' + f.data + '" class="w-full h-full object-cover"/>'
-      : '<div class="w-full h-full flex flex-col items-center justify-center gap-1 bg-[#1c1c24]"><span class="material-symbols-outlined text-primary text-[26px]">' + (f.type.startsWith('audio/') ? 'graphic_eq' : 'movie') + '</span><span class="text-[10px] text-on-surface-variant px-2 truncate w-full text-center">' + f.name + '</span></div>';
-    const removeBtn = removable ? '<button onclick="removeGalleryFile(\'' + f.id + '\')" class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 hover:bg-primary text-white flex items-center justify-center"><span class="material-symbols-outlined text-[14px]">close</span></button>' : '';
-    return '<div class="relative aspect-square rounded-xl overflow-hidden border border-[#282834] bg-[#16161b]">' + media + removeBtn + '</div>';
-  }
-  function renderGallery() {
-    const files = getGalleryFiles();
-    document.getElementById('gallery-empty').classList.toggle('hidden', files.length > 0);
-    document.getElementById('gallery-grid').innerHTML = files.map(f => galleryThumbHtml(f, true)).join('');
-  }
-  function handleFileUpload(e) {
-    if (!currentUser) { toast('Sign in to build your portfolio.'); openAuth('signin'); return; }
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
-    const existing = getGalleryFiles();
-    let remaining = files.length;
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        existing.push({ id: Date.now() + '-' + Math.random().toString(36).slice(2), name: file.name, type: file.type, data: reader.result });
-        remaining--;
-        if (remaining === 0) { saveGalleryFiles(existing); renderGallery(); toast(files.length + ' file(s) added to your gallery.'); }
-      };
-      reader.readAsDataURL(file);
-    });
-    e.target.value = '';
-  }
-  function removeGalleryFile(id) {
-    const files = getGalleryFiles().filter(f => f.id !== id);
-    saveGalleryFiles(files);
-    renderGallery();
-  }
-  function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
+/* ---------- messaging ---------- */
+async function loadMsgs(){const{data}=await db.from('messages').select('*').order('created_at').limit(500);msgs=data||[]}
+async function sendMsg(to,body){const{data,error}=await db.from('messages').insert({sender_id:me.id,recipient_id:to,body}).select().single();if(error){toast(error.message);return null}msgs.push(data);return data}
+function openChat(id,d){if(!me){toast('Sign in to send messages.');openAuth('signin');return}draft=d||'';go('chat',id)}
+function convs(){const m={};msgs.forEach(x=>{const o=x.sender_id===me.id?x.recipient_id:x.sender_id;(m[o]=m[o]||[]).push(x)});if(chatWith&&!m[chatWith])m[chatWith]=[];return Object.entries(m).sort((a,b)=>(b[1].at(-1)?.created_at||'9')>(a[1].at(-1)?.created_at||'9')?1:-1)}
+async function rChat(){
+  await who(convs().map(c=>c[0]));
+  $('main').innerHTML=head('Messages','Talk directly with clients and creatives.')+`<div class="grid md:grid-cols-[280px_1fr] gap-4 h-[calc(100dvh-11rem)] md:h-[calc(100dvh-9rem)]"><div id="clist" class="overflow-y-auto space-y-2 ${chatWith?'hidden md:block':''}"></div><div id="thread" class="card flex-col p-3 min-h-0 ${chatWith?'flex':'hidden md:flex'}"></div></div>`;
+  paintChat(true);
+}
+function paintChat(first){
+  if(!$('clist'))return;
+  $('clist').innerHTML=convs().map(([id,ms])=>{const p=P[id],u=ms.filter(x=>x.recipient_id===me.id&&!x.read_at).length;return `<button onclick="go('chat','${id}')" class="card p-3 w-full flex gap-3 items-center text-left ${id===chatWith?'!border-primary':''}"><span class="w-10 h-10 rounded-full overflow-hidden tile shrink-0">${pic(p)}</span><span class="min-w-0 flex-1"><b class="block truncate text-sm">${esc(p?.full_name||'Member')}</b><span class="block truncate text-xs text-mute">${esc(ms.at(-1)?.body||'New conversation')}</span></span>${u?`<span class="bdg !static">${u}</span>`:''}</button>`}).join('')||'<p class="text-sm text-mute">No conversations yet. Open a creative and tap Message.</p>';
+  const t=$('thread');if(!chatWith){t.innerHTML='<p class="m-auto text-sm text-mute">Select a conversation</p>';return}
+  const p=P[chatWith],th=msgs.filter(x=>x.sender_id===chatWith||x.recipient_id===chatWith),old=$('cin')?.value;
+  t.innerHTML=`<div class="flex items-center gap-3 pb-3 border-b border-line"><button class="md:hidden" onclick="go('chat')"><span class="m">arrow_back</span></button><button class="flex items-center gap-3" onclick="go('person','${chatWith}')"><span class="w-9 h-9 rounded-full overflow-hidden tile">${pic(p)}</span><b class="text-sm">${esc(p?.full_name||'Member')}</b></button></div>
+  <div id="msgs" class="flex-1 overflow-y-auto py-3 space-y-2">${th.map(x=>`<div class="flex ${x.sender_id===me.id?'justify-end':''}"><div class="max-w-[80%] px-3 py-2 rounded-2xl text-sm whitespace-pre-wrap ${x.sender_id===me.id?'bg-primary':'bg-[#24242c]'}">${esc(x.body)}<div class="text-[10px] opacity-60 mt-1">${hm(x.created_at)}</div></div></div>`).join('')||'<p class="text-sm text-mute text-center mt-6">Say hello.</p>'}</div>
+  <form onsubmit="return send(event)" class="flex gap-2 pt-2"><input id="cin" class="inp" autocomplete="off" placeholder="Write a message" value="${esc(first?draft:old||'')}"/><button class="btn">Send</button></form>`;
+  $('msgs').scrollTop=1e9;draft='';
+  if(th.some(x=>x.recipient_id===me.id&&!x.read_at)){const now=new Date().toISOString();th.forEach(x=>{if(x.recipient_id===me.id&&!x.read_at)x.read_at=now});db.from('messages').update({read_at:now}).eq('recipient_id',me.id).eq('sender_id',chatWith).is('read_at',null).then(()=>{});notifs.forEach(n=>{if(n.link==='chat:'+chatWith)n.read=true});db.from('notifications').update({read:true}).eq('user_id',me.id).eq('link','chat:'+chatWith).then(()=>{});nav();bell();paintChat()}
+}
+async function send(e){e.preventDefault();const v=$('cin').value.trim();if(!v)return false;$('cin').value='';if(await sendMsg(chatWith,v))paintChat();return false}
+async function onMsg(m){msgs.push(m);await who([m.sender_id]);nav();if(view==='chat')paintChat()}
 
-  /* ---------- notifications / profile menu ---------- */
-  function toggleNotifications() {
-    document.getElementById('profile-menu').classList.add('hidden');
-    document.getElementById('notif-panel').classList.toggle('hidden');
-  }
-  function markNotifsRead() { document.getElementById('notif-dot').classList.add('hidden'); document.getElementById('notif-panel').classList.add('hidden'); toast('All notifications marked as read.'); }
-  function toggleProfileMenu() {
-    document.getElementById('notif-panel').classList.add('hidden');
-    document.getElementById('profile-menu').classList.toggle('hidden');
-  }
+/* ---------- notifications ---------- */
+async function loadNotifs(){const{data}=await db.from('notifications').select('*').order('created_at',{ascending:false}).limit(20);notifs=data||[]}
+function bell(){const n=notifs.filter(x=>!x.read).length;$('bdg').textContent=n;$('bdg').classList.toggle('hidden',!n)}
+function toggleNp(){const el=$('np');el.classList.toggle('hidden');if(el.classList.contains('hidden'))return;
+  el.innerHTML=`<div class="flex justify-between items-center p-3 border-b border-line"><b class="text-sm">Notifications</b><button class="text-xs text-primary font-semibold" onclick="readAll()">Mark all read</button></div>`+(notifs.map(n=>`<button onclick="openN('${n.id}')" class="w-full text-left p-3 border-b border-line hover:bg-[#1d1d23] flex gap-2">${n.read?'':'<span class="w-2 h-2 mt-1.5 rounded-full bg-primary shrink-0"></span>'}<span class="min-w-0"><b class="block text-sm">${esc(n.title)}</b><span class="block text-xs text-mute truncate">${esc(n.body||'')}</span></span></button>`).join('')||'<p class="p-4 text-sm text-mute">You are all caught up.</p>')}
+function openN(id){const n=notifs.find(x=>x.id===id);if(!n.read){n.read=true;db.from('notifications').update({read:true}).eq('id',id).then(()=>{});bell()}$('np').classList.add('hidden');n.link?.startsWith('chat:')?go('chat',n.link.slice(5)):go('dashboard')}
+function readAll(){notifs.forEach(n=>n.read=true);db.from('notifications').update({read:true}).eq('user_id',me.id).eq('read',false).then(()=>{});bell();toggleNp();toggleNp()}
 
-  /* ---------- auth ---------- */
-  function renderAuthState() {
-    const out = document.getElementById('auth-area-logged-out');
-    const inn = document.getElementById('auth-area-logged-in');
-    if (currentUser) {
-      out.classList.add('hidden'); inn.classList.remove('hidden');
-      document.getElementById('profile-menu-name').textContent = currentUser.name;
-      document.getElementById('profile-menu-role').textContent = roleBadges[currentUser.role] || 'Creative';
-    } else {
-      out.classList.remove('hidden'); inn.classList.add('hidden');
-    }
-  }
-  function openAuth(tab, role) {
-    document.getElementById('auth-modal').classList.add('active');
-    if (role) pendingRole = role;
-    setAuthTab(tab || 'signin', !!role);
-  }
-  function setAuthTab(tab, roleAlreadyChosen) {
-    document.getElementById('tab-signin').classList.toggle('bg-primary', tab === 'signin');
-    document.getElementById('tab-signin').classList.toggle('text-white', tab === 'signin');
-    document.getElementById('tab-signin').classList.toggle('text-on-surface-variant', tab !== 'signin');
-    document.getElementById('tab-signup').classList.toggle('bg-primary', tab === 'signup');
-    document.getElementById('tab-signup').classList.toggle('text-white', tab === 'signup');
-    document.getElementById('tab-signup').classList.toggle('text-on-surface-variant', tab !== 'signup');
-    document.getElementById('signin-form-step').classList.toggle('hidden', tab !== 'signin');
-    document.getElementById('signup-role-step').classList.toggle('hidden', !(tab === 'signup' && !roleAlreadyChosen));
-    document.getElementById('signup-form-step').classList.toggle('hidden', !(tab === 'signup' && roleAlreadyChosen));
-    if (tab === 'signup' && roleAlreadyChosen) fillRoleLabel();
-  }
-  function pickRole(role) {
-    pendingRole = role;
-    document.querySelectorAll('[data-role-card]').forEach(c => c.classList.remove('selected'));
-    document.querySelector('[data-role-card="' + role + '"]').classList.add('selected');
-    setTimeout(() => setAuthTab('signup', true), 120);
-  }
-  function backToRoleStep() { setAuthTab('signup', false); }
-  function fillRoleLabel() { document.getElementById('signup-role-label').textContent = roleLabels[pendingRole] || 'account'; }
-  function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+/* ---------- live subscriptions ---------- */
+function live(){
+  if(chan)db.removeChannel(chan);
+  const t=(table,event,filter,fn)=>[ 'postgres_changes',{event,schema:'public',table,...(filter?{filter}:{})},fn];
+  chan=db.channel('live-'+me.id)
+   .on(...t('notifications','INSERT','user_id=eq.'+me.id,p=>{notifs.unshift(p.new);bell();toast(p.new.title)}))
+   .on(...t('messages','INSERT','recipient_id=eq.'+me.id,p=>onMsg(p.new)))
+   .on(...t('profile_views','INSERT','profile_id=eq.'+me.id,()=>['dashboard','analytics'].includes(view)&&go(view)))
+   .on(...t('bookings','*',null,()=>view==='dashboard'&&go('dashboard')))
+   .on(...t('briefs','INSERT',null,()=>view==='briefs'&&go('briefs')))
+   .subscribe();
+}
 
-  async function submitSignup(e) {
-    e.preventDefault();
-    const inputs = e.target.querySelectorAll('input');
-    const name = inputs[0].value.trim() || 'New Creative';
-    const email = inputs[1].value.trim();
-    const password = inputs[2].value;
+/* ---------- dashboard & analytics (live) ---------- */
+const since7=()=>{const d=new Date(Date.now()-6*864e5);d.setHours(0,0,0,0);return d};
+async function rDash(){
+  load('Dashboard');
+  const[v,b]=await Promise.all([db.from('profile_views').select('id',{count:'exact',head:true}).eq('profile_id',me.id).gte('created_at',since7().toISOString()),db.from('bookings').select('*').order('created_at',{ascending:false}).limit(50)]);
+  const bs=b.data||[];await who(bs.flatMap(x=>[x.client_id,x.artist_id]));
+  const esc$=bs.filter(x=>x.payment_status==='escrow_held').reduce((a,x)=>a+Number(x.escrow_deposit),0);
+  const card=(l,n)=>`<div class="card p-4"><span class="text-xs text-mute">${l}</span><div class="text-2xl font-bold mt-1">${n}</div></div>`;
+  $('main').innerHTML=head('Dashboard','Welcome back, '+esc(me.full_name.split(' ')[0])+'. Updates live.')+
+  `<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">${card('Profile views (7d)',v.count||0)}${card('Bookings',bs.length)}${card('In escrow',R(esc$))}${card('Unread messages',uMsg())}</div>
+  <h3 class="font-bold mb-3">Recent bookings</h3><div class="grid gap-2">${bs.slice(0,6).map(x=>{const o=P[x.client_id===me.id?x.artist_id:x.client_id];return `<div class="card p-3 flex justify-between gap-3 text-sm"><span class="truncate">${x.client_id===me.id?'To':'From'} ${esc(o?.full_name||'Member')}</span><span class="text-mute shrink-0">${R(x.escrow_deposit)} · ${esc(x.payment_status.replace('_',' '))}</span></div>`}).join('')||'<p class="text-sm text-mute card p-4">No bookings yet. Book a creative to get started.</p>'}</div>`;
+}
+async function rAna(){
+  load('Analytics');const s=since7(),{data}=await db.from('profile_views').select('created_at,viewer_id').eq('profile_id',me.id).gte('created_at',s.toISOString());
+  const rows=data||[],days=[...Array(7)].map((_,i)=>{const d=new Date(s.getTime()+i*864e5);return{k:d.toLocaleDateString('en-CA'),l:d.toLocaleDateString('en-ZA',{weekday:'short'}),n:0}});
+  rows.forEach(r=>{const d=days.find(x=>x.k===new Date(r.created_at).toLocaleDateString('en-CA'));if(d)d.n++});
+  await who(rows.map(r=>r.viewer_id));const by={};rows.forEach(r=>{const k=r.viewer_id?(ROLES[P[r.viewer_id]?.role]?.[0]||'Member'):'Visitors (not signed in)';by[k]=(by[k]||0)+1});
+  const mx=Math.max(1,...days.map(d=>d.n));
+  $('main').innerHTML=head('Analytics','Who is looking at your profile. Updates live.')+
+  `<div class="card p-5"><b>${rows.length} profile views, last 7 days</b><div class="flex items-end gap-2 h-44 mt-5">${days.map(d=>`<div class="flex-1 flex flex-col items-center gap-2 justify-end h-full"><span class="text-[10px] text-mute">${d.n}</span><div class="w-full bg-primary rounded-t" style="height:${Math.max(d.n/mx*100,2)}%"></div><span class="text-[10px] text-mute">${d.l}</span></div>`).join('')}</div></div>
+  <div class="card p-4 mt-4"><b>Who viewed</b><div class="mt-2 space-y-1 text-sm text-mute">${Object.entries(by).map(([k,v])=>`<div class="flex justify-between"><span>${esc(k)}</span><span class="text-white">${v}</span></div>`).join('')||'No views yet. Share your profile to get started.'}</div></div>`;
+}
 
-    if (supabaseReady && supa) {
-      const { data, error } = await supa.auth.signUp({
-        email, password,
-        options: { data: { full_name: name, role: pendingRole } }
-      });
-      if (error) { toast('Sign up failed: ' + error.message); return false; }
-      await supa.from('profiles').upsert({ id: data.user.id, full_name: name, role: pendingRole, email: email });
-      currentUser = { name: name, email: email, role: pendingRole, id: data.user.id };
-    } else {
-      currentUser = { name: name, email: email, role: pendingRole };
-    }
-    localStorage.setItem('chza_user', JSON.stringify(currentUser));
-    renderAuthState();
-    closeModal('auth-modal');
-    e.target.reset();
-    toast(supabaseReady ? 'Account created — check your email to confirm.' : 'Welcome to Creative Hub ZA, ' + name.split(' ')[0] + '! (demo mode — add Supabase keys for real accounts)');
-    navigate(pendingRole === 'artist' ? 'portfolio' : 'home');
-    return false;
-  }
-  async function submitSignin(e) {
-    e.preventDefault();
-    const inputs = e.target.querySelectorAll('input');
-    const email = inputs[0].value.trim();
-    const password = inputs[1].value;
+/* ---------- own profile ---------- */
+const catChips=id=>{$(id).innerHTML=CATS.map(c=>`<button type="button" class="chip ${sel.includes(c)?'on':''}" onclick="tg('${c}','${id}')">${c}</button>`).join('')};
+function tg(c,id){sel=sel.includes(c)?sel.filter(x=>x!==c):[...sel,c];catChips(id)}
+async function rProfile(){
+  sel=[...(me.categories||[])];
+  $('main').innerHTML=head('Profile','What visitors see. Changes appear on the home wall instantly.')+
+  `<div class="card p-5 space-y-4 max-w-xl"><label class="flex items-center gap-4 cursor-pointer"><span class="w-20 h-20 rounded-full overflow-hidden tile">${pic(me)}</span><span class="text-sm"><b>Profile photo</b><br/><span class="text-primary font-semibold">Change photo</span></span><input type="file" accept="image/*" class="hidden" onchange="changePhoto(this)"/></label>
+  <input id="pf-n" class="inp" value="${esc(me.full_name)}" placeholder="Name"/>
+  <select id="pf-m" class="inp">${CITIES.map(c=>`<option ${c===me.metro?'selected':''}>${c}</option>`).join('')}</select>
+  ${me.role==='artist'?`<input id="pf-c" class="inp" value="${esc(me.craft||'')}" placeholder="What you do"/><div><p class="text-xs text-mute mb-2">Categories your work falls under</p><div id="cats-pf" class="flex flex-wrap gap-2"></div></div>`:''}
+  <textarea id="pf-b" rows="4" class="inp" placeholder="Tell clients about you">${esc(me.bio||'')}</textarea>
+  <button class="btn" onclick="saveProfile()">Save changes</button></div>`;
+  if(me.role==='artist')catChips('cats-pf');
+}
+async function saveProfile(){
+  const u={full_name:$('pf-n').value.trim()||me.full_name,metro:$('pf-m').value,bio:$('pf-b').value};
+  if(me.role==='artist'){u.craft=$('pf-c').value.trim();u.categories=sel}
+  const{error}=await db.from('profiles').update(u).eq('id',me.id);if(error){toast(error.message);return}
+  Object.assign(me,u);P[me.id]=me;renderWho();loadPeople();toast('Profile saved.');
+}
+async function changePhoto(el){if(!el.files[0])return;await upAvatar(await shrink(el.files[0],500));renderWho();rProfile();toast('Photo updated.')}
+async function upAvatar(d){
+  const blob=await(await fetch(d)).blob(),{error}=await db.storage.from('avatars').upload(me.id+'.jpg',blob,{upsert:true,contentType:'image/jpeg'});
+  if(error){toast(error.message);return}
+  const url=db.storage.from('avatars').getPublicUrl(me.id+'.jpg').data.publicUrl+'?v='+Date.now();
+  await db.from('profiles').update({avatar_url:url}).eq('id',me.id);me.avatar_url=url;P[me.id]=me;loadPeople();
+}
+function shrink(f,max){return new Promise(r=>{const i=new Image,u=URL.createObjectURL(f);i.onload=()=>{const s=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.82))};i.src=u})}
 
-    if (supabaseReady && supa) {
-      const { data, error } = await supa.auth.signInWithPassword({ email, password });
-      if (error) { toast('Sign in failed: ' + error.message); return false; }
-      const { data: profile } = await supa.from('profiles').select('*').eq('id', data.user.id).single();
-      currentUser = { name: (profile && profile.full_name) || email.split('@')[0], email: email, role: (profile && profile.role) || 'artist', id: data.user.id };
-    } else {
-      const namePart = email.split('@')[0] || 'Creative';
-      currentUser = currentUser && currentUser.email === email ? currentUser : { name: namePart.charAt(0).toUpperCase() + namePart.slice(1), email: email, role: (currentUser && currentUser.role) || 'artist' };
-    }
-    localStorage.setItem('chza_user', JSON.stringify(currentUser));
-    renderAuthState();
-    closeModal('auth-modal');
-    e.target.reset();
-    toast('Welcome back, ' + currentUser.name.split(' ')[0] + '!');
-    return false;
-  }
-  async function signOut() {
-    if (supabaseReady && supa) { await supa.auth.signOut(); }
-    currentUser = null;
-    localStorage.removeItem('chza_user');
-    renderAuthState();
-    document.getElementById('profile-menu').classList.add('hidden');
-    toast('You have been signed out.');
-    navigate('home');
-  }
+/* ---------- auth ---------- */
+function openAuth(t){
+  if(!db){toast('Add your Supabase keys to CONFIG in index.html first.');return}
+  if(t==='signup'){closeM('auth');openOnboard();return}
+  openM('auth');$('auth-h').textContent='Welcome back';
+}
+async function boot(u){
+  const{data}=await db.from('profiles').select('*').eq('id',u.id).single();if(!data)return false;
+  me=data;P[me.id]=me;await Promise.all([loadMsgs(),loadNotifs()]);live();renderWho();return true;
+}
+async function signin(e){
+  e.preventDefault();const{data,error}=await db.auth.signInWithPassword({email:$('si-e').value.trim(),password:$('si-p').value});
+  if(error){toast(error.message);return false}
+  await boot(data.user);e.target.reset();closeM('auth');toast('Welcome back, '+me.full_name.split(' ')[0]+'.');if(me.role==='artist'&&!me.avatar_url){openOnboard();return false}enterApp('dashboard');return false;
+}
+async function signOut(){await db.auth.signOut();if(chan)db.removeChannel(chan);me=null;msgs=[];notifs=[];renderWho();showWelcome();toast('Signed out.')}
 
-  /* ---------- booking modal ---------- */
-  function openBooking(name, subtitle, cta) {
-    if (!currentUser) { toast('Sign in to send a booking request.'); openAuth('signin'); return; }
-    bookingTarget = name;
-    applyBriefId = '';
-    document.getElementById('booking-title').textContent = name;
-    document.getElementById('booking-subtitle').textContent = subtitle;
-    document.getElementById('booking-submit-btn').textContent = cta;
-    document.getElementById('booking-budget-input').value = '';
-    document.getElementById('booking-deposit-amount').textContent = 'R0';
-    document.getElementById('booking-modal').classList.add('active');
-  }
-  function updateDeposit() {
-    const budget = parseFloat(document.getElementById('booking-budget-input').value) || 0;
-    document.getElementById('booking-deposit-amount').textContent = 'R' + Math.round(budget * 0.25).toLocaleString();
-  }
-  function submitBooking(e) {
-    e.preventDefault();
-    const budget = parseFloat(document.getElementById('booking-budget-input').value) || 0;
-    const deposit = Math.round(budget * 0.25);
+/* ---------- booking & escrow ---------- */
+function openBooking(id){if(!me){toast('Sign in to book.');openAuth('signin');return}bk={id,name:P[id]?.full_name||'creative'};$('book-h').textContent='Book '+bk.name;$('bk-b').value='';$('book-d').textContent='R0';openM('book')}
+const depOf=()=>Math.round((parseFloat($('bk-b').value)||0)*.25);
+function dep(){$('book-d').textContent=R(depOf())}
+async function submitBooking(e){
+  e.preventDefault();const b=parseFloat($('bk-b').value)||0,d=depOf(),date=$('bk-d').value;
+  const body=`Booking request${date?' for '+date:''}${b?' · budget '+R(b):''}\n${$('bk-n').value}`;
+  if(!b){closeM('book');if(await sendMsg(bk.id,body)){toast('Message sent.');openChat(bk.id)}return false}
+  if(!yoco){toast('Card payments are not set up yet. Add your Yoco public key.');return false}
+  closeM('book');
+  yoco.showPopup({amountInCents:d*100,currency:'ZAR',name:'Creative Hub ZA',description:'Escrow deposit — '+bk.name,callback:async r=>{
+    if(r.error){toast('Payment cancelled: '+r.error.message);return}
+    try{const{data:{session}}=await db.auth.getSession();
+      const res=await fetch(C.API+'/api/checkout/yoco',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token},body:JSON.stringify({token:r.id,budget:b,artistId:bk.id})});
+      const j=await res.json().catch(()=>({}));
+      if(j.success){await sendMsg(bk.id,body);toast(R(d)+' held in escrow.');go('dashboard')}else toast(j.message||'Payment failed.');
+    }catch(x){toast('Could not reach the payment server. Check API in CONFIG.')}}});
+  return false;
+}
 
-    if (applyBriefId) {
-      const apps = getApplications();
-      apps.push({ briefId: applyBriefId, applicant: currentUser.email, name: currentUser.name });
-      localStorage.setItem('chza_applications', JSON.stringify(apps));
-      renderBriefs();
-      closeModal('booking-modal');
-      e.target.reset();
-      toast('Application sent for "' + bookingTarget + '".');
-      applyBriefId = '';
-      return false;
-    }
+/* ---------- onboarding ---------- */
+const REF=((new URLSearchParams(location.search).get('ref')||'').match(/^[0-9a-f-]{36}$/i)||[null])[0];
+const okUrl=u=>/^https?:\/\//i.test(u);
+const lnk=u=>{let h=u;try{h=new URL(u).hostname.replace('www.','')}catch(e){}const ic=/spotify/.test(h)?'headphones':/youtu/.test(h)?'play_circle':'link';return `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer" class="chip !text-white inline-flex items-center gap-1"><span class="m !text-base">${ic}</span>${esc(h)}</a>`};
+function portfolio(p){const l=(p.portfolio_links||[]).filter(okUrl),i=p.portfolio_images||[];return(l.length?`<div class="flex flex-wrap gap-2 mt-4">${l.map(lnk).join('')}</div>`:'')+(i.length?`<div class="grid grid-cols-3 gap-2 mt-4">${i.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer" class="tile aspect-square rounded-lg"><img src="${esc(u)}" loading="lazy" alt=""/></a>`).join('')}</div>`:'')}
+let ob={};
+const closeOb=()=>closeM('ob');
+function openOnboard(){
+  if(!db){toast('Add your Supabase keys to CONFIG in index.html first.');return}
+  ob=me?{step:me.role!=='artist'||me.portfolio_links?.length||me.portfolio_images?.length?3:2,role:me.role}:{step:1,role:'artist'};
+  Object.assign(ob,{cats:[...(me?.categories||[])],links:[''],imgs:[],photo:null,craft:me?.craft||''});
+  $('ob-bg').innerHTML=[...people.filter(p=>p.avatar_url),...people.filter(p=>!p.avatar_url)].slice(0,9).map(p=>`<div class="tile">${pic(p)}</div>`).join('');
+  openM('ob');obPaint();
+}
+function obPaint(){
+  const art=ob.role==='artist',tot=art?4:3,n=art||ob.step<3?ob.step:ob.step-1;
+  $('ob-bar').style.width=n/tot*100+'%';$('ob-step').textContent=`Step ${n} of ${tot}`;
+  $('ob-body').innerHTML=`<div class="up">${[0,ob1h,ob2h,ob3h,ob4h][ob.step]()}</div>`;
+  if(ob.step===1)obRoles();
+}
+/* step 1: who you are */
+const ob1h=()=>`<h2 class="font-display text-3xl font-bold">Let's get you on the wall.</h2><p class="text-mute text-sm mt-2">Two minutes, then explore everyone on the platform.</p>
+<p class="text-xs text-mute mt-6 mb-2">I am a…</p><div id="ob-roles" class="grid grid-cols-2 gap-2"></div>
+<form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><input id="ob-p" class="inp" type="password" minlength="6" placeholder="Password (6+ characters)" required/><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select><button class="btn w-full">Continue</button></form>
+<p class="text-xs text-mute text-center mt-4">Already onboarded? <button class="text-primary font-semibold" onclick="closeOb();openAuth('signin')">Sign in</button></p>`;
+function obRoles(){$('ob-roles').innerHTML=Object.entries(ROLES).map(([k,v])=>`<button type="button" onclick="ob.role='${k}';obRoles()" class="text-left p-3 rounded-xl border text-sm ${k===ob.role?'border-primary bg-primary/10':'border-line'}"><span class="m text-primary">${v[1]}</span><br/><b>${v[0]}</b></button>`).join('')}
+async function ob1(e){
+  e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;b.textContent='Creating your account…';
+  const{data,error}=await db.auth.signUp({email:$('ob-e').value.trim(),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF}}});
+  if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return false}
+  if(!data.session){$('ob-body').innerHTML='<div class="up"><span class="m text-primary !text-4xl">mail</span><h2 class="font-display text-3xl font-bold mt-3">Check your email</h2><p class="text-mute text-sm mt-2">Tap the confirmation link we sent you, then sign in and we will pick up right where you left off.</p></div>';return false}
+  await boot(data.user);ob.step=ob.role==='artist'?2:3;obPaint();return false;
+}
+/* step 2: portfolio (artists) */
+const ob2h=()=>`<h2 class="font-display text-3xl font-bold">Show us your work.</h2><p class="text-mute text-sm mt-2">Clients book what they can see. Share a link, upload pictures, or both.</p>
+<input class="inp mt-6" placeholder="What you do (e.g. Amapiano producer)" value="${esc(ob.craft)}" oninput="ob.craft=this.value"/>
+<p class="text-xs text-mute mt-5 mb-2">Categories (pick all that fit)</p><div class="flex flex-wrap gap-2">${CATS.map(c=>`<button type="button" class="chip ${ob.cats.includes(c)?'on':''}" onclick="obCat('${c}')">${c}</button>`).join('')}</div>
+<p class="text-xs text-mute mt-5 mb-2">Links: Spotify, YouTube, Instagram, anything</p>${ob.links.map((l,i)=>`<input class="inp mb-2" placeholder="https://" value="${esc(l)}" oninput="ob.links[${i}]=this.value"/>`).join('')}${ob.links.length<3?`<button type="button" class="text-xs text-primary font-semibold" onclick="ob.links.push('');obPaint()">+ Add another link</button>`:''}
+<p class="text-xs text-mute mt-5 mb-2">Or upload pictures of your work (up to 6)</p><div class="grid grid-cols-3 gap-2">${ob.imgs.map((d,i)=>`<div class="tile aspect-square rounded-lg"><img src="${d}"/><button type="button" class="absolute top-1 right-1 bg-black/70 rounded-full w-6 h-6" onclick="ob.imgs.splice(${i},1);obPaint()"><span class="m !text-sm">close</span></button></div>`).join('')}${ob.imgs.length<6?`<label class="aspect-square rounded-lg border border-dashed border-[#44444f] flex flex-col items-center justify-center text-mute cursor-pointer hover:border-primary"><span class="m">add_photo_alternate</span><span class="text-[11px]">Add</span><input type="file" accept="image/*" multiple class="hidden" onchange="obImgs(this)"/></label>`:''}</div>
+<button id="ob2b" class="btn w-full mt-6" onclick="ob2()">Continue</button>`;
+function obCat(c){ob.cats=ob.cats.includes(c)?ob.cats.filter(x=>x!==c):[...ob.cats,c];obPaint()}
+async function obImgs(el){for(const f of [...el.files].slice(0,6-ob.imgs.length))ob.imgs.push(await shrink(f,900));obPaint()}
+async function ob2(){
+  const links=ob.links.map(l=>l.trim()).filter(Boolean).map(l=>okUrl(l)?l:'https://'+l);
+  if(!ob.craft.trim()||!ob.cats.length)return toast('Tell us what you do and pick a category.');
+  if(!links.length&&!ob.imgs.length)return toast('Add a link or at least one picture.');
+  const b=$('ob2b');b.disabled=true;b.textContent='Saving your portfolio…';const urls=[];
+  for(const[i,d]of ob.imgs.entries()){const path=`${me.id}/${Date.now()}-${i}.jpg`,{error}=await db.storage.from('portfolio').upload(path,await(await fetch(d)).blob(),{contentType:'image/jpeg'});if(!error)urls.push(db.storage.from('portfolio').getPublicUrl(path).data.publicUrl)}
+  const u={craft:ob.craft.trim(),categories:ob.cats,portfolio_links:links,portfolio_images:urls},{error}=await db.from('profiles').update(u).eq('id',me.id);
+  if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return}
+  Object.assign(me,u);P[me.id]=me;ob.step=3;obPaint();
+}
+/* step 3: photo with live wall preview */
+const ob3h=()=>{
+  const art=ob.role==='artist',cells=people.filter(p=>p.id!==me.id&&p.avatar_url).slice(0,5).map(p=>`<div class="tile aspect-square">${pic(p)}</div>`);
+  while(cells.length<5)cells.push('<div class="tile aspect-square"><div class="ph !text-white/20"><span class="m">add</span></div></div>');
+  cells.splice(1,0,`<div class="tile aspect-square ring-2 ring-primary ring-inset">${ob.photo?`<img src="${ob.photo}"/>`:pic(me)}<span class="absolute bottom-1 left-1 text-[10px] font-bold bg-primary rounded px-1">You</span></div>`);
+  return `<h2 class="font-display text-3xl font-bold">${art?'Now, your face.':'Add your logo or photo.'}</h2><p class="text-mute text-sm mt-2">${art?'This puts you on our welcome wall. Tap your tile and visitors land on your profile.':'Optional, but profiles with a picture get more replies.'}</p>
+<div class="grid grid-cols-3 rounded-xl overflow-hidden mt-6">${cells.join('')}</div>
+<label class="btn2 w-full mt-4 flex items-center justify-center gap-2 cursor-pointer"><span class="m">add_a_photo</span>${ob.photo?'Choose a different photo':'Upload a photo'}<input type="file" accept="image/*" class="hidden" onchange="obPhoto(this)"/></label>
+<button class="btn w-full mt-3" onclick="ob3()">${ob.photo?'Put me on the wall':'Continue'}</button><button class="text-xs text-mute w-full mt-3" onclick="ob.step=4;obPaint()">Skip for now</button>`};
+async function obPhoto(el){if(el.files[0]){ob.photo=await shrink(el.files[0],500);obPaint()}}
+async function ob3(){
+  if(!ob.photo){if(ob.role==='artist')return toast('Add a photo to join the wall, or skip for now.');ob.step=4;return obPaint()}
+  await upAvatar(ob.photo);renderWho();ob.step=4;obPaint();
+}
+/* step 4: tell a creative to tell a creative */
+const inv=()=>location.href.split('?')[0].split('#')[0]+'?ref='+me.id;
+const ob4h=()=>`<div class="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center"><span class="m text-primary !text-4xl">check_circle</span></div><h2 class="font-display text-3xl font-bold mt-4">You're in, ${esc(me.full_name.split(' ')[0])}.</h2>
+<p class="text-mute text-sm mt-2">${me.avatar_url?'Your face is on the wall.':'Your profile is live.'} Now tell a creative to tell a creative: the more of us here, the more work comes in.</p>
+<div class="card p-4 mt-6"><p class="text-xs text-mute">Your personal invite link</p><p class="text-sm break-all mt-1">${esc(inv())}</p><div class="grid grid-cols-2 gap-2 mt-3"><a class="btn text-center" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Join me on Creative Hub ZA, where South Africans book local creatives directly: '+inv())}">WhatsApp</a><button class="btn2" onclick="navigator.clipboard.writeText(inv()).then(()=>toast('Link copied.'))">Copy link</button></div></div>
+<button class="btn w-full mt-6" onclick="finishOb()">Explore the platform</button><button class="text-xs text-mute w-full mt-3" onclick="closeOb();enterApp('profile')">View my profile</button>`;
+function finishOb(){closeOb();enterApp('discover');toast('Welcome. See who else is here.')}
 
-    closeModal('booking-modal');
-    e.target.reset();
-
-    if (deposit > 0 && yocoReady && yoco) {
-      payDepositWithYoco(deposit, bookingTarget);
-    } else if (deposit > 0) {
-      toast('Deposit of R' + deposit.toLocaleString() + ' authorized (demo mode — add Yoco keys to take real payments). Request sent to ' + bookingTarget + '.');
-    } else {
-      toast('Request sent to ' + bookingTarget + '. They typically reply within 24 hours.');
-    }
-    return false;
-  }
-
-  /* ---------- Yoco escrow deposit payment ---------- */
-  function payDepositWithYoco(depositAmountZar, target) {
-    yoco.showPopup({
-      amountInCents: Math.round(depositAmountZar * 100),
-      currency: 'ZAR',
-      name: 'Creative Hub ZA',
-      description: 'Escrow deposit — ' + target,
-      callback: async function (result) {
-        if (result.error) { toast('Payment cancelled: ' + result.error.message); return; }
-        try {
-          const res = await fetch(CONFIG.API_BASE_URL + '/api/checkout/yoco', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: result.id, amountInCents: Math.round(depositAmountZar * 100), currency: 'ZAR', target: target })
-          });
-          const data = await res.json();
-          toast(data.success ? 'Deposit of R' + depositAmountZar.toLocaleString() + ' held in escrow. Request sent to ' + target + '.' : 'Payment failed: ' + (data.message || 'unknown error'));
-        } catch (err) {
-          toast('Payment captured by Yoco, but could not reach the backend to confirm escrow. Check API_BASE_URL in CONFIG.');
-        }
-      }
-    });
-  }
-
-  /* ---------- brief modal ---------- */
-  function openBriefModal() {
-    if (!currentUser) { toast('Sign in to post a gig or brief.'); openAuth('signin'); return; }
-    document.getElementById('brief-modal').classList.add('active');
-  }
-  function submitBrief(e) {
-    e.preventDefault();
-    const f = e.target;
-    const brief = {
-      id: 'b' + Date.now(),
-      title: f.querySelector('input[type="text"]').value.trim(),
-      category: f.querySelector('select').value,
-      budget: f.querySelectorAll('input[type="text"]')[1].value.trim() || 'Not specified',
-      deadline: f.querySelectorAll('input')[2].value || 'Flexible',
-      description: f.querySelector('textarea').value.trim(),
-      postedBy: currentUser.name
-    };
-    const briefs = getBriefs();
-    briefs.unshift(brief);
-    saveBriefs(briefs);
-    closeModal('brief-modal');
-    f.reset();
-    toast('Brief posted! Verified creatives will start applying shortly.');
-    renderBriefs();
-    return false;
-  }
-
-  /* ---------- briefs board ---------- */
-  function getBriefs() {
-    try {
-      const raw = localStorage.getItem('chza_briefs');
-      if (raw) return JSON.parse(raw);
-    } catch (e) {}
-    const seed = [
-      { id: 'seed1', title: 'Album cover art — Amapiano EP', category: 'Fine Art Commission', budget: 'R6,000', deadline: 'Flexible', description: 'Looking for a bold, Afrofuturist cover for a 6-track EP.', postedBy: 'Kasi Sounds Records' },
-      { id: 'seed2', title: 'Guest tattoo residency — August', category: 'Tattoo Residency', budget: 'R3,500/day', deadline: 'Flexible', description: 'One-week guest spot, fine-line specialists preferred.', postedBy: 'Salon Tattoo Collective' },
-      { id: 'seed3', title: '3 radio jingles — 15 sec each', category: 'Music Production', budget: 'R4,500', deadline: 'Flexible', description: 'Upbeat, local-language jingles for drive-time slots.', postedBy: 'Vibe FM' }
-    ];
-    saveBriefs(seed);
-    return seed;
-  }
-  function saveBriefs(briefs) { localStorage.setItem('chza_briefs', JSON.stringify(briefs)); }
-  function getApplications() {
-    try { return JSON.parse(localStorage.getItem('chza_applications') || '[]'); } catch (e) { return []; }
-  }
-  function hasApplied(briefId) {
-    if (!currentUser) return false;
-    return getApplications().some(a => a.briefId === briefId && a.applicant === currentUser.email);
-  }
-  function renderBriefs() {
-    const briefs = getBriefs();
-    document.getElementById('briefs-list').innerHTML = briefs.map(b => {
-      const applied = hasApplied(b.id);
-      return '<div class="rounded-2xl bg-[#16161b] border border-[#282834] p-5 flex flex-col justify-between">' +
-        '<div>' +
-        '<div class="flex items-start justify-between gap-2 mb-2"><h3 class="text-white font-bold text-base">' + escapeHtml(b.title) + '</h3><span class="shrink-0 px-2 py-0.5 rounded bg-[#22222c] border border-[#31313e] text-[10px] font-semibold text-on-surface-variant uppercase">' + escapeHtml(b.category) + '</span></div>' +
-        '<p class="text-xs text-on-surface-variant mb-3">' + escapeHtml(b.description) + '</p>' +
-        '<div class="flex items-center justify-between text-xs text-on-surface-variant mb-4"><span>Budget: <strong class="text-white">' + escapeHtml(b.budget) + '</strong></span><span>' + escapeHtml(b.postedBy) + '</span></div>' +
-        '</div>' +
-        (applied
-          ? '<button disabled class="w-full py-2.5 rounded-lg bg-[#1c1c24] text-on-surface-variant text-xs font-semibold border border-[#282834] cursor-default">Applied ✓</button>'
-          : '<button class="w-full py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-semibold shadow-sm transition-all" onclick="openApply(\'' + b.id + '\',\'' + escapeAttr(b.title) + '\')">Apply</button>') +
-        '</div>';
-    }).join('');
-  }
-  function escapeHtml(s) { return (s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-  function escapeAttr(s) { return escapeHtml(s).replace(/'/g, "\\'"); }
-
-  function openApply(briefId, title) {
-    if (!currentUser) { toast('Sign in to apply for briefs.'); openAuth('signin'); return; }
-    openBooking(title, 'Apply for this brief', 'Send Application');
-    applyBriefId = briefId;
-  }
-
-  /* ---------- discover feed filters ---------- */
-  let activeCategory = 'all';
-  function setActiveCatButton(cat) {
-    document.querySelectorAll('.cat-btn').forEach(b => {
-      const isActive = b.dataset.cat === cat;
-      b.classList.toggle('bg-primary', isActive);
-      b.classList.toggle('text-white', isActive);
-      b.classList.toggle('shadow-md', isActive);
-      b.classList.toggle('shadow-primary/20', isActive);
-      b.classList.toggle('bg-[#18181f]', !isActive);
-      b.classList.toggle('text-on-surface-variant', !isActive);
-      b.classList.toggle('border', !isActive);
-      b.classList.toggle('border-[#292934]', !isActive);
-    });
-  }
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.cat-btn');
-    if (btn) { activeCategory = btn.dataset.cat; setActiveCatButton(activeCategory); applyFilters(); }
-  });
-  function applyFilters() {
-    const term = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
-    const availableOnly = document.getElementById('filter-available')?.checked;
-    const stemsOnly = document.getElementById('filter-stems')?.checked;
-    let visibleCount = 0;
-    document.querySelectorAll('.creative-card').forEach(card => {
-      const matchesCat = activeCategory === 'all' || card.dataset.category === activeCategory;
-      const matchesTerm = !term || card.dataset.name.includes(term);
-      const matchesAvailable = !availableOnly || card.dataset.available === 'true';
-      const matchesStems = !stemsOnly || card.dataset.stems === 'true';
-      const show = matchesCat && matchesTerm && matchesAvailable && matchesStems;
-      card.classList.toggle('hidden', !show);
-      if (show) visibleCount++;
-    });
-    document.getElementById('no-results').classList.toggle('hidden', visibleCount > 0);
-  }
-
-  /* ---------- studios expand ---------- */
-  let studiosExpanded = false;
-  function toggleStudios() {
-    studiosExpanded = !studiosExpanded;
-    document.querySelectorAll('.extra-studio').forEach(el => el.classList.toggle('hidden', !studiosExpanded));
-    document.getElementById('expand-studios-btn').querySelector('span').textContent = studiosExpanded ? 'Show Fewer Spaces' : 'Explore All 42 Spaces';
-  }
-
-  /* ---------- inline track preview (no persistent dock) ---------- */
-  let trackIntervals = new WeakMap();
-  function toggleTrackPlay(btn) {
-    const icon = btn.querySelector('.material-symbols-outlined');
-    const bar = btn.closest('.flex.items-center.gap-3')?.querySelector('.track-bar');
-    const playing = icon.textContent === 'pause';
-    document.querySelectorAll('.track-play-btn').forEach(b => {
-      if (b !== btn && trackIntervals.get(b)) { clearInterval(trackIntervals.get(b)); trackIntervals.delete(b); b.querySelector('.material-symbols-outlined').textContent = 'play_arrow'; }
-    });
-    if (playing) {
-      icon.textContent = 'play_arrow';
-      clearInterval(trackIntervals.get(btn));
-      trackIntervals.delete(btn);
-    } else {
-      icon.textContent = 'pause';
-      let w = parseFloat(bar.style.width) || (bar.classList.contains('w-2/5') ? 40 : 0);
-      bar.classList.remove('w-2/5', 'w-0');
-      bar.style.width = w + '%';
-      const iv = setInterval(() => {
-        w = Math.min(w + 2, 100);
-        bar.style.width = w + '%';
-        if (w >= 100) { clearInterval(iv); trackIntervals.delete(btn); icon.textContent = 'play_arrow'; }
-      }, 300);
-      trackIntervals.set(btn, iv);
-    }
-  }
+/* ---------- init ---------- */
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});
+(async()=>{renderWho();await loadPeople();if(!db)return;const{data:{session}}=await db.auth.getSession();if(session)await boot(session.user);if(REF&&!me)openOnboard()})();
 </script>
 </body>
 </html>
