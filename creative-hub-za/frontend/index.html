@@ -3,12 +3,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Creative Hub ZA — South Africa's Local Creative Network</title>
+<title>Creative Hub ZA | Creatives, all in one home</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{bg:'#0e0e11',card:'#16161b',line:'#26262f',mute:'#a19fa9',primary:'#C4293D'},fontFamily:{sans:['Manrope','sans-serif'],display:['Playfair Display','serif']}}}}</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://js.yoco.com/sdk/v1/yoco.js"></script>
 <style>
 body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 .m{font-family:'Material Symbols Outlined';font-size:20px;line-height:1;vertical-align:middle}
@@ -45,8 +44,8 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
     <div id="w-btns" class="flex gap-2"></div>
   </header>
   <div class="absolute inset-x-0 bottom-0 px-5 md:px-10 pb-[max(2rem,env(safe-area-inset-bottom))] pointer-events-none">
-    <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] max-w-3xl">Book local talent, <br class="hidden md:block"/>straight from the source.</h1>
-    <p class="text-white/80 mt-4 max-w-lg">Creatives, all in one home</p>
+    <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] max-w-3xl">Creatives, <br class="hidden md:block"/>all in one home.</h1>
+    <p class="text-white/80 mt-4 max-w-lg">Musicians, tattooists, photographers, painters and 3D artists across South Africa, under one roof. Tap a face, see the work, book direct.</p>
     <div class="flex gap-3 mt-6 pointer-events-auto"><button class="btn" onclick="me?enterApp('dashboard'):openOnboard()">Onboard</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('discover')">Explore creatives</button></div>
   </div>
 </section>
@@ -77,7 +76,7 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
   <div class="card w-full sm:max-w-md max-h-[92vh] overflow-y-auto p-6">
     <div class="flex justify-between items-center mb-4"><h3 id="auth-h" class="font-bold text-lg"></h3><button onclick="closeM('auth')"><span class="m">close</span></button></div>
     <form id="f-in" onsubmit="return signin(event)" class="space-y-3">
-      <input id="si-e" class="inp" type="email" placeholder="Email" required/><input id="si-p" class="inp" type="password" placeholder="Password" required/>
+      <input id="si-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="si-p" class="inp pr-11" type="password" placeholder="Password" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><button type="button" class="text-xs text-primary font-semibold" onclick="resend($('si-e').value)">Resend confirmation email</button>
       <button class="btn w-full">Sign in</button>
       <p class="text-xs text-mute text-center">New here? <button type="button" class="text-primary font-semibold" onclick="openAuth('signup')">Create an account</button></p>
     </form>
@@ -123,9 +122,8 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 
 <script>
 /* Publishable keys only. Never put a secret / service_role key here. */
-const C={URL:'https://xbqmsgufdhqfpkkelcas.supabase.co',KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo',YOCO:'YOUR_YOCO_PUBLIC_KEY',API:'http://localhost:5000'};
+const C={URL:'https://xbqmsgufdhqfpkkelcas.supabase.co',KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo',API:'http://localhost:5000'};
 const db=C.URL.startsWith('http')?supabase.createClient(C.URL,C.KEY):null;
-const yoco=C.YOCO.startsWith('pk_')&&window.YocoSDK?new YocoSDK({publicKey:C.YOCO}):null;
 const CATS=['Music','Tattoo','Photography','Fine art','3D / VFX','Film & video','Design'];
 const CITIES=['Johannesburg','Cape Town','Durban','Pretoria','Gqeberha','Bloemfontein'];
 const ROLES={artist:['Artist / Creator','brush'],label:['Record label','library_music'],radio:['Radio station','radio'],brand:['Brand / business','storefront']};
@@ -193,7 +191,7 @@ function list(){
 async function rPerson(id){
   await who([id]);const p=P[id];
   if(!p){$('main').innerHTML='<p class="text-mute">This profile could not be found.</p>';return}
-  if(!me||me.id!==id)db?.from('profile_views').insert({profile_id:id,viewer_id:me?.id||null}).then(()=>{});
+  if((!me||me.id!==id)&&viewOnce(id))db?.rpc('record_profile_view',{p_profile:id,p_visitor:vkey()}).then(()=>{});
   const mine=me?.id===id;
   $('main').innerHTML=`<button class="text-sm text-mute mb-4" onclick="go('discover')"><span class="m">arrow_back</span> Back</button>
   <div class="grid md:grid-cols-[280px_1fr] gap-6"><div class="tile aspect-square rounded-2xl">${pic(p)}</div><div>
@@ -206,7 +204,7 @@ async function rPerson(id){
 /* ---------- briefs ---------- */
 async function rBriefs(){
   load('Briefs');const{data}=await db.from('briefs').select('*').order('created_at',{ascending:false}).limit(100);BR=data||[];await who(BR.map(b=>b.created_by));
-  $('main').innerHTML=head('Briefs','Open work from local labels, stations and brands.')+`<div class="grid gap-3">${BR.map(b=>`<div class="card p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><b>${esc(b.title)}</b><p class="text-sm text-mute mt-1">${esc(b.description)}</p><p class="text-xs text-mute mt-2">${esc(P[b.created_by]?.full_name||'Member')} · ${esc(b.category)} · <span class="text-white font-semibold">${R(b.budget)}</span>${b.deadline?' · due '+esc(b.deadline):''}</p></div>${me?.id===b.created_by?'<span class="text-sm text-mute">Your brief</span>':`<button class="btn shrink-0" onclick="applyBrief('${b.id}')">Apply</button>`}</div>`).join('')||'<p class="text-sm text-mute card p-4">No briefs yet. Post the first one.</p>'}</div>`;
+  $('main').innerHTML=head('Briefs','A brief is a job post. A client describes what they need and their budget, creatives apply, and you agree the details in chat.')+`<div class="grid gap-3">${BR.map(b=>`<div class="card p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><b>${esc(b.title)}</b><p class="text-sm text-mute mt-1">${esc(b.description)}</p><p class="text-xs text-mute mt-2">${esc(P[b.created_by]?.full_name||'Member')} · ${esc(b.category)} · <span class="text-white font-semibold">${R(b.budget)}</span>${b.deadline?' · due '+esc(b.deadline):''}</p></div>${me?.id===b.created_by?'<span class="text-sm text-mute">Your brief</span>':`<button class="btn shrink-0" onclick="applyBrief('${b.id}')">Apply</button>`}</div>`).join('')||'<p class="text-sm text-mute card p-4">No briefs yet. Post the first one.</p>'}</div>`;
 }
 function applyBrief(id){if(!me){toast('Sign in to apply.');openAuth('signin');return}const b=BR.find(x=>x.id===id);openChat(b.created_by,`Hi, I'd like to apply for your brief "${b.title}".`)}
 function openBrief(){if(!me){toast('Sign in to post a brief.');openAuth('signin');return}$('b-c').innerHTML=CATS.map(c=>`<option>${c}</option>`).join('');openM('brief')}
@@ -261,7 +259,7 @@ function live(){
 const since7=()=>{const d=new Date(Date.now()-6*864e5);d.setHours(0,0,0,0);return d};
 async function rDash(){
   load('Dashboard');
-  const[v,b]=await Promise.all([db.from('profile_views').select('id',{count:'exact',head:true}).eq('profile_id',me.id).gte('created_at',since7().toISOString()),db.from('bookings').select('*').order('created_at',{ascending:false}).limit(50)]);
+  const[v,b]=await Promise.all([db.from('profile_views').select('id',{count:'exact',head:true}).eq('profile_id',me.id).gte('created_at',since7().toISOString()),db.from('bookings').select('*').neq('payment_status','pending').order('created_at',{ascending:false}).limit(50)]);
   const bs=b.data||[];await who(bs.flatMap(x=>[x.client_id,x.artist_id]));
   const esc$=bs.filter(x=>x.payment_status==='escrow_held').reduce((a,x)=>a+Number(x.escrow_deposit),0);
   const card=(l,n)=>`<div class="card p-4"><span class="text-xs text-mute">${l}</span><div class="text-2xl font-bold mt-1">${n}</div></div>`;
@@ -275,7 +273,7 @@ async function rAna(){
   rows.forEach(r=>{const d=days.find(x=>x.k===new Date(r.created_at).toLocaleDateString('en-CA'));if(d)d.n++});
   await who(rows.map(r=>r.viewer_id));const by={};rows.forEach(r=>{const k=r.viewer_id?(ROLES[P[r.viewer_id]?.role]?.[0]||'Member'):'Visitors (not signed in)';by[k]=(by[k]||0)+1});
   const mx=Math.max(1,...days.map(d=>d.n));
-  $('main').innerHTML=head('Analytics','Who is looking at your profile. Updates live.')+
+  $('main').innerHTML=head('Analytics','Who is looking at your profile. Repeat visits within 6 hours count once. Updates live.')+
   `<div class="card p-5"><b>${rows.length} profile views, last 7 days</b><div class="flex items-end gap-2 h-44 mt-5">${days.map(d=>`<div class="flex-1 flex flex-col items-center gap-2 justify-end h-full"><span class="text-[10px] text-mute">${d.n}</span><div class="w-full bg-primary rounded-t" style="height:${Math.max(d.n/mx*100,2)}%"></div><span class="text-[10px] text-mute">${d.l}</span></div>`).join('')}</div></div>
   <div class="card p-4 mt-4"><b>Who viewed</b><div class="mt-2 space-y-1 text-sm text-mute">${Object.entries(by).map(([k,v])=>`<div class="flex justify-between"><span>${esc(k)}</span><span class="text-white">${v}</span></div>`).join('')||'No views yet. Share your profile to get started.'}</div></div>`;
 }
@@ -286,12 +284,12 @@ function tg(c,id){sel=sel.includes(c)?sel.filter(x=>x!==c):[...sel,c];catChips(i
 async function rProfile(){
   sel=[...(me.categories||[])];
   $('main').innerHTML=head('Profile','What visitors see. Changes appear on the home wall instantly.')+
-  `<div class="card p-5 space-y-4 max-w-xl"><label class="flex items-center gap-4 cursor-pointer"><span class="w-20 h-20 rounded-full overflow-hidden tile">${pic(me)}</span><span class="text-sm"><b>Profile photo</b><br/><span class="text-primary font-semibold">Change photo</span></span><input type="file" accept="image/*" class="hidden" onchange="changePhoto(this)"/></label>
+  `<div class="card p-5 space-y-4 max-w-xl"><label class="flex items-center gap-4 cursor-pointer"><span class="w-20 h-20 rounded-full overflow-hidden tile">${pic(me)}</span><span class="text-sm"><b>Profile photo</b><br/><span class="btn2 !py-1.5 !px-3 mt-1 inline-block">Change photo</span></span><input type="file" accept="image/*" class="hidden" onchange="changePhoto(this)"/></label>
   <input id="pf-n" class="inp" value="${esc(me.full_name)}" placeholder="Name"/>
   <select id="pf-m" class="inp">${CITIES.map(c=>`<option ${c===me.metro?'selected':''}>${c}</option>`).join('')}</select>
   ${me.role==='artist'?`<input id="pf-c" class="inp" value="${esc(me.craft||'')}" placeholder="What you do"/><div><p class="text-xs text-mute mb-2">Categories your work falls under</p><div id="cats-pf" class="flex flex-wrap gap-2"></div></div>`:''}
   <textarea id="pf-b" rows="4" class="inp" placeholder="Tell clients about you">${esc(me.bio||'')}</textarea>
-  <button class="btn" onclick="saveProfile()">Save changes</button></div>`;
+  <button class="btn" onclick="saveProfile()">Save changes</button></div><div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
   if(me.role==='artist')catChips('cats-pf');
 }
 async function saveProfile(){
@@ -331,19 +329,16 @@ function openBooking(id){if(!me){toast('Sign in to book.');openAuth('signin');re
 const depOf=()=>Math.round((parseFloat($('bk-b').value)||0)*.25);
 function dep(){$('book-d').textContent=R(depOf())}
 async function submitBooking(e){
-  e.preventDefault();const b=parseFloat($('bk-b').value)||0,d=depOf(),date=$('bk-d').value;
-  const body=`Booking request${date?' for '+date:''}${b?' · budget '+R(b):''}\n${$('bk-n').value}`;
-  if(!b){closeM('book');if(await sendMsg(bk.id,body)){toast('Message sent.');openChat(bk.id)}return false}
-  if(!yoco){toast('Card payments are not set up yet. Add your Yoco public key.');return false}
-  closeM('book');
-  yoco.showPopup({amountInCents:d*100,currency:'ZAR',name:'Creative Hub ZA',description:'Escrow deposit — '+bk.name,callback:async r=>{
-    if(r.error){toast('Payment cancelled: '+r.error.message);return}
-    try{const{data:{session}}=await db.auth.getSession();
-      const res=await fetch(C.API+'/api/checkout/yoco',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token},body:JSON.stringify({token:r.id,budget:b,artistId:bk.id})});
-      const j=await res.json().catch(()=>({}));
-      if(j.success){await sendMsg(bk.id,body);toast(R(d)+' held in escrow.');go('dashboard')}else toast(j.message||'Payment failed.');
-    }catch(x){toast('Could not reach the payment server. Check API in CONFIG.')}}});
-  return false;
+  e.preventDefault();const b=parseFloat($('bk-b').value)||0,date=$('bk-d').value,note=$('bk-n').value.trim();
+  if(!b){closeM('book');if(await sendMsg(bk.id,`Booking request${date?' for '+date:''}\n${note}`)){toast('Message sent.');openChat(bk.id)}return false}
+  const btn=e.target.querySelector('.btn.w-full');btn.disabled=true;btn.textContent='Opening secure checkout…';
+  try{const{data:{session}}=await db.auth.getSession();
+    const res=await fetch(C.API+'/api/checkout/yoco',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token},body:JSON.stringify({budget:b,artistId:bk.id,note,date})});
+    const j=await res.json().catch(()=>({}));
+    if(j.success&&j.redirectUrl){location.href=j.redirectUrl;return false}
+    toast(j.message||'Could not start payment.');
+  }catch(x){toast('Could not reach the payment server. Check API in CONFIG.')}
+  btn.disabled=false;btn.textContent='Send request';return false;
 }
 
 /* ---------- onboarding ---------- */
@@ -369,14 +364,14 @@ function obPaint(){
 /* step 1: who you are */
 const ob1h=()=>`<h2 class="font-display text-3xl font-bold">Let's get you on the wall.</h2><p class="text-mute text-sm mt-2">Two minutes, then explore everyone on the platform.</p>
 <p class="text-xs text-mute mt-6 mb-2">I am a…</p><div id="ob-roles" class="grid grid-cols-2 gap-2"></div>
-<form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><input id="ob-p" class="inp" type="password" minlength="6" placeholder="Password (6+ characters)" required/><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select><button class="btn w-full">Continue</button></form>
+<form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="ob-p" class="inp pr-11" type="password" minlength="6" placeholder="Password (6+ characters)" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select><button class="btn w-full">Continue</button></form>
 <p class="text-xs text-mute text-center mt-4">Already onboarded? <button class="text-primary font-semibold" onclick="closeOb();openAuth('signin')">Sign in</button></p>`;
 function obRoles(){$('ob-roles').innerHTML=Object.entries(ROLES).map(([k,v])=>`<button type="button" onclick="ob.role='${k}';obRoles()" class="text-left p-3 rounded-xl border text-sm ${k===ob.role?'border-primary bg-primary/10':'border-line'}"><span class="m text-primary">${v[1]}</span><br/><b>${v[0]}</b></button>`).join('')}
 async function ob1(e){
   e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;b.textContent='Creating your account…';
-  const{data,error}=await db.auth.signUp({email:$('ob-e').value.trim(),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF}}});
+  const{data,error}=await db.auth.signUp({email:(ob.email=$('ob-e').value.trim()),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF}}});
   if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return false}
-  if(!data.session){$('ob-body').innerHTML='<div class="up"><span class="m text-primary !text-4xl">mail</span><h2 class="font-display text-3xl font-bold mt-3">Check your email</h2><p class="text-mute text-sm mt-2">Tap the confirmation link we sent you, then sign in and we will pick up right where you left off.</p></div>';return false}
+  if(!data.session){$('ob-body').innerHTML='<div class="up"><span class="m text-primary !text-4xl">mail</span><h2 class="font-display text-3xl font-bold mt-3">Check your email</h2><p class="text-mute text-sm mt-2">Tap the confirmation link we sent you, then sign in and we will pick up right where you left off.</p><button class="btn2 mt-4" onclick="resend(ob.email)">Resend email</button></div>';return false}
   await boot(data.user);ob.step=ob.role==='artist'?2:3;obPaint();return false;
 }
 /* step 2: portfolio (artists) */
@@ -420,9 +415,21 @@ const ob4h=()=>`<div class="w-16 h-16 rounded-full bg-primary/15 flex items-cent
 <button class="btn w-full mt-6" onclick="finishOb()">Explore the platform</button><button class="text-xs text-mute w-full mt-3" onclick="closeOb();enterApp('profile')">View my profile</button>`;
 function finishOb(){closeOb();enterApp('discover');toast('Welcome. See who else is here.')}
 
+function eye(b){const i=b.previousElementSibling,s=i.type==='password';i.type=s?'text':'password';b.firstChild.textContent=s?'visibility_off':'visibility'}
+async function resend(email){if(!email)return toast('Enter your email first.');const{error}=await db.auth.resend({type:'signup',email});toast(error?error.message:'Confirmation email sent. Check your inbox and spam.')}
+function viewOnce(id){try{const a=JSON.parse(sessionStorage.getItem('pv')||'[]');if(a.includes(id))return false;a.push(id);sessionStorage.setItem('pv',JSON.stringify(a))}catch(e){}return true}
+async function delAcct(){
+  if(prompt('This permanently deletes your profile, messages and photos. Type DELETE to confirm.')!=='DELETE')return;
+  const{count}=await db.from('bookings').select('id',{count:'exact',head:true}).eq('payment_status','escrow_held').or(`client_id.eq.${me.id},artist_id.eq.${me.id}`);
+  if(count)return toast('You have a booking with money held in escrow. Finish or refund it first.');
+  try{const{data:f}=await db.storage.from('portfolio').list(me.id);if(f?.length)await db.storage.from('portfolio').remove(f.map(x=>`${me.id}/${x.name}`));await db.storage.from('avatars').remove([`${me.id}.jpg`])}catch(e){}
+  const{error}=await db.rpc('delete_my_account');if(error){toast(error.message);return}
+  await signOut();toast('Your account has been deleted.');
+}
+const vkey=()=>{try{let k=localStorage.getItem('chk');if(!k){k=crypto.randomUUID();localStorage.setItem('chk',k)}return k}catch(e){return null}};
 /* ---------- init ---------- */
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});
-(async()=>{renderWho();await loadPeople();if(!db)return;const{data:{session}}=await db.auth.getSession();if(session)await boot(session.user);if(REF&&!me)openOnboard()})();
+(async()=>{renderWho();await loadPeople();if(!db)return;const{data:{session}}=await db.auth.getSession();if(session)await boot(session.user);const PAY=new URLSearchParams(location.search).get('pay');if(PAY&&me){history.replaceState(null,'',location.pathname);if(PAY==='ok'){toast('Payment received. Confirming your booking…');enterApp('dashboard')}else toast('Payment was not completed.')}if(REF&&!me)openOnboard()})();
 </script>
 </body>
 </html>
