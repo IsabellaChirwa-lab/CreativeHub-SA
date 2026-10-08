@@ -289,8 +289,8 @@ async function rProfile(){
   <select id="pf-m" class="inp">${CITIES.map(c=>`<option ${c===me.metro?'selected':''}>${c}</option>`).join('')}</select>
   ${me.role==='artist'?`<input id="pf-c" class="inp" value="${esc(me.craft||'')}" placeholder="What you do"/><div><p class="text-xs text-mute mb-2">Categories your work falls under</p><div id="cats-pf" class="flex flex-wrap gap-2"></div></div>`:''}
   <textarea id="pf-b" rows="4" class="inp" placeholder="Tell clients about you">${esc(me.bio||'')}</textarea>
-  <button class="btn" onclick="saveProfile()">Save changes</button></div><div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
-  if(me.role==='artist')catChips('cats-pf');
+  <button class="btn" onclick="saveProfile()">Save changes</button></div>${me.role==='artist'?'<div id="pf-port"></div>':''}<div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
+  if(me.role==='artist'){catChips('cats-pf');pfInit()}
 }
 async function saveProfile(){
   const u={full_name:$('pf-n').value.trim()||me.full_name,metro:$('pf-m').value,bio:$('pf-b').value};
@@ -427,6 +427,34 @@ async function delAcct(){
   await signOut();toast('Your account has been deleted.');
 }
 const vkey=()=>{try{let k=localStorage.getItem('chk');if(!k){k=crypto.randomUUID();localStorage.setItem('chk',k)}return k}catch(e){return null}};
+/* ---------- portfolio editor (Profile page) ---------- */
+let pf={};
+function pfInit(){pf={links:[...(me.portfolio_links||[])],imgs:[...(me.portfolio_images||[])],add:[],gone:[]};portPaint()}
+const ptile=(u,fn)=>`<div class="tile aspect-square rounded-lg"><img src="${esc(u)}" alt=""/><button type="button" class="absolute top-1 right-1 bg-black/70 rounded-full w-6 h-6" onclick="${fn}" aria-label="Remove picture"><span class="m !text-sm">close</span></button></div>`;
+function pfDel(i){pf.gone.push(pf.imgs[i]);pf.imgs.splice(i,1);portPaint()}
+async function pfAdd(el){for(const f of [...el.files].slice(0,6-pf.imgs.length-pf.add.length))pf.add.push(await shrink(f,900));portPaint()}
+function portPaint(){
+  const el=$('pf-port');if(!el)return;const n=pf.imgs.length+pf.add.length;
+  el.innerHTML=`<div class="card p-5 mt-4 max-w-xl"><b>Portfolio</b><p class="text-xs text-mute mt-1">What clients see on your profile: links and up to 6 pictures.</p>
+  <p class="text-xs text-mute mt-4 mb-2">Links (Spotify, YouTube, Instagram, anything)</p>
+  ${pf.links.map((l,i)=>`<div class="flex gap-2 mb-2"><input class="inp" placeholder="https://" value="${esc(l)}" oninput="pf.links[${i}]=this.value"/><button type="button" class="btn2 !px-3" onclick="pf.links.splice(${i},1);portPaint()" aria-label="Remove link"><span class="m">delete</span></button></div>`).join('')}
+  ${pf.links.length<5?`<button type="button" class="text-xs text-primary font-semibold" onclick="pf.links.push('');portPaint()">+ Add a link</button>`:''}
+  <p class="text-xs text-mute mt-5 mb-2">Pictures (${n}/6)</p>
+  <div class="grid grid-cols-3 gap-2">${pf.imgs.map((u,i)=>ptile(u,`pfDel(${i})`)).join('')}${pf.add.map((u,i)=>ptile(u,`pf.add.splice(${i},1);portPaint()`)).join('')}${n<6?`<label class="aspect-square rounded-lg border border-dashed border-[#44444f] flex flex-col items-center justify-center text-mute cursor-pointer hover:border-primary"><span class="m">add_photo_alternate</span><span class="text-[11px]">Add</span><input type="file" accept="image/*" multiple class="hidden" onchange="pfAdd(this)"/></label>`:''}</div>
+  <button id="pf-sv" class="btn mt-5" onclick="savePort()">Save portfolio</button></div>`;
+}
+async function savePort(){
+  const links=pf.links.map(l=>l.trim()).filter(Boolean).map(l=>okUrl(l)?l:'https://'+l);
+  if(!links.length&&!pf.imgs.length&&!pf.add.length)return toast('Keep at least one link or picture.');
+  const b=$('pf-sv');b.disabled=true;b.textContent='Saving…';const urls=[...pf.imgs];
+  for(const[i,d]of pf.add.entries()){const path=`${me.id}/${Date.now()}-${i}.jpg`,{error}=await db.storage.from('portfolio').upload(path,await(await fetch(d)).blob(),{contentType:'image/jpeg'});if(error)toast(error.message);else urls.push(db.storage.from('portfolio').getPublicUrl(path).data.publicUrl)}
+  const u={portfolio_links:links,portfolio_images:urls},{error}=await db.from('profiles').update(u).eq('id',me.id);
+  if(error){toast(error.message);b.disabled=false;b.textContent='Save portfolio';return}
+  const rm=pf.gone.map(x=>(x.split('/portfolio/')[1]||'')).filter(p=>p.startsWith(me.id+'/'));
+  if(rm.length)db.storage.from('portfolio').remove(rm);
+  Object.assign(me,u);P[me.id]=me;toast('Portfolio saved.');pfInit();
+}
+
 /* ---------- init ---------- */
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});
 (async()=>{renderWho();await loadPeople();if(!db)return;const{data:{session}}=await db.auth.getSession();if(session)await boot(session.user);const PAY=new URLSearchParams(location.search).get('pay');if(PAY&&me){history.replaceState(null,'',location.pathname);if(PAY==='ok'){toast('Payment received. Confirming your booking…');enterApp('dashboard')}else toast('Payment was not completed.')}if(REF&&!me)openOnboard()})();
