@@ -45,8 +45,9 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
   </header>
   <div class="absolute inset-x-0 bottom-0 px-5 md:px-10 pb-[max(2rem,env(safe-area-inset-bottom))] pointer-events-none">
     <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] max-w-3xl">Creatives, <br class="hidden md:block"/>all in one home.</h1>
-    <p class="text-white/80 mt-4 max-w-lg">Musicians, tattooists, photographers, painters and 3D artists across South Africa, under one roof. Tap a face, see the work, book direct.</p>
+    <p class="text-white/85 mt-4 max-w-xl">Musicians, dancers, tattooists, photographers, painters, 3D artists and more. If you create, you belong here. Anyone creative is welcome, you name it. Tap a face, see the work, book direct.</p>
     <div class="flex gap-3 mt-6 pointer-events-auto"><button class="btn" onclick="me?enterApp('dashboard'):openOnboard()">Onboard</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('discover')">Explore creatives</button></div>
+    <button class="pointer-events-auto text-xs text-white/60 underline mt-4" onclick="enterApp('guidelines')">Community guidelines</button>
   </div>
 </section>
 
@@ -77,7 +78,7 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
     <div class="flex justify-between items-center mb-4"><h3 id="auth-h" class="font-bold text-lg"></h3><button onclick="closeM('auth')"><span class="m">close</span></button></div>
     <form id="f-in" onsubmit="return signin(event)" class="space-y-3">
       <input id="si-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="si-p" class="inp pr-11" type="password" placeholder="Password" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><button type="button" class="text-xs text-primary font-semibold" onclick="resend($('si-e').value)">Resend confirmation email</button>
-      <button class="btn w-full">Sign in</button>
+      <button class="btn w-full">Sign in</button><button type="button" class="text-xs text-mute w-full" onclick="forgot()">Forgot your password?</button>
       <p class="text-xs text-mute text-center">New here? <button type="button" class="text-primary font-semibold" onclick="openAuth('signup')">Create an account</button></p>
     </form>
   </div>
@@ -118,13 +119,22 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
     </section>
   </div>
 </div>
+<div id="pw" class="modal fixed inset-0 z-50 bg-black/75 items-end sm:items-center justify-center sm:p-4">
+  <form onsubmit="return savePw(event)" class="card w-full sm:max-w-md p-6 space-y-3">
+    <div class="flex justify-between"><h3 class="font-bold text-lg">Change password</h3><button type="button" onclick="closeM('pw')" aria-label="Close"><span class="m">close</span></button></div>
+    <div class="relative"><input id="pw-1" class="inp pr-11" type="password" minlength="6" placeholder="New password (6+ characters)" required/><button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" aria-label="Show or hide password" onclick="eye(this)"><span class="m">visibility</span></button></div>
+    <div class="relative"><input id="pw-2" class="inp pr-11" type="password" minlength="6" placeholder="Repeat new password" required/><button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" aria-label="Show or hide password" onclick="eye(this)"><span class="m">visibility</span></button></div>
+    <button class="btn w-full">Update password</button>
+  </form>
+</div>
+<div id="gm" class="modal fixed inset-0 z-[65] bg-black/80 items-end sm:items-center justify-center sm:p-4"><div class="card w-full sm:max-w-2xl max-h-[90vh] flex flex-col"><div class="flex justify-between items-center p-4 border-b border-line"><b>Community guidelines</b><button onclick="closeM('gm')" aria-label="Close"><span class="m">close</span></button></div><div id="gm-body" class="p-5 overflow-y-auto"></div></div></div>
 <div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-24 md:bottom-8 z-[70] flex flex-col gap-2 items-center pointer-events-none"></div>
 
 <script>
 /* Publishable keys only. Never put a secret / service_role key here. */
 const C={URL:'https://xbqmsgufdhqfpkkelcas.supabase.co',KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo',API:'http://localhost:5000'};
 const db=C.URL.startsWith('http')?supabase.createClient(C.URL,C.KEY):null;
-const CATS=['Music','Tattoo','Photography','Fine art','3D / VFX','Film & video','Design'];
+const CATS=['Music','Dance','Tattoo','Photography','Fine art','3D / VFX','Film & video','Design','Other'];
 const CITIES=['Johannesburg','Cape Town','Durban','Pretoria','Gqeberha','Bloemfontein'];
 const ROLES={artist:['Artist / Creator','brush'],label:['Record label','library_music'],radio:['Radio station','radio'],brand:['Brand / business','storefront']};
 const NAV=[['discover','Discover','explore'],['briefs','Briefs','work'],['chat','Messages','chat'],['dashboard','Dashboard','space_dashboard'],['analytics','Analytics','monitoring'],['profile','Profile','person']];
@@ -166,7 +176,7 @@ function nav(){
 async function go(v,a){
   if(['chat','dashboard','analytics','profile'].includes(v)&&!me){toast('Sign in to open this page.');openAuth('signin');return}
   view=v;if(v==='chat')chatWith=a||null;window.scrollTo(0,0);$('np').classList.add('hidden');nav();
-  try{await({discover:rDiscover,briefs:rBriefs,chat:rChat,dashboard:rDash,analytics:rAna,profile:rProfile,person:()=>rPerson(a)})[v]()}catch(e){console.error(e);toast('Something went wrong loading this page.')}
+  try{await({discover:rDiscover,briefs:rBriefs,chat:rChat,dashboard:rDash,analytics:rAna,profile:rProfile,person:()=>rPerson(a),guidelines:rGuide})[v]()}catch(e){console.error(e);toast('Something went wrong loading this page.')}
 }
 function renderWho(){
   const t=me?`<button onclick="go('profile')" class="flex items-center gap-2 text-left"><span class="w-8 h-8 rounded-full overflow-hidden tile shrink-0">${pic(me)}</span><span class="hidden md:block text-sm"><b>${esc(me.full_name)}</b><br/><span class="text-xs text-mute">${ROLES[me.role]?.[0]||'Admin'}</span></span></button>`:'';
@@ -289,7 +299,7 @@ async function rProfile(){
   <select id="pf-m" class="inp">${CITIES.map(c=>`<option ${c===me.metro?'selected':''}>${c}</option>`).join('')}</select>
   ${me.role==='artist'?`<input id="pf-c" class="inp" value="${esc(me.craft||'')}" placeholder="What you do"/><div><p class="text-xs text-mute mb-2">Categories your work falls under</p><div id="cats-pf" class="flex flex-wrap gap-2"></div></div>`:''}
   <textarea id="pf-b" rows="4" class="inp" placeholder="Tell clients about you">${esc(me.bio||'')}</textarea>
-  <button class="btn" onclick="saveProfile()">Save changes</button></div>${me.role==='artist'?'<div id="pf-port"></div>':''}<div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
+  <button class="btn" onclick="saveProfile()">Save changes</button></div>${me.role==='artist'?'<div id="pf-port"></div>':''}<div class="card p-5 max-w-xl mt-4"><b>Change password</b><div class="relative mt-3"><input id="np1" class="inp pr-11" type="password" minlength="6" placeholder="New password (6+ characters)"/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><button class="btn mt-3" onclick="chPw()">Update password</button></div><div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="openM('pw')">Change password</button><button class="btn2" onclick="openGuide()">Guidelines</button><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
   if(me.role==='artist'){catChips('cats-pf');pfInit()}
 }
 async function saveProfile(){
@@ -364,12 +374,12 @@ function obPaint(){
 /* step 1: who you are */
 const ob1h=()=>`<h2 class="font-display text-3xl font-bold">Let's get you on the wall.</h2><p class="text-mute text-sm mt-2">Two minutes, then explore everyone on the platform.</p>
 <p class="text-xs text-mute mt-6 mb-2">I am a…</p><div id="ob-roles" class="grid grid-cols-2 gap-2"></div>
-<form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="ob-p" class="inp pr-11" type="password" minlength="6" placeholder="Password (6+ characters)" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select><button class="btn w-full">Continue</button></form>
+<form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="ob-p" class="inp pr-11" type="password" minlength="6" placeholder="Password (6+ characters)" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select><label class="flex gap-3 items-start text-xs text-mute cursor-pointer"><input id="ob-ok" type="checkbox" required class="mt-0.5 w-4 h-4 shrink-0 accent-[#C4293D]"/><span>I am 18 or older and I agree to follow the <button type="button" class="text-primary font-semibold underline" onclick="openGuide()">community guidelines</button>.</span></label><button class="btn w-full">Continue</button></form>
 <p class="text-xs text-mute text-center mt-4">Already onboarded? <button class="text-primary font-semibold" onclick="closeOb();openAuth('signin')">Sign in</button></p>`;
 function obRoles(){$('ob-roles').innerHTML=Object.entries(ROLES).map(([k,v])=>`<button type="button" onclick="ob.role='${k}';obRoles()" class="text-left p-3 rounded-xl border text-sm ${k===ob.role?'border-primary bg-primary/10':'border-line'}"><span class="m text-primary">${v[1]}</span><br/><b>${v[0]}</b></button>`).join('')}
 async function ob1(e){
   e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;b.textContent='Creating your account…';
-  const{data,error}=await db.auth.signUp({email:(ob.email=$('ob-e').value.trim()),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF}}});
+  const{data,error}=await db.auth.signUp({email:(ob.email=$('ob-e').value.trim()),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF,agreed_guidelines:new Date().toISOString()}}});
   if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return false}
   if(!data.session){$('ob-body').innerHTML='<div class="up"><span class="m text-primary !text-4xl">mail</span><h2 class="font-display text-3xl font-bold mt-3">Check your email</h2><p class="text-mute text-sm mt-2">Tap the confirmation link we sent you, then sign in and we will pick up right where you left off.</p><button class="btn2 mt-4" onclick="resend(ob.email)">Resend email</button></div>';return false}
   await boot(data.user);ob.step=ob.role==='artist'?2:3;obPaint();return false;
@@ -454,6 +464,35 @@ async function savePort(){
   if(rm.length)db.storage.from('portfolio').remove(rm);
   Object.assign(me,u);P[me.id]=me;toast('Portfolio saved.');pfInit();
 }
+
+/* ---------- passwords ---------- */
+async function savePw(e){e.preventDefault();const a=$('pw-1').value;if(a!==$('pw-2').value){toast('The two passwords do not match.');return false}
+  const{error}=await db.auth.updateUser({password:a});if(error){toast(error.message);return false}
+  e.target.reset();closeM('pw');toast('Password updated.');return false}
+async function forgot(){const m=$('si-e').value.trim();if(!m)return toast('Type your email above first.');
+  const{error}=await db.auth.resetPasswordForEmail(m,{redirectTo:location.origin+location.pathname});toast(error?error.message:'If that email has an account, a reset link is on its way.')}
+db?.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY')openM('pw')});
+
+async function chPw(){const p=$('np1').value;if(p.length<6)return toast('Use at least 6 characters.');const{error}=await db.auth.updateUser({password:p});if(error)return toast(error.message);$('np1').value='';toast('Password updated.')}
+/* ---------- community guidelines ---------- */
+const SUPPORT='YOUR_SUPPORT_EMAIL'; // put your real support email here
+const GUIDE=()=>{
+  const h=t=>`<h3 class="font-bold mt-6 mb-2">${t}</h3>`,p=t=>`<p class="text-sm text-white/80 leading-relaxed">${t}</p>`,l=a=>`<ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  const us=SUPPORT.includes('@')?`<a class="text-primary font-semibold" href="mailto:${esc(SUPPORT)}">${esc(SUPPORT)}</a>`:'the Creative Hub ZA team';
+  return p(`Creative Hub ZA is a local home for creatives and the people who book them. These guidelines keep it safe, fair and welcoming. By onboarding you agree to follow them. Last updated October 2026.`)+
+  h('Who belongs here')+p(`Every creative is welcome: musicians, dancers, tattooists, photographers, painters, 3D artists, filmmakers, designers, and anyone else who makes things. Labels, radio stations, brands and clients are welcome too. You must be 18 or older to onboard.`)+
+  h('Be respectful')+l([`No harassment, bullying, threats, hate speech or discrimination of any kind.`,`No unwanted sexual advances or sexual messages.`,`Disagree politely. Criticise the work, never the person.`])+
+  h('Keep it real')+l([`Post only your own work, or work you have permission to share, and credit your collaborators.`,`Never pretend to be someone else or claim work that is not yours.`,`Be honest about your experience, prices and availability.`,`If work is made with AI, say so.`])+
+  h('What you can post')+l([`No sexually explicit material and no graphic violence meant to shock.`,`Any content that sexualises or harms children is banned. We remove it immediately and report it to the authorities.`,`No illegal content, and nothing that infringes someone else's copyright.`,`Artistic work that includes nudity must be non-explicit.`])+
+  h('Messages')+l([`Be clear and reply within a reasonable time. A polite no is better than silence.`,`No spam, mass messages or unwanted promotion.`,`Never share someone else's private details, and never share your password with anyone.`,`Messages are stored on our systems and are not end-to-end encrypted. We only read them to look into a report or when the law requires it.`])+
+  h('Briefs')+l([`A brief must describe real, paid work with a real budget, a clear deliverable and a deadline.`,`No free work dressed up as paid work.`,`Reply to people who apply, even if you choose someone else.`])+
+  h('Bookings and payments')+l([`Agree the scope, price, dates and deliverables in the chat before you pay.`,`Deposits are 25% of the budget and are paid through our payment partner. Keep your booking and payment on the platform so your deposit stays protected. Be wary of anyone who asks you to pay elsewhere.`,`If a creative cancels or does not deliver, the client is refunded the deposit.`,`If a client cancels, we look at how much work had already started and decide what is fair.`,`Creatives keep the copyright in their work unless a written agreement says otherwise. Clients receive the usage rights agreed in the brief.`,`If you cannot agree, talk it through first. If that fails, contact ${us} and we will review the chat and the booking.`])+
+  h('Your information')+l([`We collect only what we need to run the platform: your profile, portfolio, messages and booking details.`,`We do not sell your information.`,`Your profile, portfolio and photo are public so clients can find you. Your email address is not shown to other members.`,`You can edit your profile and portfolio at any time. If you delete your account, your profile, messages and photos are removed. We may keep booking and payment records for accounting.`,`Only invite people who would want to hear from you. No spamming invite links.`])+
+  h('Reporting and consequences')+p(`If you see something that breaks these guidelines, tell us at ${us}. Depending on how serious it is, we may remove content, warn you, suspend your account or remove it permanently. We report illegal activity to the authorities.`)+
+  h('Changes')+p(`We may update these guidelines as the community grows. If you keep using the platform after an update, you accept the new version. We will let you know about big changes.`)
+};
+function rGuide(){$('main').innerHTML=head('Community guidelines','How we keep Creative Hub ZA safe, fair and welcoming.')+`<div class="card p-5 md:p-8 max-w-3xl">${GUIDE()}</div>`}
+function openGuide(){$('gm-body').innerHTML=GUIDE();openM('gm')}
 
 /* ---------- init ---------- */
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});
