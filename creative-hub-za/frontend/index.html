@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Creative Hub ZA | Creatives, all in one home</title>
+<meta name="description" content="Creative Hub ZA is where South African creatives show their work to clients, labels and brands looking for talent, and can potentially get booked."/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{bg:'#0e0e11',card:'#16161b',line:'#26262f',mute:'#a19fa9',primary:'#C4293D'},fontFamily:{sans:['Manrope','sans-serif'],display:['Playfair Display','serif']}}}}</script>
@@ -29,8 +30,9 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 .modal{display:none}.modal.on{display:flex}
 .bdg{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:99px;background:#C4293D;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
 ::-webkit-scrollbar{display:none}
+.wall{transition:opacity .45s ease}.wall.swap{opacity:0}
 @keyframes up{from{opacity:0;transform:translateY(10px)}}.up{animation:up .35s ease both}
-@media(prefers-reduced-motion:reduce){.up{animation:none}}
+@media(prefers-reduced-motion:reduce){.up{animation:none}.wall{transition:none}}
 </style>
 </head>
 <body class="font-sans antialiased">
@@ -43,11 +45,13 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
     <div class="font-extrabold tracking-tight text-lg">CREATIVE HUB <span class="text-primary">ZA</span></div>
     <div id="w-btns" class="flex gap-2"></div>
   </header>
+  <div id="wall-dots" class="absolute top-16 right-4 md:right-9 z-10 flex items-center text-xs text-white/70"></div>
   <div class="absolute inset-x-0 bottom-0 px-5 md:px-10 pb-[max(2rem,env(safe-area-inset-bottom))] pointer-events-none">
     <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] max-w-3xl">Creatives, <br class="hidden md:block"/>all in one home.</h1>
-    <p class="text-white/85 mt-4 max-w-xl">Musicians, dancers, tattooists, photographers, painters, 3D artists and more. If you create, you belong here. Anyone creative is welcome, you name it. Tap a face, see the work, book direct.</p>
-    <div class="flex gap-3 mt-6 pointer-events-auto"><button class="btn" onclick="me?enterApp('dashboard'):openOnboard()">Onboard</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('discover')">Explore creatives</button></div>
-    <button class="pointer-events-auto text-xs text-white/60 underline mt-4" onclick="enterApp('guidelines')">Community guidelines</button>
+    <p class="text-white/85 mt-4 max-w-xl">Creative Hub ZA is where South African creatives show their work to clients, labels and brands looking for talent, and can potentially get booked. Musicians, photographers, tattoo artists, dancers, painters and more. Tap a face to see their work, then message them or request a booking.</p>
+    <div class="flex flex-wrap gap-3 mt-6 pointer-events-auto"><button id="hero-cta" class="btn" onclick="me?enterApp('dashboard'):openOnboard()">Join as a creative</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('discover')">Explore creatives</button><button class="btn2 bg-black/40 backdrop-blur" onclick="openPartner()">Partner with us</button></div>
+    <div id="wall-nudge" class="pointer-events-auto mt-3"></div>
+    <div class="pointer-events-auto flex flex-wrap gap-x-4 gap-y-1 mt-4 text-xs text-white/60 underline"><button onclick="enterApp('guidelines')">Community guidelines</button><button onclick="openLegal('terms')">Terms</button><button onclick="openLegal('privacy')">Privacy</button></div>
   </div>
 </section>
 
@@ -56,7 +60,7 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
   <aside class="hidden md:flex fixed inset-y-0 left-0 w-60 flex-col border-r border-line bg-bg p-4">
     <button class="font-extrabold tracking-tight text-lg px-2 py-3 text-left" onclick="showWelcome()">CREATIVE HUB <span class="text-primary">ZA</span></button>
     <nav id="side" class="flex flex-col gap-1 mt-4"></nav>
-    <div class="mt-auto"><button class="btn w-full mb-3" onclick="openBrief()">Post a brief</button><div id="who-side"></div></div>
+    <div class="mt-auto"><button class="btn w-full mb-3" onclick="openBrief()">Post a brief</button><div id="who-side"></div><div class="flex gap-3 px-2 mt-3 text-[11px] text-mute underline"><button onclick="openPartner()">Partner with us</button><button onclick="openLegal('terms')">Terms</button><button onclick="openLegal('privacy')">Privacy</button></div></div>
   </aside>
   <header class="md:ml-60 sticky top-0 z-20 bg-bg/90 backdrop-blur border-b border-line flex items-center justify-between px-4 md:px-8 h-14 pt-[env(safe-area-inset-top)] box-content">
     <button class="md:hidden font-extrabold tracking-tight" onclick="showWelcome()">CH <span class="text-primary">ZA</span></button>
@@ -86,10 +90,10 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 
 <div id="book" class="modal fixed inset-0 z-50 bg-black/75 items-end sm:items-center justify-center sm:p-4">
   <form onsubmit="return submitBooking(event)" class="card w-full sm:max-w-md p-6 space-y-3">
-    <div class="flex justify-between"><div><h3 id="book-h" class="font-bold text-lg"></h3><p class="text-xs text-mute">Pay a 25% deposit held in escrow, or leave the budget empty to just send a message.</p></div><button type="button" onclick="closeM('book')"><span class="m">close</span></button></div>
+    <div class="flex justify-between"><div><h3 id="book-h" class="font-bold text-lg"></h3><p id="book-sub" class="text-xs text-mute">Pay a 25% deposit held in escrow, or leave the budget empty to just send a message.</p></div><button type="button" onclick="closeM('book')"><span class="m">close</span></button></div>
     <input id="bk-d" class="inp" type="date"/><input id="bk-b" oninput="dep()" class="inp" type="number" min="0" placeholder="Budget (ZAR)"/>
     <textarea id="bk-n" class="inp" rows="3" required placeholder="What do you need?"></textarea>
-    <div class="flex justify-between text-sm card p-3"><span class="text-mute">Escrow deposit (25%)</span><b id="book-d">R0</b></div>
+    <div id="book-dr" class="flex justify-between text-sm card p-3"><span class="text-mute">Escrow deposit (25%)</span><b id="book-d">R0</b></div>
     <button class="btn w-full">Send request</button>
   </form>
 </div>
@@ -109,7 +113,7 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
     <aside class="hidden md:flex relative overflow-hidden flex-col justify-end p-10">
       <div id="ob-bg" class="wall absolute inset-0 grid grid-cols-3 opacity-40" style="grid-auto-rows:1fr"></div>
       <div class="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-bg/70"></div>
-      <div class="relative"><h2 class="font-display text-5xl font-bold leading-tight">Your face on South Africa's creative wall.</h2><p class="text-white/70 mt-4 max-w-sm">Join the local creatives, labels, stations and brands booking each other directly.</p></div>
+      <div class="relative"><h2 class="font-display text-5xl font-bold leading-tight">Your face on South Africa's creative wall.</h2><p class="text-white/70 mt-4 max-w-sm">Join the local creatives, labels, stations and brands looking to work together.</p></div>
     </aside>
     <section class="flex flex-col p-5 md:p-10 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
       <div class="flex justify-between items-center"><div class="font-extrabold tracking-tight">CREATIVE HUB <span class="text-primary">ZA</span></div><button onclick="closeOb()" aria-label="Close"><span class="m">close</span></button></div>
@@ -128,11 +132,15 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
   </form>
 </div>
 <div id="gm" class="modal fixed inset-0 z-[65] bg-black/80 items-end sm:items-center justify-center sm:p-4"><div class="card w-full sm:max-w-2xl max-h-[90vh] flex flex-col"><div class="flex justify-between items-center p-4 border-b border-line"><b>Community guidelines</b><button onclick="closeM('gm')" aria-label="Close"><span class="m">close</span></button></div><div id="gm-body" class="p-5 overflow-y-auto"></div></div></div>
+<div id="pm" class="modal fixed inset-0 z-[65] bg-black/80 items-end sm:items-center justify-center sm:p-4"><div class="card w-full sm:max-w-lg max-h-[90vh] flex flex-col"><div class="flex justify-between items-center p-4 border-b border-line"><b>Partner with Creative Hub ZA</b><button onclick="closeM('pm')" aria-label="Close"><span class="m">close</span></button></div><div id="pm-body" class="p-5 overflow-y-auto"></div></div></div>
+<div id="lm" class="modal fixed inset-0 z-[65] bg-black/80 items-end sm:items-center justify-center sm:p-4"><div class="card w-full sm:max-w-2xl max-h-[90vh] flex flex-col"><div class="flex justify-between items-center p-4 border-b border-line"><b id="lm-t">Terms</b><button onclick="closeM('lm')" aria-label="Close"><span class="m">close</span></button></div><div id="lm-body" class="p-5 overflow-y-auto"></div></div></div>
 <div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-24 md:bottom-8 z-[70] flex flex-col gap-2 items-center pointer-events-none"></div>
 
 <script>
 /* Publishable keys only. Never put a secret / service_role key here. */
-const C={URL:'https://xbqmsgufdhqfpkkelcas.supabase.co',KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo',API:'http://localhost:5000'};
+// PAYMENTS: keep false until the backend is deployed and Yoco is set up. While false, the
+// booking form only sends a message (no budget, no deposit), so nobody hits a payment error.
+const C={URL:'https://xbqmsgufdhqfpkkelcas.supabase.co',KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo',API:'http://localhost:5000',PAYMENTS:false};
 const db=C.URL.startsWith('http')?supabase.createClient(C.URL,C.KEY):null;
 const CATS=['Music','Dance','Tattoo','Photography','Fine art','3D / VFX','Film & video','Design','Other'];
 const CITIES=['Johannesburg','Cape Town','Durban','Pretoria','Gqeberha','Bloemfontein'];
@@ -154,12 +162,57 @@ const load=t=>$('main').innerHTML=head(t,'Loading…');
 async function who(ids){const need=[...new Set(ids)].filter(i=>i&&!P[i]);if(!need.length||!db)return;const{data}=await db.from('public_profiles').select('*').in('id',need);(data||[]).forEach(p=>P[p.id]=p)}
 
 /* ---------- welcome wall ---------- */
-async function loadPeople(){if(!db){wall();return}const{data}=await db.from('public_profiles').select('*').eq('role','artist').limit(300);people=data||[];people.forEach(p=>P[p.id]=p);wall()}
+async function loadPeople(){if(!db){wall();return}const{data}=await db.from('public_profiles').select('*').eq('role','artist').limit(1000);people=data||[];people.forEach(p=>P[p.id]=p);wall()}
+/* ---------- creative wall: shuffled panels that rotate ---------- */
+// Only creatives with a profile photo go on the wall. They are shuffled once per visit and split into panels of 24.
+// With more than 24 creatives the wall moves to the next panel every WALL_MS. A signed-in
+// creative starts on the panel that contains them.
+const WALL_SIZE=24,WALL_MS=15000;
+let wallOrder=[],wallPages=1,wallIdx=0,wallTimer=null,wallSig='',wallMe='';
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+const wallTile=p=>{const you=me&&p.id===me.id;return `<button class="tile${you?' ring-2 ring-inset ring-primary':''}" onclick="enterApp('person','${p.id}')" aria-label="${esc(p.full_name)}">${pic(p)}${you?'<span class="absolute top-1.5 left-1.5 z-10 text-[10px] font-bold bg-primary text-white px-1.5 py-0.5 rounded">You</span>':''}<span class="n">${esc(p.full_name)}</span></button>`};
+const wallJoin=()=>`<button class="tile" onclick="openAuth('signup')" aria-label="Join"><div class="ph !text-white/25"><span class="m !text-3xl">add</span></div></button>`;
 function wall(){
-  const l=[...people.filter(p=>p.avatar_url),...people.filter(p=>!p.avatar_url)].slice(0,24);
-  let h=l.map(p=>`<button class="tile" onclick="enterApp('person','${p.id}')" aria-label="${esc(p.full_name)}">${pic(p)}<span class="n">${esc(p.full_name)}</span></button>`).join('');
-  for(let i=l.length;i<24;i++)h+=`<button class="tile" onclick="openAuth('signup')" aria-label="Join"><div class="ph !text-white/25"><span class="m !text-3xl">add</span></div></button>`;
+  const pool=people.filter(p=>p.avatar_url); // no photo, no tile: initials would break the look
+  const sig=pool.map(p=>p.id).sort().join(','),meId=me?me.id:'',changed=sig!==wallSig;
+  if(changed){wallSig=sig;wallOrder=shuffle(pool)}
+  if(changed||meId!==wallMe){ // open on the panel that contains the signed-in creative
+    wallMe=meId;wallIdx=0;
+    const mine=meId?wallOrder.findIndex(p=>p.id===meId):-1;
+    if(mine>=0)wallIdx=Math.floor(mine/WALL_SIZE);
+  }
+  wallPages=Math.max(1,Math.ceil(wallOrder.length/WALL_SIZE));
+  if(wallIdx>=wallPages)wallIdx=0;
+  const nz=$('wall-nudge');
+  if(nz)nz.innerHTML=(me&&me.role==='artist'&&!me.avatar_url)
+    ?'<div class="inline-flex items-center gap-3 bg-black/55 backdrop-blur rounded-xl px-3 py-2 text-xs text-white/85"><span>You are not on the wall yet. Add a profile photo to appear here.</span><button class="btn2 !py-1.5 !px-3 text-xs" onclick="enterApp(\'profile\')">Add photo</button></div>':'';
+  paintWall();startWallTimer();
+}
+function paintWall(){
+  const S=WALL_SIZE;let items=wallOrder.slice(wallIdx*S,(wallIdx+1)*S);
+  if(wallPages>1&&items.length<S)items=items.concat(wallOrder.slice(0,S-items.length)); // fill the last panel from the start
+  let h=items.map(wallTile).join('');
+  for(let i=items.length;i<S;i++)h+=wallJoin(); // only when there are fewer than 24 creatives
   $('wall').innerHTML=h;
+  $('wall-dots').innerHTML=wallPages<2?'':wallPages<=8
+    ?Array.from({length:wallPages},(_,i)=>`<button class="p-1" onclick="wallGo(${i})" aria-label="Show panel ${i+1} of ${wallPages}"><span class="block w-2 h-2 rounded-full ${i===wallIdx?'bg-white':'bg-white/35'}"></span></button>`).join('')
+    :`<span>${wallIdx+1} / ${wallPages}</span>`;
+  if(wallPages>1){const n=(wallIdx+1)%wallPages;wallOrder.slice(n*S,(n+1)*S).forEach(p=>{if(p.avatar_url)new Image().src=p.avatar_url})} // warm the next panel
+}
+function wallShow(i){
+  const w=$('wall');if(!w)return;
+  const swap=()=>{wallIdx=i;paintWall();w.classList.remove('swap')};
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){swap();return}
+  w.classList.add('swap');setTimeout(swap,450);
+}
+function wallGo(i){wallShow(i);startWallTimer()}
+function startWallTimer(){
+  clearInterval(wallTimer);wallTimer=null;
+  if(wallPages<2)return;
+  wallTimer=setInterval(()=>{
+    if(document.hidden||$('welcome').classList.contains('hidden')||$('wall').matches(':hover'))return; // don't swap under someone's cursor
+    wallShow((wallIdx+1)%wallPages);
+  },WALL_MS);
 }
 function showWelcome(){$('welcome').classList.remove('hidden');$('app').classList.add('hidden');loadPeople()}
 function enterApp(v,a){$('welcome').classList.add('hidden');$('app').classList.remove('hidden');go(v,a)}
@@ -183,13 +236,14 @@ function renderWho(){
   $('who-top').innerHTML=me?'':`<button class="btn2 !py-2" onclick="openAuth('signin')">Sign in</button>`;
   $('who-side').innerHTML=me?t+`<button class="text-xs text-mute mt-3" onclick="signOut()">Sign out</button>`:`<button class="btn2 w-full" onclick="openAuth('signin')">Sign in</button>`;
   $('bellb').classList.toggle('hidden',!me);
-  $('w-btns').innerHTML=me?`<button class="btn" onclick="enterApp('dashboard')">Open app</button>`:`<button class="btn2 bg-black/40 backdrop-blur" onclick="openAuth('signin')">Sign in</button><button class="btn" onclick="openOnboard()">Onboard</button>`;
+  {const hc=$('hero-cta');if(hc)hc.textContent=me?'Open my dashboard':'Join as a creative'}
+  $('w-btns').innerHTML=me?`<button class="btn" onclick="enterApp('dashboard')">Open app</button>`:`<button class="btn2 bg-black/40 backdrop-blur" onclick="openAuth('signin')">Sign in</button><button class="btn" onclick="openOnboard()"><span class="hidden sm:inline">Join as a creative</span><span class="sm:hidden">Join</span></button>`;
   nav();bell();
 }
 
 /* ---------- discover & profiles ---------- */
 async function rDiscover(){
-  $('main').innerHTML=head('Discover','Local creatives, booked directly.')+
+  $('main').innerHTML=head('Discover','Find local creatives and request a booking.')+
   `<input class="inp mb-4" placeholder="Search by name, craft or city" value="${esc(q)}" oninput="q=this.value;list()"/>
    <div class="flex gap-2 overflow-x-auto pb-4">${['All',...CATS].map(c=>`<button class="chip ${c===cat?'on':''}" onclick="cat='${c}';rDiscover()">${c}</button>`).join('')}</div><div id="plist" class="grid sm:grid-cols-2 gap-4"></div>`;
   if(!people.length)await loadPeople();list();
@@ -208,7 +262,7 @@ async function rPerson(id){
   <h1 class="font-display text-3xl font-bold">${esc(p.full_name)}</h1><p class="text-mute mt-1">${esc(p.craft||ROLES[p.role]?.[0]||'')} · ${esc(p.metro||'South Africa')}</p>
   <div class="flex flex-wrap gap-1 mt-3">${tags(p)}</div>
   <p class="mt-4 leading-relaxed max-w-prose whitespace-pre-wrap">${esc(p.bio||'This creative is new to the hub.')}</p>
-  ${portfolio(p)}<div class="flex gap-3 mt-6">${mine?`<button class="btn" onclick="go('profile')">Edit profile</button>`:`<button class="btn" onclick="openBooking('${id}')">Book</button><button class="btn2" onclick="openChat('${id}')"><span class="m">chat</span> Message</button>`}</div></div></div>`;
+  ${portfolio(p)}<div class="flex gap-3 mt-6">${mine?`<button class="btn" onclick="go('profile')">Edit profile</button>`:`<button class="btn" onclick="openBooking('${id}')">Request booking</button><button class="btn2" onclick="openChat('${id}')"><span class="m">chat</span> Message</button>`}</div></div></div>`;
 }
 
 /* ---------- briefs ---------- */
@@ -275,7 +329,7 @@ async function rDash(){
   const card=(l,n)=>`<div class="card p-4"><span class="text-xs text-mute">${l}</span><div class="text-2xl font-bold mt-1">${n}</div></div>`;
   $('main').innerHTML=head('Dashboard','Welcome back, '+esc(me.full_name.split(' ')[0])+'. Updates live.')+
   `<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">${card('Profile views (7d)',v.count||0)}${card('Bookings',bs.length)}${card('In escrow',R(esc$))}${card('Unread messages',uMsg())}</div>
-  <h3 class="font-bold mb-3">Recent bookings</h3><div class="grid gap-2">${bs.slice(0,6).map(x=>{const o=P[x.client_id===me.id?x.artist_id:x.client_id];return `<div class="card p-3 flex justify-between gap-3 text-sm"><span class="truncate">${x.client_id===me.id?'To':'From'} ${esc(o?.full_name||'Member')}</span><span class="text-mute shrink-0">${R(x.escrow_deposit)} · ${esc(x.payment_status.replace('_',' '))}</span></div>`}).join('')||'<p class="text-sm text-mute card p-4">No bookings yet. Book a creative to get started.</p>'}</div>`;
+  <h3 class="font-bold mb-3">Recent bookings</h3><div class="grid gap-2">${bs.slice(0,6).map(x=>{const o=P[x.client_id===me.id?x.artist_id:x.client_id];return `<div class="card p-3 flex justify-between gap-3 text-sm"><span class="truncate">${x.client_id===me.id?'To':'From'} ${esc(o?.full_name||'Member')}</span><span class="text-mute shrink-0">${R(x.escrow_deposit)} · ${esc(x.payment_status.replace('_',' '))}</span></div>`}).join('')||'<p class="text-sm text-mute card p-4">No bookings yet. When someone requests a booking, it will show up here.</p>'}</div>`;
 }
 async function rAna(){
   load('Analytics');const s=since7(),{data}=await db.from('profile_views').select('created_at,viewer_id').eq('profile_id',me.id).gte('created_at',s.toISOString());
@@ -335,11 +389,14 @@ async function signin(e){
 async function signOut(){await db.auth.signOut();if(chan)db.removeChannel(chan);me=null;msgs=[];notifs=[];renderWho();showWelcome();toast('Signed out.')}
 
 /* ---------- booking & escrow ---------- */
-function openBooking(id){if(!me){toast('Sign in to book.');openAuth('signin');return}bk={id,name:P[id]?.full_name||'creative'};$('book-h').textContent='Book '+bk.name;$('bk-b').value='';$('book-d').textContent='R0';openM('book')}
+function openBooking(id){if(!me){toast('Sign in to book.');openAuth('signin');return}bk={id,name:P[id]?.full_name||'creative'};$('book-h').textContent='Request a booking with '+bk.name;$('bk-b').value='';$('book-d').textContent='R0';
+  const pay=!!C.PAYMENTS;$('bk-b').style.display=pay?'':'none';$('book-dr').style.display=pay?'':'none';
+  $('book-sub').textContent=pay?'Pay a 25% deposit held in escrow, or leave the budget empty to just send a message.':'Send a booking request. Agree the details in the chat. Secure deposits are coming soon.';
+  $('bk-n').placeholder=pay?'What do you need?':'What do you need? Include your budget and timing.';openM('book')}
 const depOf=()=>Math.round((parseFloat($('bk-b').value)||0)*.25);
 function dep(){$('book-d').textContent=R(depOf())}
 async function submitBooking(e){
-  e.preventDefault();const b=parseFloat($('bk-b').value)||0,date=$('bk-d').value,note=$('bk-n').value.trim();
+  e.preventDefault();const b=C.PAYMENTS?(parseFloat($('bk-b').value)||0):0,date=$('bk-d').value,note=$('bk-n').value.trim();
   if(!b){closeM('book');if(await sendMsg(bk.id,`Booking request${date?' for '+date:''}\n${note}`)){toast('Message sent.');openChat(bk.id)}return false}
   const btn=e.target.querySelector('.btn.w-full');btn.disabled=true;btn.textContent='Opening secure checkout…';
   try{const{data:{session}}=await db.auth.getSession();
@@ -374,18 +431,18 @@ function obPaint(){
 /* step 1: who you are */
 const ob1h=()=>`<h2 class="font-display text-3xl font-bold">Let's get you on the wall.</h2><p class="text-mute text-sm mt-2">Two minutes, then explore everyone on the platform.</p>
 <p class="text-xs text-mute mt-6 mb-2">I am a…</p><div id="ob-roles" class="grid grid-cols-2 gap-2"></div>
-<form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="ob-p" class="inp pr-11" type="password" minlength="6" placeholder="Password (6+ characters)" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select><label class="flex gap-3 items-start text-xs text-mute cursor-pointer"><input id="ob-ok" type="checkbox" required class="mt-0.5 w-4 h-4 shrink-0 accent-[#C4293D]"/><span>I am 18 or older and I agree to follow the <button type="button" class="text-primary font-semibold underline" onclick="openGuide()">community guidelines</button>.</span></label><button class="btn w-full">Continue</button></form>
-<p class="text-xs text-mute text-center mt-4">Already onboarded? <button class="text-primary font-semibold" onclick="closeOb();openAuth('signin')">Sign in</button></p>`;
+<form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="ob-p" class="inp pr-11" type="password" minlength="6" placeholder="Password (6+ characters)" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select><label class="flex gap-3 items-start text-xs text-mute cursor-pointer"><input id="ob-ok" type="checkbox" required class="mt-0.5 w-4 h-4 shrink-0 accent-[#C4293D]"/><span>I am 18 or older and I agree to the <button type="button" class="text-primary font-semibold underline" onclick="openLegal('terms')">Terms</button>, <button type="button" class="text-primary font-semibold underline" onclick="openLegal('privacy')">Privacy Policy</button> and <button type="button" class="text-primary font-semibold underline" onclick="openGuide()">community guidelines</button>.</span></label><button class="btn w-full">Continue</button></form>
+<p class="text-xs text-mute text-center mt-4">Already have an account? <button class="text-primary font-semibold" onclick="closeOb();openAuth('signin')">Sign in</button></p>`;
 function obRoles(){$('ob-roles').innerHTML=Object.entries(ROLES).map(([k,v])=>`<button type="button" onclick="ob.role='${k}';obRoles()" class="text-left p-3 rounded-xl border text-sm ${k===ob.role?'border-primary bg-primary/10':'border-line'}"><span class="m text-primary">${v[1]}</span><br/><b>${v[0]}</b></button>`).join('')}
 async function ob1(e){
   e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;b.textContent='Creating your account…';
-  const{data,error}=await db.auth.signUp({email:(ob.email=$('ob-e').value.trim()),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF,agreed_guidelines:new Date().toISOString()}}});
+  const{data,error}=await db.auth.signUp({email:(ob.email=$('ob-e').value.trim()),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF,agreed_guidelines:new Date().toISOString(),agreed_terms:new Date().toISOString()}}});
   if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return false}
   if(!data.session){$('ob-body').innerHTML='<div class="up"><span class="m text-primary !text-4xl">mail</span><h2 class="font-display text-3xl font-bold mt-3">Check your email</h2><p class="text-mute text-sm mt-2">Tap the confirmation link we sent you, then sign in and we will pick up right where you left off.</p><button class="btn2 mt-4" onclick="resend(ob.email)">Resend email</button></div>';return false}
   await boot(data.user);ob.step=ob.role==='artist'?2:3;obPaint();return false;
 }
 /* step 2: portfolio (artists) */
-const ob2h=()=>`<h2 class="font-display text-3xl font-bold">Show us your work.</h2><p class="text-mute text-sm mt-2">Clients book what they can see. Share a link, upload pictures, or both.</p>
+const ob2h=()=>`<h2 class="font-display text-3xl font-bold">Show us your work.</h2><p class="text-mute text-sm mt-2">Clients are more likely to book what they can see. Share a link, upload pictures, or both.</p>
 <input class="inp mt-6" placeholder="What you do (e.g. Amapiano producer)" value="${esc(ob.craft)}" oninput="ob.craft=this.value"/>
 <p class="text-xs text-mute mt-5 mb-2">Categories (pick all that fit)</p><div class="flex flex-wrap gap-2">${CATS.map(c=>`<button type="button" class="chip ${ob.cats.includes(c)?'on':''}" onclick="obCat('${c}')">${c}</button>`).join('')}</div>
 <p class="text-xs text-mute mt-5 mb-2">Links: Spotify, YouTube, Instagram, anything</p>${ob.links.map((l,i)=>`<input class="inp mb-2" placeholder="https://" value="${esc(l)}" oninput="ob.links[${i}]=this.value"/>`).join('')}${ob.links.length<3?`<button type="button" class="text-xs text-primary font-semibold" onclick="ob.links.push('');obPaint()">+ Add another link</button>`:''}
@@ -421,7 +478,7 @@ async function ob3(){
 const inv=()=>location.href.split('?')[0].split('#')[0]+'?ref='+me.id;
 const ob4h=()=>`<div class="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center"><span class="m text-primary !text-4xl">check_circle</span></div><h2 class="font-display text-3xl font-bold mt-4">You're in, ${esc(me.full_name.split(' ')[0])}.</h2>
 <p class="text-mute text-sm mt-2">${me.avatar_url?'Your face is on the wall.':'Your profile is live.'} Now tell a creative to tell a creative: the more of us here, the more work comes in.</p>
-<div class="card p-4 mt-6"><p class="text-xs text-mute">Your personal invite link</p><p class="text-sm break-all mt-1">${esc(inv())}</p><div class="grid grid-cols-2 gap-2 mt-3"><a class="btn text-center" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Join me on Creative Hub ZA, where South Africans book local creatives directly: '+inv())}">WhatsApp</a><button class="btn2" onclick="navigator.clipboard.writeText(inv()).then(()=>toast('Link copied.'))">Copy link</button></div></div>
+<div class="card p-4 mt-6"><p class="text-xs text-mute">Your personal invite link</p><p class="text-sm break-all mt-1">${esc(inv())}</p><div class="grid grid-cols-2 gap-2 mt-3"><a class="btn text-center" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Join me on Creative Hub ZA, where South Africans can find and potentially book local creatives: '+inv())}">WhatsApp</a><button class="btn2" onclick="navigator.clipboard.writeText(inv()).then(()=>toast('Link copied.'))">Copy link</button></div></div>
 <button class="btn w-full mt-6" onclick="finishOb()">Explore the platform</button><button class="text-xs text-mute w-full mt-3" onclick="closeOb();enterApp('profile')">View my profile</button>`;
 function finishOb(){closeOb();enterApp('discover');toast('Welcome. See who else is here.')}
 
@@ -479,20 +536,78 @@ const SUPPORT='YOUR_SUPPORT_EMAIL'; // put your real support email here
 const GUIDE=()=>{
   const h=t=>`<h3 class="font-bold mt-6 mb-2">${t}</h3>`,p=t=>`<p class="text-sm text-white/80 leading-relaxed">${t}</p>`,l=a=>`<ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
   const us=SUPPORT.includes('@')?`<a class="text-primary font-semibold" href="mailto:${esc(SUPPORT)}">${esc(SUPPORT)}</a>`:'the Creative Hub ZA team';
-  return p(`Creative Hub ZA is a local home for creatives and the people who book them. These guidelines keep it safe, fair and welcoming. By onboarding you agree to follow them. Last updated October 2026.`)+
-  h('Who belongs here')+p(`Every creative is welcome: musicians, dancers, tattooists, photographers, painters, 3D artists, filmmakers, designers, and anyone else who makes things. Labels, radio stations, brands and clients are welcome too. You must be 18 or older to onboard.`)+
+  return p(`Creative Hub ZA is a local home for creatives and the people looking to work with them. These guidelines keep it safe, fair and welcoming. By joining you agree to follow them. Last updated October 2026.`)+
+  h('Who belongs here')+p(`Every creative is welcome: musicians, dancers, tattooists, photographers, painters, 3D artists, filmmakers, designers, and anyone else who makes things. Labels, radio stations, brands and clients are welcome too. You must be 18 or older to join.`)+
   h('Be respectful')+l([`No harassment, bullying, threats, hate speech or discrimination of any kind.`,`No unwanted sexual advances or sexual messages.`,`Disagree politely. Criticise the work, never the person.`])+
   h('Keep it real')+l([`Post only your own work, or work you have permission to share, and credit your collaborators.`,`Never pretend to be someone else or claim work that is not yours.`,`Be honest about your experience, prices and availability.`,`If work is made with AI, say so.`])+
   h('What you can post')+l([`No sexually explicit material and no graphic violence meant to shock.`,`Any content that sexualises or harms children is banned. We remove it immediately and report it to the authorities.`,`No illegal content, and nothing that infringes someone else's copyright.`,`Artistic work that includes nudity must be non-explicit.`])+
   h('Messages')+l([`Be clear and reply within a reasonable time. A polite no is better than silence.`,`No spam, mass messages or unwanted promotion.`,`Never share someone else's private details, and never share your password with anyone.`,`Messages are stored on our systems and are not end-to-end encrypted. We only read them to look into a report or when the law requires it.`])+
   h('Briefs')+l([`A brief must describe real, paid work with a real budget, a clear deliverable and a deadline.`,`No free work dressed up as paid work.`,`Reply to people who apply, even if you choose someone else.`])+
-  h('Bookings and payments')+l([`Agree the scope, price, dates and deliverables in the chat before you pay.`,`Deposits are 25% of the budget and are paid through our payment partner. Keep your booking and payment on the platform so your deposit stays protected. Be wary of anyone who asks you to pay elsewhere.`,`If a creative cancels or does not deliver, the client is refunded the deposit.`,`If a client cancels, we look at how much work had already started and decide what is fair.`,`Creatives keep the copyright in their work unless a written agreement says otherwise. Clients receive the usage rights agreed in the brief.`,`If you cannot agree, talk it through first. If that fails, contact ${us} and we will review the chat and the booking.`])+
+  h('Bookings and payments')+l([`Agree the scope, price, dates and deliverables in the chat before you pay.`,...(C.PAYMENTS?[`Deposits are 25% of the budget and are paid through our payment partner. Keep your booking and payment on the platform so your deposit stays protected. Be wary of anyone who asks you to pay elsewhere.`,`If a creative cancels or does not deliver, the client is refunded the deposit.`,`If a client cancels, we look at how much work had already started and decide what is fair.`]:[`Secure deposits are not live yet. Until they are, agree payment terms clearly in the chat and be careful about paying anyone before you trust them.`]),`Creatives keep the copyright in their work unless a written agreement says otherwise. Clients receive the usage rights agreed in the brief.`,`If you cannot agree, talk it through first. If that fails, contact ${us} and we will review the chat and the booking.`])+
   h('Your information')+l([`We collect only what we need to run the platform: your profile, portfolio, messages and booking details.`,`We do not sell your information.`,`Your profile, portfolio and photo are public so clients can find you. Your email address is not shown to other members.`,`You can edit your profile and portfolio at any time. If you delete your account, your profile, messages and photos are removed. We may keep booking and payment records for accounting.`,`Only invite people who would want to hear from you. No spamming invite links.`])+
   h('Reporting and consequences')+p(`If you see something that breaks these guidelines, tell us at ${us}. Depending on how serious it is, we may remove content, warn you, suspend your account or remove it permanently. We report illegal activity to the authorities.`)+
   h('Changes')+p(`We may update these guidelines as the community grows. If you keep using the platform after an update, you accept the new version. We will let you know about big changes.`)
 };
 function rGuide(){$('main').innerHTML=head('Community guidelines','How we keep Creative Hub ZA safe, fair and welcoming.')+`<div class="card p-5 md:p-8 max-w-3xl">${GUIDE()}</div>`}
 function openGuide(){$('gm-body').innerHTML=GUIDE();openM('gm')}
+
+/* ---------- terms of use + privacy policy ---------- */
+// Drafted for a South African marketplace. Have an attorney review before you go public, and add
+// your registered business name below once you have one.
+const LG={
+  h:t=>`<h3 class="font-bold mt-6 mb-2">${t}</h3>`,
+  p:t=>`<p class="text-sm text-white/80 leading-relaxed">${t}</p>`,
+  l:a=>`<ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`,
+  us:()=>SUPPORT.includes('@')?`<a class="text-primary font-semibold" href="mailto:${esc(SUPPORT)}">${esc(SUPPORT)}</a>`:'the Creative Hub ZA team'
+};
+const TERMS=()=>{const{h,p,l,us}=LG;
+  return p(`These Terms of Use apply when you use Creative Hub ZA ("we", "us"). By creating an account or using the platform you agree to them, together with our Privacy Policy and Community Guidelines. Last updated October 2026.`)+
+  h('What Creative Hub ZA is')+p(`We are a marketplace that helps creatives, labels, radio stations, brands and clients find and contact each other. When a booking is agreed, the agreement is between the client and the creative. We are not a party to it, and we are not the employer, agent or manager of any member.`)+
+  h('Who can use it')+l([`You must be 18 or older.`,`The details you give us must be true and kept up to date.`,`Keep your password private. You are responsible for what happens on your account.`,`One person or business, one account.`])+
+  h('Your content')+l([`You keep the copyright in the work you upload.`,`You give us permission to display your profile, portfolio and photos on the platform so clients can find you. This ends when you remove the content or delete your account.`,`You are responsible for what you post. Only post work you made or have permission to share.`])+
+  h('Bookings, deposits and fees')+l([`Members agree scope, price, dates and deliverables with each other, preferably in the chat, before any work starts.`,`When secure deposits are switched on, the client pays a deposit through our payment partner and we hold it until the booking is completed or cancelled, as set out in the Community Guidelines.`,`We may charge a service fee on bookings made through the platform. Any fee is shown before you pay or accept a booking.`,`Keep bookings and payments on the platform. We cannot protect payments made elsewhere.`,`We do not guarantee bookings, enquiries, income or exposure to any member. Appearing on the wall or in search does not mean you will be booked.`,`We do not guarantee the quality, timing or outcome of any creative's work, or the conduct of any client.`])+
+  h('What you may not do')+l([`Break the Community Guidelines or any law.`,`Misuse the platform, for example by scraping it, spamming members or trying to access other people's accounts.`,`Copy another person's work or pretend to be someone else.`])+
+  h('Suspending or closing an account')+p(`We may remove content or suspend or close an account that breaks these Terms or the Community Guidelines. You can delete your account at any time from your profile.`)+
+  h('Our responsibility')+p(`We work to keep the platform available and accurate, but we provide it as is. To the extent the law allows, we are not liable for losses that arise from the actions of members, from work or payments agreed between members, or from the platform being unavailable. Nothing in these Terms limits any right you have under South African consumer protection law.`)+
+  h('Disputes and governing law')+p(`If something goes wrong, contact us at ${us()} and we will try to help you resolve it. These Terms are governed by the laws of South Africa.`)+
+  h('Changes')+p(`We may update these Terms as the platform grows. If you keep using the platform after an update, you accept the new version. We will tell you about big changes.`)
+};
+const PRIVACY=()=>{const{h,p,l,us}=LG;
+  return p(`This policy explains how Creative Hub ZA ("we", "us") collects and uses your personal information, in line with the Protection of Personal Information Act (POPIA). We are the responsible party for the information described here. Last updated October 2026.`)+
+  h('What we collect')+l([`Account details: your name, email address, password (kept in hashed form by our sign-in provider, so we never see it), city and the type of member you are.`,`Profile details: your craft, categories, links, photos and portfolio images.`,`Activity: messages, briefs you post or apply to, and booking records.`,`Payment records: deposit amounts and status. Card details are handled by our payment partner and never reach our servers.`,`Usage: when someone views a profile we record the view against an anonymous viewer ID stored in their browser, so creatives can see simple analytics. If you arrived through an invite link we record which one.`])+
+  h('Why we use it')+l([`To run the platform: create your account, show your profile, connect members and send notifications.`,`To process bookings and deposits.`,`To keep members safe, look into reports and prevent fraud.`,`To meet legal and accounting duties.`])+
+  h('What is public and what is private')+p(`Your name, craft, city, photo, portfolio and links are public so clients can find you. Your email address and your messages are not shown to other members.`)+
+  h('Who we share it with')+l([`Service providers that help us run the platform: for hosting, database, sign-in and file storage, payments and email. They may only use your information to provide their service to us.`,`Authorities, where the law requires it.`,`We do not sell your personal information.`])+
+  h('Where it is stored')+p(`Our providers may store information on servers outside South Africa. We choose providers that protect personal information to a standard comparable to POPIA.`)+
+  h('How long we keep it')+p(`We keep your information while your account is active. If you delete your account, we remove your profile, messages and photos. We keep booking and payment records for as long as the law requires for accounting and tax.`)+
+  h('Browser storage')+p(`We store your sign-in session and an anonymous viewer ID in your browser so the platform works. We do not use advertising trackers.`)+
+  h('Your rights')+l([`Ask what information we hold about you, and ask us to correct it.`,`Edit your profile and portfolio yourself at any time.`,`Delete your account from your profile, or ask us to delete your information.`,`Object to how we use your information.`,`Complain to the Information Regulator of South Africa if you think we have handled your information unlawfully.`])+
+  h('Keeping it safe')+p(`We use reasonable technical and organisational measures to protect your information. No online service is perfectly secure, so please use a strong password and do not share it.`)+
+  h('Children')+p(`Creative Hub ZA is for people 18 and older. If you think someone under 18 has signed up, tell us and we will remove the account.`)+
+  h('Contact us')+p(`For any privacy question or request, contact ${us()}.`)+
+  h('Changes')+p(`We may update this policy. We will tell you about big changes.`)
+};
+/* ---------- partner with us (labels, stations, brands, venues, studios) ---------- */
+function openPartner(){
+  const ok=SUPPORT.includes('@');
+  const mail=ok?`mailto:${SUPPORT}?subject=${encodeURIComponent('Partnering with Creative Hub ZA')}&body=${encodeURIComponent('Hi Creative Hub ZA,\n\nWe are [organisation name], a [label / radio station / brand / venue / studio / agency]. We would like to talk about working together.\n\nName:\nOrganisation:\nWebsite:\nWhat we are looking for:\n')}`:'';
+  $('pm-body').innerHTML=`<h3 class="font-display text-2xl font-bold">Looking for local talent?</h3>
+  <p class="text-sm text-white/80 leading-relaxed mt-2">Creative Hub ZA is a growing home for South African creatives. We are building it with labels, radio stations, brands, agencies, venues, studios and schools who want to find new talent and work with it.</p>
+  <ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed mt-4">
+    <li>Browse creatives by craft and city and look through their work.</li>
+    <li>Post a brief so the right creatives can respond.</li>
+    <li>Message creatives directly and request bookings.</li>
+    <li>Talk to us about collaborations, showcases and sponsored opportunities.</li>
+  </ul>
+  <p class="text-xs text-mute mt-4">Creatives are being onboarded now, so early partners can help shape what we build. Any work or bookings are agreed between you and the creative.</p>
+  <div class="flex flex-col sm:flex-row gap-3 mt-6">
+    <button class="btn flex-1" onclick="closeM('pm');openOnboard();if(!me&&db){ob.role='label';obPaint()}">Create a partner account</button>
+    ${ok?`<a class="btn2 flex-1 text-center" href="${esc(mail)}">Email us</a>`:''}
+  </div>`;
+  openM('pm');
+}
+function openLegal(k){$('lm-t').textContent=k==='terms'?'Terms of Use':'Privacy Policy';$('lm-body').innerHTML=k==='terms'?TERMS():PRIVACY();openM('lm')}
+
 
 /* ---------- init ---------- */
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});
