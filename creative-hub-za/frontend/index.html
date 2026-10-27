@@ -3,15 +3,35 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Creative Hub ZA | Creatives, all in one home</title>
-<meta name="description" content="Creative Hub ZA is where South African creatives show their work to clients, labels and brands looking for talent, and can potentially get booked."/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet"/>
+<title>Creative Hub ZA | Find and book South African creatives</title>
+<meta name="description" content="South African musicians, photographers, tattoo artists, dancers, painters and more build a profile to show their work. Clients, labels and brands can browse, message and request to book them."/>
+<meta name="theme-color" content="#000000"/>
+<link rel="icon" href="/favicon.ico" sizes="48x48"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Creative Hub ZA"/>
+<meta property="og:title" content="Creative Hub ZA | Find and book South African creatives"/>
+<meta property="og:description" content="Show your work. Get discovered. Musicians, photographers, tattoo artists, dancers, painters and more, all in one place."/>
+<meta property="og:url" content="https://creativehubza.netlify.app/"/>
+<meta property="og:image" content="https://creativehubza.netlify.app/og-image.png"/>
+<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Creative Hub ZA | Find and book South African creatives"/>
+<meta name="twitter:description" content="Show your work. Get discovered. Musicians, photographers, tattoo artists, dancers, painters and more, all in one place."/>
+<meta name="twitter:image" content="https://creativehubza.netlify.app/og-image.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=block" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{bg:'#0e0e11',card:'#16161b',line:'#26262f',mute:'#a19fa9',primary:'#C4293D'},fontFamily:{sans:['Manrope','sans-serif'],display:['Playfair Display','serif']}}}}</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
-.m{font-family:'Material Symbols Outlined';font-size:20px;line-height:1;vertical-align:middle}
+.m{font-family:'Material Symbols Outlined';font-weight:400;font-style:normal;font-size:20px;line-height:1;vertical-align:middle;letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;font-feature-settings:'liga'}
 .card{background:#16161b;border:1px solid #26262f;border-radius:14px}
 .inp{width:100%;padding:.7rem .9rem;background:#1d1d23;border:1px solid #2f2f3c;border-radius:10px;font-size:.875rem;color:#fff}
 .inp:focus{outline:none;border-color:#C4293D}
@@ -23,7 +43,8 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 .nav:hover{color:#fff;background:#16161b}.nav.on{color:#fff;background:#1d1d23}
 .tile{position:relative;overflow:hidden;background:#1d1d23}
 .tile img,.tile .ph{width:100%;height:100%;object-fit:cover}
-.wall .tile img,.wall .tile .ph{filter:grayscale(.5) brightness(.7);transition:.3s}
+.wall .tile img,.wall .tile .ph{filter:grayscale(.2) brightness(.85);transition:.3s}
+.wall .tile.you img{filter:none}
 .wall .tile:hover img,.wall .tile:hover .ph{filter:none;transform:scale(1.05)}
 .tile .n{position:absolute;left:.5rem;bottom:.4rem;font-size:.7rem;font-weight:700;opacity:0;transition:.2s;text-shadow:0 1px 6px #000}.tile:hover .n{opacity:1}
 .ph{display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
@@ -32,10 +53,12 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 ::-webkit-scrollbar{display:none}
 .wall{transition:opacity .45s ease}.wall.swap{opacity:0}
 @keyframes up{from{opacity:0;transform:translateY(10px)}}.up{animation:up .35s ease both}
-@media(prefers-reduced-motion:reduce){.up{animation:none}.wall{transition:none}}
+@keyframes pulse{50%{opacity:.45}}.skel{background:#1d1d23;animation:pulse 1.4s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.up{animation:none}.wall{transition:none}.skel{animation:none}}
 </style>
 </head>
 <body class="font-sans antialiased">
+<noscript><p style="padding:2rem;text-align:center">Creative Hub ZA needs JavaScript to run. Please turn it on and refresh.</p></noscript>
 
 <!-- WELCOME: live photo wall -->
 <section id="welcome" class="fixed inset-0 z-30 overflow-hidden">
@@ -45,11 +68,12 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
     <div class="font-extrabold tracking-tight text-lg">CREATIVE HUB <span class="text-primary">ZA</span></div>
     <div id="w-btns" class="flex gap-2"></div>
   </header>
-  <div id="wall-dots" class="absolute top-16 right-4 md:right-9 z-10 flex items-center text-xs text-white/70"></div>
+  <div id="wall-dots" class="absolute top-[calc(env(safe-area-inset-top)+5.25rem)] right-4 md:right-9 z-10 flex items-center text-xs text-white/70"></div>
   <div class="absolute inset-x-0 bottom-0 px-5 md:px-10 pb-[max(2rem,env(safe-area-inset-bottom))] pointer-events-none">
     <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] max-w-3xl">Creatives, <br class="hidden md:block"/>all in one home.</h1>
-    <p class="text-white/85 mt-4 max-w-xl">Creative Hub ZA is where South African creatives show their work to clients, labels and brands looking for talent, and can potentially get booked. Musicians, photographers, tattoo artists, dancers, painters and more. Tap a face to see their work, then message them or request a booking.</p>
-    <div class="flex flex-wrap gap-3 mt-6 pointer-events-auto"><button id="hero-cta" class="btn" onclick="me?enterApp('dashboard'):openOnboard()">Join as a creative</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('discover')">Explore creatives</button><button class="btn2 bg-black/40 backdrop-blur" onclick="openPartner()">Partner with us</button></div>
+    <p class="text-white text-lg md:text-xl font-semibold mt-4">Show your work. Get discovered.</p>
+    <p class="text-white/85 mt-2 max-w-xl">South African musicians, photographers, tattoo artists, dancers, painters and more build a profile to show their work. Clients, labels and brands can browse, message and request to book them.</p>
+    <div class="flex flex-wrap gap-3 mt-6 pointer-events-auto"><button id="hero-cta" class="btn" onclick="me?enterApp('dashboard'):openOnboard()">Join as a creative</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('discover')">Explore creatives</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('partners')">Partner with us</button></div>
     <div id="wall-nudge" class="pointer-events-auto mt-3"></div>
     <div class="pointer-events-auto flex flex-wrap gap-x-4 gap-y-1 mt-4 text-xs text-white/60 underline"><button onclick="enterApp('guidelines')">Community guidelines</button><button onclick="openLegal('terms')">Terms</button><button onclick="openLegal('privacy')">Privacy</button></div>
   </div>
@@ -60,7 +84,7 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
   <aside class="hidden md:flex fixed inset-y-0 left-0 w-60 flex-col border-r border-line bg-bg p-4">
     <button class="font-extrabold tracking-tight text-lg px-2 py-3 text-left" onclick="showWelcome()">CREATIVE HUB <span class="text-primary">ZA</span></button>
     <nav id="side" class="flex flex-col gap-1 mt-4"></nav>
-    <div class="mt-auto"><button class="btn w-full mb-3" onclick="openBrief()">Post a brief</button><div id="who-side"></div><div class="flex gap-3 px-2 mt-3 text-[11px] text-mute underline"><button onclick="openPartner()">Partner with us</button><button onclick="openLegal('terms')">Terms</button><button onclick="openLegal('privacy')">Privacy</button></div></div>
+    <div class="mt-auto"><button class="btn w-full mb-3" onclick="openBrief()">Post a brief</button><div id="who-side"></div><div class="flex gap-3 px-2 mt-3 text-[11px] text-mute underline"><button onclick="go('partners')">Partner with us</button><button onclick="openLegal('terms')">Terms</button><button onclick="openLegal('privacy')">Privacy</button></div></div>
   </aside>
   <header class="md:ml-60 sticky top-0 z-20 bg-bg/90 backdrop-blur border-b border-line flex items-center justify-between px-4 md:px-8 h-14 pt-[env(safe-area-inset-top)] box-content">
     <button class="md:hidden font-extrabold tracking-tight" onclick="showWelcome()">CH <span class="text-primary">ZA</span></button>
@@ -81,7 +105,7 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
   <div class="card w-full sm:max-w-md max-h-[92vh] overflow-y-auto p-6">
     <div class="flex justify-between items-center mb-4"><h3 id="auth-h" class="font-bold text-lg"></h3><button onclick="closeM('auth')"><span class="m">close</span></button></div>
     <form id="f-in" onsubmit="return signin(event)" class="space-y-3">
-      <input id="si-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="si-p" class="inp pr-11" type="password" placeholder="Password" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><button type="button" class="text-xs text-primary font-semibold" onclick="resend($('si-e').value)">Resend confirmation email</button>
+      <input id="si-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="si-p" class="inp pr-11" type="password" placeholder="Password" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div>
       <button class="btn w-full">Sign in</button><button type="button" class="text-xs text-mute w-full" onclick="forgot()">Forgot your password?</button>
       <p class="text-xs text-mute text-center">New here? <button type="button" class="text-primary font-semibold" onclick="openAuth('signup')">Create an account</button></p>
     </form>
@@ -132,7 +156,6 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
   </form>
 </div>
 <div id="gm" class="modal fixed inset-0 z-[65] bg-black/80 items-end sm:items-center justify-center sm:p-4"><div class="card w-full sm:max-w-2xl max-h-[90vh] flex flex-col"><div class="flex justify-between items-center p-4 border-b border-line"><b>Community guidelines</b><button onclick="closeM('gm')" aria-label="Close"><span class="m">close</span></button></div><div id="gm-body" class="p-5 overflow-y-auto"></div></div></div>
-<div id="pm" class="modal fixed inset-0 z-[65] bg-black/80 items-end sm:items-center justify-center sm:p-4"><div class="card w-full sm:max-w-lg max-h-[90vh] flex flex-col"><div class="flex justify-between items-center p-4 border-b border-line"><b>Partner with Creative Hub ZA</b><button onclick="closeM('pm')" aria-label="Close"><span class="m">close</span></button></div><div id="pm-body" class="p-5 overflow-y-auto"></div></div></div>
 <div id="lm" class="modal fixed inset-0 z-[65] bg-black/80 items-end sm:items-center justify-center sm:p-4"><div class="card w-full sm:max-w-2xl max-h-[90vh] flex flex-col"><div class="flex justify-between items-center p-4 border-b border-line"><b id="lm-t">Terms</b><button onclick="closeM('lm')" aria-label="Close"><span class="m">close</span></button></div><div id="lm-body" class="p-5 overflow-y-auto"></div></div></div>
 <div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-24 md:bottom-8 z-[70] flex flex-col gap-2 items-center pointer-events-none"></div>
 
@@ -162,26 +185,33 @@ const load=t=>$('main').innerHTML=head(t,'Loading…');
 async function who(ids){const need=[...new Set(ids)].filter(i=>i&&!P[i]);if(!need.length||!db)return;const{data}=await db.from('public_profiles').select('*').in('id',need);(data||[]).forEach(p=>P[p.id]=p)}
 
 /* ---------- welcome wall ---------- */
-async function loadPeople(){if(!db){wall();return}const{data}=await db.from('public_profiles').select('*').eq('role','artist').limit(1000);people=data||[];people.forEach(p=>P[p.id]=p);wall()}
+async function loadPeople(){
+  if(!db){wallReady=true;wall();return}
+  const{data,error}=await db.from('public_profiles').select('*').eq('role','artist').limit(1000);
+  if(error)console.error(error);else{people=data||[];people.forEach(p=>P[p.id]=p)}
+  wallReady=true;wall();
+}
 /* ---------- creative wall: shuffled panels that rotate ---------- */
 // Only creatives with a profile photo go on the wall. They are shuffled once per visit and split into panels of 24.
 // With more than 24 creatives the wall moves to the next panel every WALL_MS. A signed-in
 // creative starts on the panel that contains them.
 const WALL_SIZE=24,WALL_MS=15000;
-let wallOrder=[],wallPages=1,wallIdx=0,wallTimer=null,wallSig='',wallMe='';
+let wallOrder=[],wallPages=1,wallIdx=0,wallTimer=null,wallMe='',wallReady=false;
 const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
-const wallTile=p=>{const you=me&&p.id===me.id;return `<button class="tile${you?' ring-2 ring-inset ring-primary':''}" onclick="enterApp('person','${p.id}')" aria-label="${esc(p.full_name)}">${pic(p)}${you?'<span class="absolute top-1.5 left-1.5 z-10 text-[10px] font-bold bg-primary text-white px-1.5 py-0.5 rounded">You</span>':''}<span class="n">${esc(p.full_name)}</span></button>`};
-const wallJoin=()=>`<button class="tile" onclick="openAuth('signup')" aria-label="Join"><div class="ph !text-white/25"><span class="m !text-3xl">add</span></div></button>`;
+const wallTile=p=>{const you=me&&p.id===me.id;return `<button class="tile${you?' you ring-2 ring-inset ring-primary':''}" onclick="enterApp('person','${p.id}')" aria-label="${esc(p.full_name)}">${pic(p)}${you?'<span class="absolute top-1.5 left-1.5 z-10 text-[10px] font-bold bg-primary text-white px-1.5 py-0.5 rounded">You</span>':''}<span class="n">${esc(p.full_name)}</span></button>`};
+const wallJoin=first=>`<button class="tile" onclick="openAuth('signup')" aria-label="Join Creative Hub ZA"><div class="ph !text-white/30 flex-col gap-1"><span class="m !text-3xl">add</span>${first?'<span class="!font-sans !text-[11px] !font-semibold">Your face here</span>':''}</div></button>`;
 function wall(){
   const pool=people.filter(p=>p.avatar_url); // no photo, no tile: initials would break the look
-  const sig=pool.map(p=>p.id).sort().join(','),meId=me?me.id:'',changed=sig!==wallSig;
-  if(changed){wallSig=sig;wallOrder=shuffle(pool)}
-  if(changed||meId!==wallMe){ // open on the panel that contains the signed-in creative
-    wallMe=meId;wallIdx=0;
-    const mine=meId?wallOrder.findIndex(p=>p.id===meId):-1;
-    if(mine>=0)wallIdx=Math.floor(mine/WALL_SIZE);
-  }
+  const byId=new Map(pool.map(p=>[p.id,p])),meId=me?me.id:'';
+  const hadMe=!!meId&&wallOrder.some(p=>p.id===meId);
+  // Shuffle once per visit. After that the order stays put: people who are still here keep their place,
+  // newcomers are shuffled in at the end, so the wall never reshuffles under someone's eyes.
+  const keep=wallOrder.filter(p=>byId.has(p.id)).map(p=>byId.get(p.id)),seen=new Set(keep.map(p=>p.id));
+  wallOrder=keep.concat(shuffle(pool.filter(p=>!seen.has(p.id))));
   wallPages=Math.max(1,Math.ceil(wallOrder.length/WALL_SIZE));
+  const mine=meId?wallOrder.findIndex(p=>p.id===meId):-1;
+  // open on the panel with the signed-in creative: on login, on page load, and the moment their photo goes live
+  if(meId!==wallMe||(mine>=0&&!hadMe)){wallMe=meId;wallIdx=mine>=0?Math.floor(mine/WALL_SIZE):0}
   if(wallIdx>=wallPages)wallIdx=0;
   const nz=$('wall-nudge');
   if(nz)nz.innerHTML=(me&&me.role==='artist'&&!me.avatar_url)
@@ -191,8 +221,9 @@ function wall(){
 function paintWall(){
   const S=WALL_SIZE;let items=wallOrder.slice(wallIdx*S,(wallIdx+1)*S);
   if(wallPages>1&&items.length<S)items=items.concat(wallOrder.slice(0,S-items.length)); // fill the last panel from the start
+  if(!wallReady){$('wall').innerHTML='<div class="tile skel"></div>'.repeat(S);$('wall-dots').innerHTML='';return}
   let h=items.map(wallTile).join('');
-  for(let i=items.length;i<S;i++)h+=wallJoin(); // only when there are fewer than 24 creatives
+  for(let i=items.length;i<S;i++)h+=wallJoin(i===items.length); // only when there are fewer than 24 creatives
   $('wall').innerHTML=h;
   $('wall-dots').innerHTML=wallPages<2?'':wallPages<=8
     ?Array.from({length:wallPages},(_,i)=>`<button class="p-1" onclick="wallGo(${i})" aria-label="Show panel ${i+1} of ${wallPages}"><span class="block w-2 h-2 rounded-full ${i===wallIdx?'bg-white':'bg-white/35'}"></span></button>`).join('')
@@ -210,7 +241,7 @@ function startWallTimer(){
   clearInterval(wallTimer);wallTimer=null;
   if(wallPages<2)return;
   wallTimer=setInterval(()=>{
-    if(document.hidden||$('welcome').classList.contains('hidden')||$('wall').matches(':hover'))return; // don't swap under someone's cursor
+    if(document.hidden||$('welcome').classList.contains('hidden')||(matchMedia('(hover:hover)').matches&&$('wall').matches(':hover')))return; // don't swap under a mouse cursor
     wallShow((wallIdx+1)%wallPages);
   },WALL_MS);
 }
@@ -224,12 +255,12 @@ function nav(){
   const b=n=>n[0]==='chat'&&u?`<span class="bdg">${u}</span>`:'';
   $('side').innerHTML=NAV.map(n=>`<button class="nav ${n[0]===on?'on':''}" onclick="go('${n[0]}')"><span class="m">${n[2]}</span>${n[1]}${b(n)}</button>`).join('');
   $('tabs').innerHTML=NAV.map(n=>`<button class="relative flex flex-col items-center gap-0.5 py-2 text-[10px] font-semibold ${n[0]===on?'text-white':'text-mute'}" onclick="go('${n[0]}')"><span class="m">${n[2]}</span>${n[1]}${b(n)}</button>`).join('');
-  $('title').textContent=(NAV.find(n=>n[0]===on)||[])[1]||'';
+  $('title').textContent=(NAV.find(n=>n[0]===on)||[])[1]||({partners:'Partner with us',guidelines:'Community guidelines'})[on]||'';
 }
 async function go(v,a){
   if(['chat','dashboard','analytics','profile'].includes(v)&&!me){toast('Sign in to open this page.');openAuth('signin');return}
   view=v;if(v==='chat')chatWith=a||null;window.scrollTo(0,0);$('np').classList.add('hidden');nav();
-  try{await({discover:rDiscover,briefs:rBriefs,chat:rChat,dashboard:rDash,analytics:rAna,profile:rProfile,person:()=>rPerson(a),guidelines:rGuide})[v]()}catch(e){console.error(e);toast('Something went wrong loading this page.')}
+  try{await({discover:rDiscover,briefs:rBriefs,chat:rChat,dashboard:rDash,analytics:rAna,profile:rProfile,person:()=>rPerson(a),guidelines:rGuide,partners:rPartner})[v]()}catch(e){console.error(e);toast('Something went wrong loading this page.')}
 }
 function renderWho(){
   const t=me?`<button onclick="go('profile')" class="flex items-center gap-2 text-left"><span class="w-8 h-8 rounded-full overflow-hidden tile shrink-0">${pic(me)}</span><span class="hidden md:block text-sm"><b>${esc(me.full_name)}</b><br/><span class="text-xs text-mute">${ROLES[me.role]?.[0]||'Admin'}</span></span></button>`:'';
@@ -378,13 +409,14 @@ function openAuth(t){
   openM('auth');$('auth-h').textContent='Welcome back';
 }
 async function boot(u){
-  const{data}=await db.from('profiles').select('*').eq('id',u.id).single();if(!data)return false;
-  me=data;P[me.id]=me;await Promise.all([loadMsgs(),loadNotifs()]);live();renderWho();return true;
+  const{data,error}=await db.from('profiles').select('*').eq('id',u.id).maybeSingle();if(error||!data)return false;
+  me=data;P[me.id]=me;await Promise.all([loadMsgs(),loadNotifs()]);live();renderWho();wall();return true;
 }
 async function signin(e){
   e.preventDefault();const{data,error}=await db.auth.signInWithPassword({email:$('si-e').value.trim(),password:$('si-p').value});
   if(error){toast(error.message);return false}
-  await boot(data.user);e.target.reset();closeM('auth');toast('Welcome back, '+me.full_name.split(' ')[0]+'.');if(me.role==='artist'&&!me.avatar_url){openOnboard();return false}enterApp('dashboard');return false;
+  if(!await boot(data.user)){await db.auth.signOut();toast('Signed in, but your profile could not be loaded. Please try again.');return false}
+  e.target.reset();closeM('auth');toast('Welcome back, '+me.full_name.split(' ')[0]+'.');if(me.role==='artist'&&!me.avatar_url){openOnboard();return false}enterApp('dashboard');return false;
 }
 async function signOut(){await db.auth.signOut();if(chan)db.removeChannel(chan);me=null;msgs=[];notifs=[];renderWho();showWelcome();toast('Signed out.')}
 
@@ -415,10 +447,10 @@ const lnk=u=>{let h=u;try{h=new URL(u).hostname.replace('www.','')}catch(e){}con
 function portfolio(p){const l=(p.portfolio_links||[]).filter(okUrl),i=p.portfolio_images||[];return(l.length?`<div class="flex flex-wrap gap-2 mt-4">${l.map(lnk).join('')}</div>`:'')+(i.length?`<div class="grid grid-cols-3 gap-2 mt-4">${i.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer" class="tile aspect-square rounded-lg"><img src="${esc(u)}" loading="lazy" alt=""/></a>`).join('')}</div>`:'')}
 let ob={};
 const closeOb=()=>closeM('ob');
-function openOnboard(){
+function openOnboard(r){
   if(!db){toast('Add your Supabase keys to CONFIG in index.html first.');return}
-  ob=me?{step:me.role!=='artist'||me.portfolio_links?.length||me.portfolio_images?.length?3:2,role:me.role}:{step:1,role:'artist'};
-  Object.assign(ob,{cats:[...(me?.categories||[])],links:[''],imgs:[],photo:null,craft:me?.craft||''});
+  ob=me?{step:me.role!=='artist'||me.portfolio_links?.length||me.portfolio_images?.length?3:2,role:me.role}:{step:1,role:ROLES[r]?r:'artist'};
+  Object.assign(ob,{cats:[...(me?.categories||[])],links:[''],imgs:[],photo:null,craft:me?.craft||'',genre:'',fav:'',other:false});
   $('ob-bg').innerHTML=[...people.filter(p=>p.avatar_url),...people.filter(p=>!p.avatar_url)].slice(0,9).map(p=>`<div class="tile">${pic(p)}</div>`).join('');
   openM('ob');obPaint();
 }
@@ -429,17 +461,38 @@ function obPaint(){
   if(ob.step===1)obRoles();
 }
 /* step 1: who you are */
+const TASTE={
+  'Amapiano':['Kabza De Small','DJ Maphorisa','Uncle Waffles','Focalistic','Young Stunna','Major League DJz'],
+  'Hip-hop':['Nasty C','Cassper Nyovest','A-Reece','Kwesta','Emtee','Blxckie'],
+  'House':['Black Coffee','Caiiro','Culoe De Song','Da Capo','Shimza','Enoo Napa'],
+  'Gqom':['DJ Lag','Distruction Boyz','Busta 929','Rudeboyz','Griffit Vigo'],
+  'Afro-pop':['Master KG','Sho Madjozi','Mafikizolo','Zahara','Black Motion'],
+  'R&B / Soul':['Tyla','Sjava','Msaki','Tresor','Zoe Modiga'],
+  'Gospel':['Joyous Celebration','Spirit of Praise','Rebecca Malope','Dr Tumi','Lebo Sekgobela'],
+  'Rock / Alternative':['Prime Circle','Seether','BCUC','Mi Casa','The Parlotones'],
+  'Jazz':['Nduduzo Makhathini','Mandisi Dyantyis','Thandi Ntuli','Ndlovu Youth Choir'],
+  'Kwaito':['Zola 7','Mdu Masilela','Mapaputsi','Trompies','Professor']
+};
+function obGenre(i){ob.genre=Object.keys(TASTE)[i];ob.fav='';ob.other=false;document.querySelectorAll('#ob-gen .chip').forEach((c,j)=>c.classList.toggle('on',j===i));obFavs()}
+function obFavs(){const l=TASTE[ob.genre]||[];$('ob-favs').innerHTML=l.map((a,i)=>`<button type="button" class="chip ${ob.fav===a&&!ob.other?'on':''}" onclick="obPick(${i})">${esc(a)}</button>`).join('')+`<button type="button" class="chip ${ob.other?'on':''}" onclick="obPick(-1)">Someone else</button>`+(ob.other?`<input id="ob-oth" class="inp mt-2 w-full" placeholder="Type your favourite artist" maxlength="60" oninput="ob.fav=this.value"/>`:'');if(ob.other)$('ob-oth').focus()}
+function obPick(i){if(i<0){ob.other=true;ob.fav=''}else{ob.other=false;ob.fav=TASTE[ob.genre][i]}obFavs()}
 const ob1h=()=>`<h2 class="font-display text-3xl font-bold">Let's get you on the wall.</h2><p class="text-mute text-sm mt-2">Two minutes, then explore everyone on the platform.</p>
 <p class="text-xs text-mute mt-6 mb-2">I am a…</p><div id="ob-roles" class="grid grid-cols-2 gap-2"></div>
-<form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="ob-p" class="inp pr-11" type="password" minlength="6" placeholder="Password (6+ characters)" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select><label class="flex gap-3 items-start text-xs text-mute cursor-pointer"><input id="ob-ok" type="checkbox" required class="mt-0.5 w-4 h-4 shrink-0 accent-[#C4293D]"/><span>I am 18 or older and I agree to the <button type="button" class="text-primary font-semibold underline" onclick="openLegal('terms')">Terms</button>, <button type="button" class="text-primary font-semibold underline" onclick="openLegal('privacy')">Privacy Policy</button> and <button type="button" class="text-primary font-semibold underline" onclick="openGuide()">community guidelines</button>.</span></label><button class="btn w-full">Continue</button></form>
+<form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="ob-p" class="inp pr-11" type="password" minlength="6" placeholder="Password (6+ characters)" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select>
+<div class="card p-3"><p class="text-sm font-semibold">Quick check: what do you listen to?</p><p class="text-xs text-mute mt-1">Pick your favourite genre, then your favourite artist in it.</p><div id="ob-gen" class="flex flex-wrap gap-2 mt-3">${Object.keys(TASTE).map((g,i)=>`<button type="button" class="chip ${ob.genre===g?'on':''}" onclick="obGenre(${i})">${esc(g)}</button>`).join('')}</div><div id="ob-favs" class="flex flex-wrap gap-2 mt-3"></div></div>
+<input id="ob-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0"/>
+<label class="flex gap-3 items-start text-xs text-mute cursor-pointer"><input id="ob-ok" type="checkbox" required class="mt-0.5 w-4 h-4 shrink-0 accent-[#C4293D]"/><span>I am 18 or older and I agree to the <button type="button" class="text-primary font-semibold underline" onclick="openLegal('terms')">Terms</button>, <button type="button" class="text-primary font-semibold underline" onclick="openLegal('privacy')">Privacy Policy</button> and <button type="button" class="text-primary font-semibold underline" onclick="openGuide()">community guidelines</button>.</span></label><button class="btn w-full">Continue</button></form>
 <p class="text-xs text-mute text-center mt-4">Already have an account? <button class="text-primary font-semibold" onclick="closeOb();openAuth('signin')">Sign in</button></p>`;
 function obRoles(){$('ob-roles').innerHTML=Object.entries(ROLES).map(([k,v])=>`<button type="button" onclick="ob.role='${k}';obRoles()" class="text-left p-3 rounded-xl border text-sm ${k===ob.role?'border-primary bg-primary/10':'border-line'}"><span class="m text-primary">${v[1]}</span><br/><b>${v[0]}</b></button>`).join('')}
 async function ob1(e){
-  e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;b.textContent='Creating your account…';
-  const{data,error}=await db.auth.signUp({email:(ob.email=$('ob-e').value.trim()),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF,agreed_guidelines:new Date().toISOString(),agreed_terms:new Date().toISOString()}}});
+  e.preventDefault();if($('ob-hp').value)return false; // hidden field: only bots fill it
+  const fav=(ob.fav||'').trim();if(!ob.genre||!fav){toast('Pick your favourite genre and artist to continue.');return false}
+  const b=e.target.querySelector('button.btn');b.disabled=true;b.textContent='Creating your account…';
+  const{data,error}=await db.auth.signUp({email:(ob.email=$('ob-e').value.trim()),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF,fav_genre:ob.genre,fav_artist:fav.slice(0,60),agreed_guidelines:new Date().toISOString(),agreed_terms:new Date().toISOString()}}});
   if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return false}
-  if(!data.session){$('ob-body').innerHTML='<div class="up"><span class="m text-primary !text-4xl">mail</span><h2 class="font-display text-3xl font-bold mt-3">Check your email</h2><p class="text-mute text-sm mt-2">Tap the confirmation link we sent you, then sign in and we will pick up right where you left off.</p><button class="btn2 mt-4" onclick="resend(ob.email)">Resend email</button></div>';return false}
-  await boot(data.user);ob.step=ob.role==='artist'?2:3;obPaint();return false;
+  if(!data.session){toast('Account created. Please sign in to continue.');closeOb();openAuth('signin');return false}
+  if(!await boot(data.user)){toast('Your account was created. Please sign in to continue.');closeOb();openAuth('signin');return false}
+  ob.step=ob.role==='artist'?2:3;obPaint();return false;
 }
 /* step 2: portfolio (artists) */
 const ob2h=()=>`<h2 class="font-display text-3xl font-bold">Show us your work.</h2><p class="text-mute text-sm mt-2">Clients are more likely to book what they can see. Share a link, upload pictures, or both.</p>
@@ -483,7 +536,6 @@ const ob4h=()=>`<div class="w-16 h-16 rounded-full bg-primary/15 flex items-cent
 function finishOb(){closeOb();enterApp('discover');toast('Welcome. See who else is here.')}
 
 function eye(b){const i=b.previousElementSibling,s=i.type==='password';i.type=s?'text':'password';b.firstChild.textContent=s?'visibility_off':'visibility'}
-async function resend(email){if(!email)return toast('Enter your email first.');const{error}=await db.auth.resend({type:'signup',email});toast(error?error.message:'Confirmation email sent. Check your inbox and spam.')}
 function viewOnce(id){try{const a=JSON.parse(sessionStorage.getItem('pv')||'[]');if(a.includes(id))return false;a.push(id);sessionStorage.setItem('pv',JSON.stringify(a))}catch(e){}return true}
 async function delAcct(){
   if(prompt('This permanently deletes your profile, messages and photos. Type DELETE to confirm.')!=='DELETE')return;
@@ -532,7 +584,7 @@ db?.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY')openM('pw')});
 
 async function chPw(){const p=$('np1').value;if(p.length<6)return toast('Use at least 6 characters.');const{error}=await db.auth.updateUser({password:p});if(error)return toast(error.message);$('np1').value='';toast('Password updated.')}
 /* ---------- community guidelines ---------- */
-const SUPPORT='YOUR_SUPPORT_EMAIL'; // put your real support email here
+const SUPPORT='creativehub.admin@gmail.com';
 const GUIDE=()=>{
   const h=t=>`<h3 class="font-bold mt-6 mb-2">${t}</h3>`,p=t=>`<p class="text-sm text-white/80 leading-relaxed">${t}</p>`,l=a=>`<ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
   const us=SUPPORT.includes('@')?`<a class="text-primary font-semibold" href="mailto:${esc(SUPPORT)}">${esc(SUPPORT)}</a>`:'the Creative Hub ZA team';
@@ -588,23 +640,19 @@ const PRIVACY=()=>{const{h,p,l,us}=LG;
   h('Changes')+p(`We may update this policy. We will tell you about big changes.`)
 };
 /* ---------- partner with us (labels, stations, brands, venues, studios) ---------- */
-function openPartner(){
-  const ok=SUPPORT.includes('@');
-  const mail=ok?`mailto:${SUPPORT}?subject=${encodeURIComponent('Partnering with Creative Hub ZA')}&body=${encodeURIComponent('Hi Creative Hub ZA,\n\nWe are [organisation name], a [label / radio station / brand / venue / studio / agency]. We would like to talk about working together.\n\nName:\nOrganisation:\nWebsite:\nWhat we are looking for:\n')}`:'';
-  $('pm-body').innerHTML=`<h3 class="font-display text-2xl font-bold">Looking for local talent?</h3>
+function rPartner(){
+  const mail=`mailto:${SUPPORT}?subject=${encodeURIComponent('Partnering with Creative Hub ZA')}&body=${encodeURIComponent('Hi Creative Hub ZA,\n\nWe are [organisation name], a [label / radio station / brand / venue / studio / agency]. We would like to talk about working together.\n\nName:\nOrganisation:\nWebsite:\nWhat we are looking for:\n')}`;
+  const partner=me&&me.role!=='artist';
+  $('main').innerHTML=head('Partner with us','For labels, radio stations and brands who want to find and work with South African creatives.')+
+  `<div class="max-w-3xl space-y-4">
+  <div class="card p-5 md:p-6"><h2 class="font-display text-2xl md:text-3xl font-bold">Looking for local talent?</h2>
   <p class="text-sm text-white/80 leading-relaxed mt-2">Creative Hub ZA is a growing home for South African creatives. We are building it with labels, radio stations, brands, agencies, venues, studios and schools who want to find new talent and work with it.</p>
-  <ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed mt-4">
-    <li>Browse creatives by craft and city and look through their work.</li>
-    <li>Post a brief so the right creatives can respond.</li>
-    <li>Message creatives directly and request bookings.</li>
-    <li>Talk to us about collaborations, showcases and sponsored opportunities.</li>
-  </ul>
-  <p class="text-xs text-mute mt-4">Creatives are being onboarded now, so early partners can help shape what we build. Any work or bookings are agreed between you and the creative.</p>
-  <div class="flex flex-col sm:flex-row gap-3 mt-6">
-    <button class="btn flex-1" onclick="closeM('pm');openOnboard();if(!me&&db){ob.role='label';obPaint()}">Create a partner account</button>
-    ${ok?`<a class="btn2 flex-1 text-center" href="${esc(mail)}">Email us</a>`:''}
-  </div>`;
-  openM('pm');
+  <ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed mt-4"><li>Browse creatives by craft and city and look through their work.</li><li>Post a brief so the right creatives can respond.</li><li>Message creatives directly and request bookings.</li><li>Talk to us about collaborations, showcases and sponsored opportunities.</li></ul>
+  <p class="text-xs text-mute mt-4">Creatives are being onboarded now, so early partners can help shape what we build. Any work or bookings are agreed between you and the creative.</p></div>
+  <div class="card p-5 md:p-6">${partner
+    ?`<b>You are signed in as ${esc(ROLES[me.role]?.[0]||'a partner')}.</b><p class="text-xs text-mute mt-1">Find talent or tell creatives what you need.</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn" onclick="openBrief()">Post a brief</button><button class="btn2" onclick="go('discover')">Browse creatives</button></div>`
+    :`<b>Create your partner account</b><p class="text-xs text-mute mt-1">Pick what best describes you. Agencies, venues, studios and schools can choose Brand / business.</p><div class="grid sm:grid-cols-3 gap-2 mt-4">${['label','radio','brand'].map(k=>`<button class="text-left p-3 rounded-xl border border-line hover:border-primary" onclick="openOnboard('${k}')"><span class="m text-primary">${ROLES[k][1]}</span><br/><b class="text-sm">${ROLES[k][0]}</b></button>`).join('')}</div>${me?'':`<p class="text-xs text-mute mt-4">Already have an account? <button class="text-primary font-semibold" onclick="openAuth('signin')">Sign in</button></p>`}`}</div>
+  <p class="text-sm text-mute">Prefer to talk first? <a class="text-primary font-semibold" href="${esc(mail)}">Email ${esc(SUPPORT)}</a></p></div>`;
 }
 function openLegal(k){$('lm-t').textContent=k==='terms'?'Terms of Use':'Privacy Policy';$('lm-body').innerHTML=k==='terms'?TERMS():PRIVACY();openM('lm')}
 
