@@ -408,14 +408,23 @@ function openAuth(t){
   if(t==='signup'){closeM('auth');openOnboard();return}
   openM('auth');$('auth-h').textContent='Welcome back';
 }
+let bootErr='';
 async function boot(u){
-  const{data,error}=await db.from('profiles').select('*').eq('id',u.id).maybeSingle();if(error||!data)return false;
+  let{data,error}=await db.from('profiles').select('*').eq('id',u.id).maybeSingle();
+  if(error){console.error('Profile load failed:',error);bootErr=error.message;return false}
+  if(!data){ // signed up but no profile row (e.g. account made by hand): rebuild it from the sign-up details
+    const m=u.user_metadata||{},row={id:u.id,full_name:m.full_name||(u.email||'Member').split('@')[0],role:ROLES[m.role]?m.role:'artist',metro:m.metro||CITIES[0]};
+    const ins=await db.from('profiles').insert(row).select().maybeSingle();
+    if(ins.error||!ins.data){console.error('Profile create failed:',ins.error);bootErr=ins.error?.message||'no profile';return false}
+    data=ins.data;
+  }
+  bootErr='';
   me=data;P[me.id]=me;await Promise.all([loadMsgs(),loadNotifs()]);live();renderWho();wall();return true;
 }
 async function signin(e){
   e.preventDefault();const{data,error}=await db.auth.signInWithPassword({email:$('si-e').value.trim(),password:$('si-p').value});
   if(error){toast(error.message);return false}
-  if(!await boot(data.user)){await db.auth.signOut();toast('Signed in, but your profile could not be loaded. Please try again.');return false}
+  if(!await boot(data.user)){await db.auth.signOut();toast('Signed in, but your profile could not be loaded'+(bootErr?': '+bootErr:'.'));return false}
   e.target.reset();closeM('auth');toast('Welcome back, '+me.full_name.split(' ')[0]+'.');if(me.role==='artist'&&!me.avatar_url){openOnboard();return false}enterApp('dashboard');return false;
 }
 async function signOut(){await db.auth.signOut();if(chan)db.removeChannel(chan);me=null;msgs=[];notifs=[];renderWho();showWelcome();toast('Signed out.')}
