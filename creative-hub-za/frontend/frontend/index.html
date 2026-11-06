@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Creative Hub ZA | Find and book South African creatives</title>
-<meta name="description" content="South African musicians, photographers, tattoo artists, dancers, painters and more build a profile to show their work. Clients, labels and brands can browse, message and request to book them."/>
-<meta name="theme-color" content="#000000"/>
-<link rel="icon" href="/favicon.ico" sizes="48x48"/>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"/>
-<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-<link rel="manifest" href="/site.webmanifest"/>
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="Creative Hub ZA"/>
-<meta property="og:title" content="Creative Hub ZA | Find and book South African creatives"/>
-<meta property="og:description" content="Show your work. Get discovered. Musicians, photographers, tattoo artists, dancers, painters and more, all in one place."/>
-<meta property="og:url" content="https://creativehubza.netlify.app/"/>
-<meta property="og:image" content="https://creativehubza.netlify.app/og-image.png"/>
-<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Creative Hub ZA | Find and book South African creatives"/>
-<meta name="twitter:description" content="Show your work. Get discovered. Musicians, photographers, tattoo artists, dancers, painters and more, all in one place."/>
-<meta name="twitter:image" content="https://creativehubza.netlify.app/og-image.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=block" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{bg:'#0e0e11',card:'#16161b',line:'#26262f',mute:'#a19fa9',primary:'#C4293D'},fontFamily:{sans:['Manrope','sans-serif'],display:['Playfair Display','serif']}}}}</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
-.m{font-family:'Material Symbols Outlined';font-weight:400;font-style:normal;font-size:20px;line-height:1;vertical-align:middle;letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;font-feature-settings:'liga'}
-.card{background:#16161b;border:1px solid #26262f;border-radius:14px}
-.inp{width:100%;padding:.7rem .9rem;background:#1d1d23;border:1px solid #2f2f3c;border-radius:10px;font-size:.875rem;color:#fff}
-.inp:focus{outline:none;border-color:#C4293D}
-.btn{background:#C4293D;color:#fff;font-weight:600;font-size:.875rem;padding:.65rem 1.1rem;border-radius:10px}.btn:hover{background:#D93A50}
-.btn2{border:1px solid #33333f;color:#fff;font-weight:600;font-size:.875rem;padding:.65rem 1.1rem;border-radius:10px}.btn2:hover{background:#1d1d23}
-.chip{padding:.4rem .9rem;border-radius:99px;font-size:.8rem;font-weight:600;border:1px solid #2f2f3c;color:#a19fa9;white-space:nowrap}
-.chip.on{background:#fff;color:#0e0e11;border-color:#fff}
-.nav{position:relative;display:flex;align-items:center;gap:.75rem;padding:.6rem .8rem;border-radius:10px;color:#a19fa9;font-weight:600;font-size:.9rem}
-.nav:hover{color:#fff;background:#16161b}.nav.on{color:#fff;background:#1d1d23}
-.tile{position:relative;overflow:hidden;background:#1d1d23}
-.tile img,.tile .ph{width:100%;height:100%;object-fit:cover}
-.wall .tile img,.wall .tile .ph{filter:grayscale(.2) brightness(.85);transition:.3s}
-.wall .tile.you img{filter:none}
-.wall .tile:hover img,.wall .tile:hover .ph{filter:none;transform:scale(1.05)}
-.tile .n{position:absolute;left:.5rem;bottom:.4rem;font-size:.7rem;font-weight:700;opacity:0;transition:.2s;text-shadow:0 1px 6px #000}.tile:hover .n{opacity:1}
-.ph{display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
-.modal{display:none}.modal.on{display:flex}
-.bdg{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:99px;background:#C4293D;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
-::-webkit-scrollbar{display:none}
-.wall{transition:opacity .45s ease}.wall.swap{opacity:0}
-@keyframes up{from{opacity:0;transform:translateY(10px)}}.up{animation:up .35s ease both}
-@keyframes pulse{50%{opacity:.45}}.skel{background:#1d1d23;animation:pulse 1.4s ease-in-out infinite}
-@media(prefers-reduced-motion:reduce){.up{animation:none}.wall{transition:none}.skel{animation:none}}
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Creative Hub ZA | Find and book South African creatives</title>
+  <meta name="description" content="South African musicians, photographers, tattoo artists, dancers, painters and more build a profile to show their work. Clients, labels and brands can browse, message and request to book them."/>
+  <meta name="theme-color" content="#000000"/>
+  <link rel="icon" href="/favicon.ico" sizes="48x48"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Creative Hub ZA"/>
+  <meta property="og:title" content="Creative Hub ZA | Find and book South African creatives"/>
+  <meta property="og:description" content="Show your work. Get discovered. Musicians, photographers, tattoo artists, dancers, painters and more, all in one place."/>
+  <meta property="og:url" content="https://creativehubza.netlify.app/"/>
+  <meta property="og:image" content="https://creativehubza.netlify.app/og-image.png"/>
+  <meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Creative Hub ZA | Find and book South African creatives"/>
+  <meta name="twitter:description" content="Show your work. Get discovered. Musicians, photographers, tattoo artists, dancers, painters and more, all in one place."/>
+  <meta name="twitter:image" content="https://creativehubza.netlify.app/og-image.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=block" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{bg:'#0e0e11',card:'#16161b',line:'#26262f',mute:'#a19fa9',primary:'#C4293D'},fontFamily:{sans:['Manrope','sans-serif'],display:['Playfair Display','serif']}}}}</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
+    .m{font-family:'Material Symbols Outlined';font-weight:400;font-style:normal;font-size:20px;line-height:1;vertical-align:middle;letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;font-feature-settings:'liga'}
+    .card{background:#16161b;border:1px solid #26262f;border-radius:14px}
+    .inp{width:100%;padding:.7rem .9rem;background:#1d1d23;border:1px solid #2f2f3c;border-radius:10px;font-size:.875rem;color:#fff}
+    .inp:focus{outline:none;border-color:#C4293D}
+    .btn{background:#C4293D;color:#fff;font-weight:600;font-size:.875rem;padding:.65rem 1.1rem;border-radius:10px}.btn:hover{background:#D93A50}
+    .btn2{border:1px solid #33333f;color:#fff;font-weight:600;font-size:.875rem;padding:.65rem 1.1rem;border-radius:10px}.btn2:hover{background:#1d1d23}
+    .chip{padding:.4rem .9rem;border-radius:99px;font-size:.8rem;font-weight:600;border:1px solid #2f2f3c;color:#a19fa9;white-space:nowrap}
+    .chip.on{background:#fff;color:#0e0e11;border-color:#fff}
+    .nav{position:relative;display:flex;align-items:center;gap:.75rem;padding:.6rem .8rem;border-radius:10px;color:#a19fa9;font-weight:600;font-size:.9rem}
+    .nav:hover{color:#fff;background:#16161b}.nav.on{color:#fff;background:#1d1d23}
+    .tile{position:relative;overflow:hidden;background:#1d1d23}
+    .tile img,.tile .ph{width:100%;height:100%;object-fit:cover}
+    .wall .tile img,.wall .tile .ph{filter:grayscale(.2) brightness(.85);transition:.3s}
+    .wall .tile.you img{filter:none}
+    .wall .tile:hover img,.wall .tile:hover .ph{filter:none;transform:scale(1.05)}
+    .tile .n{position:absolute;left:.5rem;bottom:.4rem;font-size:.7rem;font-weight:700;opacity:0;transition:.2s;text-shadow:0 1px 6px #000}.tile:hover .n{opacity:1}
+    .ph{display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
+    .modal{display:none}.modal.on{display:flex}
+    .bdg{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:99px;background:#C4293D;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
+    ::-webkit-scrollbar{display:none}
+    .wall{transition:opacity .45s ease}.wall.swap{opacity:0}
+    @keyframes up{from{opacity:0;transform:translateY(10px)}}.up{animation:up .35s ease both}
+    @keyframes pulse{50%{opacity:.45}}.skel{background:#1d1d23;animation:pulse 1.4s ease-in-out infinite}
+    @media(prefers-reduced-motion:reduce){.up{animation:none}.wall{transition:none}.skel{animation:none}}
+  </style>
 </head>
 <body class="font-sans antialiased">
 <noscript><p style="padding:2rem;text-align:center">Creative Hub ZA needs JavaScript to run. Please turn it on and refresh.</p></noscript>
@@ -160,515 +160,515 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 <div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-24 md:bottom-8 z-[70] flex flex-col gap-2 items-center pointer-events-none"></div>
 
 <script>
-/* Publishable keys only. Never put a secret / service_role key here. */
-// PAYMENTS: keep false until the backend is deployed and Yoco is set up. While false, the
-// booking form only sends a message (no budget, no deposit), so nobody hits a payment error.
-const C={URL:'https://xbqmsgufdhqfpkkelcas.supabase.co',KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo',API:'http://localhost:5000',PAYMENTS:false};
-const db=C.URL.startsWith('http')?supabase.createClient(C.URL,C.KEY):null;
-const CATS=['Music','Dance','Tattoo','Photography','Fine art','3D / VFX','Film & video','Design','Other'];
-const CITIES=['Johannesburg','Cape Town','Durban','Pretoria','Gqeberha','Bloemfontein'];
-const ROLES={artist:['Artist / Creator','brush'],label:['Record label','library_music'],radio:['Radio station','radio'],brand:['Brand / business','storefront']};
-const NAV=[['discover','Discover','explore'],['briefs','Briefs','work'],['chat','Messages','chat'],['dashboard','Dashboard','space_dashboard'],['analytics','Analytics','monitoring'],['profile','Profile','person']];
-let me=null,view='discover',cat='All',q='',people=[],P={},msgs=[],notifs=[],BR=[],chatWith=null,draft='',sel=[],photo=null,bk=null,role='artist',chan=null;
+  /* Publishable keys only. Never put a secret / service_role key here. */
+  // PAYMENTS: keep false until the backend is deployed and Yoco is set up. While false, the
+  // booking form only sends a message (no budget, no deposit), so nobody hits a payment error.
+  const C={URL:'https://xbqmsgufdhqfpkkelcas.supabase.co',KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo',API:'http://localhost:5000',PAYMENTS:false};
+  const db=C.URL.startsWith('http')?supabase.createClient(C.URL,C.KEY):null;
+  const CATS=['Music','Dance','Tattoo','Photography','Fine art','3D / VFX','Film & video','Design','Other'];
+  const CITIES=['Johannesburg','Cape Town','Durban','Pretoria','Gqeberha','Bloemfontein'];
+  const ROLES={artist:['Artist / Creator','brush'],label:['Record label','library_music'],radio:['Radio station','radio'],brand:['Brand / business','storefront']};
+  const NAV=[['discover','Discover','explore'],['briefs','Briefs','work'],['chat','Messages','chat'],['dashboard','Dashboard','space_dashboard'],['analytics','Analytics','monitoring'],['profile','Profile','person']];
+  let me=null,view='discover',cat='All',q='',people=[],P={},msgs=[],notifs=[],BR=[],chatWith=null,draft='',sel=[],photo=null,bk=null,role='artist',chan=null;
 
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const R=n=>'R'+Math.round(Number(n)||0).toLocaleString('en-ZA');
-const hm=t=>new Date(t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-function toast(t){const e=document.createElement('div');e.className='bg-[#1d1d23] border border-primary/40 px-4 py-3 rounded-xl text-sm shadow-2xl max-w-xs text-center';e.textContent=t;$('toast').appendChild(e);setTimeout(()=>e.remove(),3500)}
-const openM=id=>$(id).classList.add('on'),closeM=id=>$(id).classList.remove('on');
-const hue=s=>[...String(s)].reduce((a,c)=>a+c.charCodeAt(0),0)%360;
-const pic=p=>p?.avatar_url?`<img src="${esc(p.avatar_url)}" alt="${esc(p.full_name)}" loading="lazy"/>`:`<div class="ph" style="background:linear-gradient(135deg,hsl(${hue(p?.full_name)} 55% 28%),#16161b)">${esc((p?.full_name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase())}</div>`;
-const tags=p=>(p.categories||[]).map(c=>`<span class="text-[11px] px-2 py-0.5 rounded-full bg-[#1d1d23] border border-line text-mute">${esc(c)}</span>`).join(' ');
-const head=(t,s)=>`<div class="mb-6"><h1 class="font-display text-3xl font-bold md:hidden">${t}</h1><p class="text-mute text-sm mt-1">${s}</p></div>`;
-const load=t=>$('main').innerHTML=head(t,'Loading…');
-async function who(ids){const need=[...new Set(ids)].filter(i=>i&&!P[i]);if(!need.length||!db)return;const{data}=await db.from('public_profiles').select('*').in('id',need);(data||[]).forEach(p=>P[p.id]=p)}
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const R=n=>'R'+Math.round(Number(n)||0).toLocaleString('en-ZA');
+  const hm=t=>new Date(t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  function toast(t){const e=document.createElement('div');e.className='bg-[#1d1d23] border border-primary/40 px-4 py-3 rounded-xl text-sm shadow-2xl max-w-xs text-center';e.textContent=t;$('toast').appendChild(e);setTimeout(()=>e.remove(),3500)}
+  const openM=id=>$(id).classList.add('on'),closeM=id=>$(id).classList.remove('on');
+  const hue=s=>[...String(s)].reduce((a,c)=>a+c.charCodeAt(0),0)%360;
+  const pic=p=>p?.avatar_url?`<img src="${esc(p.avatar_url)}" alt="${esc(p.full_name)}" loading="lazy"/>`:`<div class="ph" style="background:linear-gradient(135deg,hsl(${hue(p?.full_name)} 55% 28%),#16161b)">${esc((p?.full_name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase())}</div>`;
+  const tags=p=>(p.categories||[]).map(c=>`<span class="text-[11px] px-2 py-0.5 rounded-full bg-[#1d1d23] border border-line text-mute">${esc(c)}</span>`).join(' ');
+  const head=(t,s)=>`<div class="mb-6"><h1 class="font-display text-3xl font-bold md:hidden">${t}</h1><p class="text-mute text-sm mt-1">${s}</p></div>`;
+  const load=t=>$('main').innerHTML=head(t,'Loading…');
+  async function who(ids){const need=[...new Set(ids)].filter(i=>i&&!P[i]);if(!need.length||!db)return;const{data}=await db.from('public_profiles').select('*').in('id',need);(data||[]).forEach(p=>P[p.id]=p)}
 
-/* ---------- welcome wall ---------- */
-async function loadPeople(){
-  if(!db){wallReady=true;wall();return}
-  const{data,error}=await db.from('public_profiles').select('*').eq('role','artist').limit(1000);
-  if(error)console.error(error);else{people=data||[];people.forEach(p=>P[p.id]=p)}
-  wallReady=true;wall();
-}
-/* ---------- creative wall: shuffled panels that rotate ---------- */
-// Only creatives with a profile photo go on the wall. They are shuffled once per visit and split into panels of 24.
-// With more than 24 creatives the wall moves to the next panel every WALL_MS. A signed-in
-// creative starts on the panel that contains them.
-const WALL_SIZE=24,WALL_MS=15000;
-let wallOrder=[],wallPages=1,wallIdx=0,wallTimer=null,wallMe='',wallReady=false;
-const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
-const wallTile=p=>{const you=me&&p.id===me.id;return `<button class="tile${you?' you ring-2 ring-inset ring-primary':''}" onclick="enterApp('person','${p.id}')" aria-label="${esc(p.full_name)}">${pic(p)}${you?'<span class="absolute top-1.5 left-1.5 z-10 text-[10px] font-bold bg-primary text-white px-1.5 py-0.5 rounded">You</span>':''}<span class="n">${esc(p.full_name)}</span></button>`};
-const wallJoin=first=>`<button class="tile" onclick="openAuth('signup')" aria-label="Join Creative Hub ZA"><div class="ph !text-white/30 flex-col gap-1"><span class="m !text-3xl">add</span>${first?'<span class="!font-sans !text-[11px] !font-semibold">Your face here</span>':''}</div></button>`;
-function wall(){
-  const pool=people.filter(p=>p.avatar_url); // no photo, no tile: initials would break the look
-  const byId=new Map(pool.map(p=>[p.id,p])),meId=me?me.id:'';
-  const hadMe=!!meId&&wallOrder.some(p=>p.id===meId);
-  // Shuffle once per visit. After that the order stays put: people who are still here keep their place,
-  // newcomers are shuffled in at the end, so the wall never reshuffles under someone's eyes.
-  const keep=wallOrder.filter(p=>byId.has(p.id)).map(p=>byId.get(p.id)),seen=new Set(keep.map(p=>p.id));
-  wallOrder=keep.concat(shuffle(pool.filter(p=>!seen.has(p.id))));
-  wallPages=Math.max(1,Math.ceil(wallOrder.length/WALL_SIZE));
-  const mine=meId?wallOrder.findIndex(p=>p.id===meId):-1;
-  // open on the panel with the signed-in creative: on login, on page load, and the moment their photo goes live
-  if(meId!==wallMe||(mine>=0&&!hadMe)){wallMe=meId;wallIdx=mine>=0?Math.floor(mine/WALL_SIZE):0}
-  if(wallIdx>=wallPages)wallIdx=0;
-  const nz=$('wall-nudge');
-  if(nz)nz.innerHTML=(me&&me.role==='artist'&&!me.avatar_url)
-    ?'<div class="inline-flex items-center gap-3 bg-black/55 backdrop-blur rounded-xl px-3 py-2 text-xs text-white/85"><span>You are not on the wall yet. Add a profile photo to appear here.</span><button class="btn2 !py-1.5 !px-3 text-xs" onclick="enterApp(\'profile\')">Add photo</button></div>':'';
-  paintWall();startWallTimer();
-}
-function paintWall(){
-  const S=WALL_SIZE;let items=wallOrder.slice(wallIdx*S,(wallIdx+1)*S);
-  if(wallPages>1&&items.length<S)items=items.concat(wallOrder.slice(0,S-items.length)); // fill the last panel from the start
-  if(!wallReady){$('wall').innerHTML='<div class="tile skel"></div>'.repeat(S);$('wall-dots').innerHTML='';return}
-  let h=items.map(wallTile).join('');
-  for(let i=items.length;i<S;i++)h+=wallJoin(i===items.length); // only when there are fewer than 24 creatives
-  $('wall').innerHTML=h;
-  $('wall-dots').innerHTML=wallPages<2?'':wallPages<=8
-    ?Array.from({length:wallPages},(_,i)=>`<button class="p-1" onclick="wallGo(${i})" aria-label="Show panel ${i+1} of ${wallPages}"><span class="block w-2 h-2 rounded-full ${i===wallIdx?'bg-white':'bg-white/35'}"></span></button>`).join('')
-    :`<span>${wallIdx+1} / ${wallPages}</span>`;
-  if(wallPages>1){const n=(wallIdx+1)%wallPages;wallOrder.slice(n*S,(n+1)*S).forEach(p=>{if(p.avatar_url)new Image().src=p.avatar_url})} // warm the next panel
-}
-function wallShow(i){
-  const w=$('wall');if(!w)return;
-  const swap=()=>{wallIdx=i;paintWall();w.classList.remove('swap')};
-  if(matchMedia('(prefers-reduced-motion:reduce)').matches){swap();return}
-  w.classList.add('swap');setTimeout(swap,450);
-}
-function wallGo(i){wallShow(i);startWallTimer()}
-function startWallTimer(){
-  clearInterval(wallTimer);wallTimer=null;
-  if(wallPages<2)return;
-  wallTimer=setInterval(()=>{
-    if(document.hidden||$('welcome').classList.contains('hidden')||(matchMedia('(hover:hover)').matches&&$('wall').matches(':hover')))return; // don't swap under a mouse cursor
-    wallShow((wallIdx+1)%wallPages);
-  },WALL_MS);
-}
-function showWelcome(){$('welcome').classList.remove('hidden');$('app').classList.add('hidden');loadPeople()}
-function enterApp(v,a){$('welcome').classList.add('hidden');$('app').classList.remove('hidden');go(v,a)}
+  /* ---------- welcome wall ---------- */
+  async function loadPeople(){
+    if(!db){wallReady=true;wall();return}
+    const{data,error}=await db.from('public_profiles').select('*').eq('role','artist').limit(1000);
+    if(error)console.error(error);else{people=data||[];people.forEach(p=>P[p.id]=p)}
+    wallReady=true;wall();
+  }
+  /* ---------- creative wall: shuffled panels that rotate ---------- */
+  // Only creatives with a profile photo go on the wall. They are shuffled once per visit and split into panels of 24.
+  // With more than 24 creatives the wall moves to the next panel every WALL_MS. A signed-in
+  // creative starts on the panel that contains them.
+  const WALL_SIZE=24,WALL_MS=15000;
+  let wallOrder=[],wallPages=1,wallIdx=0,wallTimer=null,wallMe='',wallReady=false;
+  const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+  const wallTile=p=>{const you=me&&p.id===me.id;return `<button class="tile${you?' you ring-2 ring-inset ring-primary':''}" onclick="enterApp('person','${p.id}')" aria-label="${esc(p.full_name)}">${pic(p)}${you?'<span class="absolute top-1.5 left-1.5 z-10 text-[10px] font-bold bg-primary text-white px-1.5 py-0.5 rounded">You</span>':''}<span class="n">${esc(p.full_name)}</span></button>`};
+  const wallJoin=first=>`<button class="tile" onclick="openAuth('signup')" aria-label="Join Creative Hub ZA"><div class="ph !text-white/30 flex-col gap-1"><span class="m !text-3xl">add</span>${first?'<span class="!font-sans !text-[11px] !font-semibold">Your face here</span>':''}</div></button>`;
+  function wall(){
+    const pool=people.filter(p=>p.avatar_url); // no photo, no tile: initials would break the look
+    const byId=new Map(pool.map(p=>[p.id,p])),meId=me?me.id:'';
+    const hadMe=!!meId&&wallOrder.some(p=>p.id===meId);
+    // Shuffle once per visit. After that the order stays put: people who are still here keep their place,
+    // newcomers are shuffled in at the end, so the wall never reshuffles under someone's eyes.
+    const keep=wallOrder.filter(p=>byId.has(p.id)).map(p=>byId.get(p.id)),seen=new Set(keep.map(p=>p.id));
+    wallOrder=keep.concat(shuffle(pool.filter(p=>!seen.has(p.id))));
+    wallPages=Math.max(1,Math.ceil(wallOrder.length/WALL_SIZE));
+    const mine=meId?wallOrder.findIndex(p=>p.id===meId):-1;
+    // open on the panel with the signed-in creative: on login, on page load, and the moment their photo goes live
+    if(meId!==wallMe||(mine>=0&&!hadMe)){wallMe=meId;wallIdx=mine>=0?Math.floor(mine/WALL_SIZE):0}
+    if(wallIdx>=wallPages)wallIdx=0;
+    const nz=$('wall-nudge');
+    if(nz)nz.innerHTML=(me&&me.role==='artist'&&!me.avatar_url)
+            ?'<div class="inline-flex items-center gap-3 bg-black/55 backdrop-blur rounded-xl px-3 py-2 text-xs text-white/85"><span>You are not on the wall yet. Add a profile photo to appear here.</span><button class="btn2 !py-1.5 !px-3 text-xs" onclick="enterApp(\'profile\')">Add photo</button></div>':'';
+    paintWall();startWallTimer();
+  }
+  function paintWall(){
+    const S=WALL_SIZE;let items=wallOrder.slice(wallIdx*S,(wallIdx+1)*S);
+    if(wallPages>1&&items.length<S)items=items.concat(wallOrder.slice(0,S-items.length)); // fill the last panel from the start
+    if(!wallReady){$('wall').innerHTML='<div class="tile skel"></div>'.repeat(S);$('wall-dots').innerHTML='';return}
+    let h=items.map(wallTile).join('');
+    for(let i=items.length;i<S;i++)h+=wallJoin(i===items.length); // only when there are fewer than 24 creatives
+    $('wall').innerHTML=h;
+    $('wall-dots').innerHTML=wallPages<2?'':wallPages<=8
+            ?Array.from({length:wallPages},(_,i)=>`<button class="p-1" onclick="wallGo(${i})" aria-label="Show panel ${i+1} of ${wallPages}"><span class="block w-2 h-2 rounded-full ${i===wallIdx?'bg-white':'bg-white/35'}"></span></button>`).join('')
+            :`<span>${wallIdx+1} / ${wallPages}</span>`;
+    if(wallPages>1){const n=(wallIdx+1)%wallPages;wallOrder.slice(n*S,(n+1)*S).forEach(p=>{if(p.avatar_url)new Image().src=p.avatar_url})} // warm the next panel
+  }
+  function wallShow(i){
+    const w=$('wall');if(!w)return;
+    const swap=()=>{wallIdx=i;paintWall();w.classList.remove('swap')};
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches){swap();return}
+    w.classList.add('swap');setTimeout(swap,450);
+  }
+  function wallGo(i){wallShow(i);startWallTimer()}
+  function startWallTimer(){
+    clearInterval(wallTimer);wallTimer=null;
+    if(wallPages<2)return;
+    wallTimer=setInterval(()=>{
+      if(document.hidden||$('welcome').classList.contains('hidden')||(matchMedia('(hover:hover)').matches&&$('wall').matches(':hover')))return; // don't swap under a mouse cursor
+      wallShow((wallIdx+1)%wallPages);
+    },WALL_MS);
+  }
+  function showWelcome(){$('welcome').classList.remove('hidden');$('app').classList.add('hidden');loadPeople()}
+  function enterApp(v,a){$('welcome').classList.add('hidden');$('app').classList.remove('hidden');go(v,a)}
 
-/* ---------- navigation ---------- */
-const uMsg=()=>me?msgs.filter(m=>m.recipient_id===me.id&&!m.read_at).length:0;
-function nav(){
-  const on=view==='person'?'discover':view,u=uMsg();
-  const b=n=>n[0]==='chat'&&u?`<span class="bdg">${u}</span>`:'';
-  $('side').innerHTML=NAV.map(n=>`<button class="nav ${n[0]===on?'on':''}" onclick="go('${n[0]}')"><span class="m">${n[2]}</span>${n[1]}${b(n)}</button>`).join('');
-  $('tabs').innerHTML=NAV.map(n=>`<button class="relative flex flex-col items-center gap-0.5 py-2 text-[10px] font-semibold ${n[0]===on?'text-white':'text-mute'}" onclick="go('${n[0]}')"><span class="m">${n[2]}</span>${n[1]}${b(n)}</button>`).join('');
-  $('title').textContent=(NAV.find(n=>n[0]===on)||[])[1]||({partners:'Partner with us',guidelines:'Community guidelines'})[on]||'';
-}
-async function go(v,a){
-  if(['chat','dashboard','analytics','profile'].includes(v)&&!me){toast('Sign in to open this page.');openAuth('signin');return}
-  view=v;if(v==='chat')chatWith=a||null;window.scrollTo(0,0);$('np').classList.add('hidden');nav();
-  try{await({discover:rDiscover,briefs:rBriefs,chat:rChat,dashboard:rDash,analytics:rAna,profile:rProfile,person:()=>rPerson(a),guidelines:rGuide,partners:rPartner})[v]()}catch(e){console.error(e);toast('Something went wrong loading this page.')}
-}
-function renderWho(){
-  const t=me?`<button onclick="go('profile')" class="flex items-center gap-2 text-left"><span class="w-8 h-8 rounded-full overflow-hidden tile shrink-0">${pic(me)}</span><span class="hidden md:block text-sm"><b>${esc(me.full_name)}</b><br/><span class="text-xs text-mute">${ROLES[me.role]?.[0]||'Admin'}</span></span></button>`:'';
-  $('who-top').innerHTML=me?'':`<button class="btn2 !py-2" onclick="openAuth('signin')">Sign in</button>`;
-  $('who-side').innerHTML=me?t+`<button class="text-xs text-mute mt-3" onclick="signOut()">Sign out</button>`:`<button class="btn2 w-full" onclick="openAuth('signin')">Sign in</button>`;
-  $('bellb').classList.toggle('hidden',!me);
-  {const hc=$('hero-cta');if(hc)hc.textContent=me?'Open my dashboard':'Join as a creative'}
-  $('w-btns').innerHTML=me?`<button class="btn" onclick="enterApp('dashboard')">Open app</button>`:`<button class="btn2 bg-black/40 backdrop-blur" onclick="openAuth('signin')">Sign in</button><button class="btn" onclick="openOnboard()"><span class="hidden sm:inline">Join as a creative</span><span class="sm:hidden">Join</span></button>`;
-  nav();bell();
-}
+  /* ---------- navigation ---------- */
+  const uMsg=()=>me?msgs.filter(m=>m.recipient_id===me.id&&!m.read_at).length:0;
+  function nav(){
+    const on=view==='person'?'discover':view,u=uMsg();
+    const b=n=>n[0]==='chat'&&u?`<span class="bdg">${u}</span>`:'';
+    $('side').innerHTML=NAV.map(n=>`<button class="nav ${n[0]===on?'on':''}" onclick="go('${n[0]}')"><span class="m">${n[2]}</span>${n[1]}${b(n)}</button>`).join('');
+    $('tabs').innerHTML=NAV.map(n=>`<button class="relative flex flex-col items-center gap-0.5 py-2 text-[10px] font-semibold ${n[0]===on?'text-white':'text-mute'}" onclick="go('${n[0]}')"><span class="m">${n[2]}</span>${n[1]}${b(n)}</button>`).join('');
+    $('title').textContent=(NAV.find(n=>n[0]===on)||[])[1]||({partners:'Partner with us',guidelines:'Community guidelines'})[on]||'';
+  }
+  async function go(v,a){
+    if(['chat','dashboard','analytics','profile'].includes(v)&&!me){toast('Sign in to open this page.');openAuth('signin');return}
+    view=v;if(v==='chat')chatWith=a||null;window.scrollTo(0,0);$('np').classList.add('hidden');nav();
+    try{await({discover:rDiscover,briefs:rBriefs,chat:rChat,dashboard:rDash,analytics:rAna,profile:rProfile,person:()=>rPerson(a),guidelines:rGuide,partners:rPartner})[v]()}catch(e){console.error(e);toast('Something went wrong loading this page.')}
+  }
+  function renderWho(){
+    const t=me?`<button onclick="go('profile')" class="flex items-center gap-2 text-left"><span class="w-8 h-8 rounded-full overflow-hidden tile shrink-0">${pic(me)}</span><span class="hidden md:block text-sm"><b>${esc(me.full_name)}</b><br/><span class="text-xs text-mute">${ROLES[me.role]?.[0]||'Admin'}</span></span></button>`:'';
+    $('who-top').innerHTML=me?'':`<button class="btn2 !py-2" onclick="openAuth('signin')">Sign in</button>`;
+    $('who-side').innerHTML=me?t+`<button class="text-xs text-mute mt-3" onclick="signOut()">Sign out</button>`:`<button class="btn2 w-full" onclick="openAuth('signin')">Sign in</button>`;
+    $('bellb').classList.toggle('hidden',!me);
+    {const hc=$('hero-cta');if(hc)hc.textContent=me?'Open my dashboard':'Join as a creative'}
+    $('w-btns').innerHTML=me?`<button class="btn" onclick="enterApp('dashboard')">Open app</button>`:`<button class="btn2 bg-black/40 backdrop-blur" onclick="openAuth('signin')">Sign in</button><button class="btn" onclick="openOnboard()"><span class="hidden sm:inline">Join as a creative</span><span class="sm:hidden">Join</span></button>`;
+    nav();bell();
+  }
 
-/* ---------- discover & profiles ---------- */
-async function rDiscover(){
-  $('main').innerHTML=head('Discover','Find local creatives and request a booking.')+
-  `<input class="inp mb-4" placeholder="Search by name, craft or city" value="${esc(q)}" oninput="q=this.value;list()"/>
+  /* ---------- discover & profiles ---------- */
+  async function rDiscover(){
+    $('main').innerHTML=head('Discover','Find local creatives and request a booking.')+
+            `<input class="inp mb-4" placeholder="Search by name, craft or city" value="${esc(q)}" oninput="q=this.value;list()"/>
    <div class="flex gap-2 overflow-x-auto pb-4">${['All',...CATS].map(c=>`<button class="chip ${c===cat?'on':''}" onclick="cat='${c}';rDiscover()">${c}</button>`).join('')}</div><div id="plist" class="grid sm:grid-cols-2 gap-4"></div>`;
-  if(!people.length)await loadPeople();list();
-}
-function list(){
-  const k=q.toLowerCase(),r=people.filter(p=>(cat==='All'||(p.categories||[]).includes(cat))&&(!k||[p.full_name,p.craft,p.metro].join(' ').toLowerCase().includes(k)));
-  $('plist').innerHTML=r.map(p=>`<button onclick="go('person','${p.id}')" class="card p-4 flex gap-4 text-left hover:border-[#3b3b4d]"><div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 tile">${pic(p)}</div><div class="min-w-0"><b class="block truncate">${esc(p.full_name)}</b><span class="text-sm text-mute block truncate">${esc(p.craft||'Creative')}</span><span class="text-xs text-mute">${esc(p.metro||'')}</span><div class="flex flex-wrap gap-1 mt-2">${tags(p)}</div></div></button>`).join('')||'<p class="text-mute text-sm">No creatives yet in this category. Be the first to join.</p>';
-}
-async function rPerson(id){
-  await who([id]);const p=P[id];
-  if(!p){$('main').innerHTML='<p class="text-mute">This profile could not be found.</p>';return}
-  if((!me||me.id!==id)&&viewOnce(id))db?.rpc('record_profile_view',{p_profile:id,p_visitor:vkey()}).then(()=>{});
-  const mine=me?.id===id;
-  $('main').innerHTML=`<button class="text-sm text-mute mb-4" onclick="go('discover')"><span class="m">arrow_back</span> Back</button>
+    if(!people.length)await loadPeople();list();
+  }
+  function list(){
+    const k=q.toLowerCase(),r=people.filter(p=>(cat==='All'||(p.categories||[]).includes(cat))&&(!k||[p.full_name,p.craft,p.metro].join(' ').toLowerCase().includes(k)));
+    $('plist').innerHTML=r.map(p=>`<button onclick="go('person','${p.id}')" class="card p-4 flex gap-4 text-left hover:border-[#3b3b4d]"><div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 tile">${pic(p)}</div><div class="min-w-0"><b class="block truncate">${esc(p.full_name)}</b><span class="text-sm text-mute block truncate">${esc(p.craft||'Creative')}</span><span class="text-xs text-mute">${esc(p.metro||'')}</span><div class="flex flex-wrap gap-1 mt-2">${tags(p)}</div></div></button>`).join('')||'<p class="text-mute text-sm">No creatives yet in this category. Be the first to join.</p>';
+  }
+  async function rPerson(id){
+    await who([id]);const p=P[id];
+    if(!p){$('main').innerHTML='<p class="text-mute">This profile could not be found.</p>';return}
+    if((!me||me.id!==id)&&viewOnce(id))db?.rpc('record_profile_view',{p_profile:id,p_visitor:vkey()}).then(()=>{});
+    const mine=me?.id===id;
+    $('main').innerHTML=`<button class="text-sm text-mute mb-4" onclick="go('discover')"><span class="m">arrow_back</span> Back</button>
   <div class="grid md:grid-cols-[280px_1fr] gap-6"><div class="tile aspect-square rounded-2xl">${pic(p)}</div><div>
   <h1 class="font-display text-3xl font-bold">${esc(p.full_name)}</h1><p class="text-mute mt-1">${esc(p.craft||ROLES[p.role]?.[0]||'')} · ${esc(p.metro||'South Africa')}</p>
   <div class="flex flex-wrap gap-1 mt-3">${tags(p)}</div>
   <p class="mt-4 leading-relaxed max-w-prose whitespace-pre-wrap">${esc(p.bio||'This creative is new to the hub.')}</p>
   ${portfolio(p)}<div class="flex gap-3 mt-6">${mine?`<button class="btn" onclick="go('profile')">Edit profile</button>`:`<button class="btn" onclick="openBooking('${id}')">Request booking</button><button class="btn2" onclick="openChat('${id}')"><span class="m">chat</span> Message</button>`}</div></div></div>`;
-}
+  }
 
-/* ---------- briefs ---------- */
-async function rBriefs(){
-  load('Briefs');const{data}=await db.from('briefs').select('*').order('created_at',{ascending:false}).limit(100);BR=data||[];await who(BR.map(b=>b.created_by));
-  $('main').innerHTML=head('Briefs','A brief is a job post. A client describes what they need and their budget, creatives apply, and you agree the details in chat.')+`<div class="grid gap-3">${BR.map(b=>`<div class="card p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><b>${esc(b.title)}</b><p class="text-sm text-mute mt-1">${esc(b.description)}</p><p class="text-xs text-mute mt-2">${esc(P[b.created_by]?.full_name||'Member')} · ${esc(b.category)} · <span class="text-white font-semibold">${R(b.budget)}</span>${b.deadline?' · due '+esc(b.deadline):''}</p></div>${me?.id===b.created_by?'<span class="text-sm text-mute">Your brief</span>':`<button class="btn shrink-0" onclick="applyBrief('${b.id}')">Apply</button>`}</div>`).join('')||'<p class="text-sm text-mute card p-4">No briefs yet. Post the first one.</p>'}</div>`;
-}
-function applyBrief(id){if(!me){toast('Sign in to apply.');openAuth('signin');return}const b=BR.find(x=>x.id===id);openChat(b.created_by,`Hi, I'd like to apply for your brief "${b.title}".`)}
-function openBrief(){if(!me){toast('Sign in to post a brief.');openAuth('signin');return}$('b-c').innerHTML=CATS.map(c=>`<option>${c}</option>`).join('');openM('brief')}
-async function submitBrief(e){e.preventDefault();const{error}=await db.from('briefs').insert({created_by:me.id,title:$('b-t').value,category:$('b-c').value,budget:+$('b-b').value,deadline:$('b-d').value||null,description:$('b-x').value});if(error){toast(error.message);return false}e.target.reset();closeM('brief');toast('Brief posted.');go('briefs');return false}
+  /* ---------- briefs ---------- */
+  async function rBriefs(){
+    load('Briefs');const{data}=await db.from('briefs').select('*').order('created_at',{ascending:false}).limit(100);BR=data||[];await who(BR.map(b=>b.created_by));
+    $('main').innerHTML=head('Briefs','A brief is a job post. A client describes what they need and their budget, creatives apply, and you agree the details in chat.')+`<div class="grid gap-3">${BR.map(b=>`<div class="card p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><b>${esc(b.title)}</b><p class="text-sm text-mute mt-1">${esc(b.description)}</p><p class="text-xs text-mute mt-2">${esc(P[b.created_by]?.full_name||'Member')} · ${esc(b.category)} · <span class="text-white font-semibold">${R(b.budget)}</span>${b.deadline?' · due '+esc(b.deadline):''}</p></div>${me?.id===b.created_by?'<span class="text-sm text-mute">Your brief</span>':`<button class="btn shrink-0" onclick="applyBrief('${b.id}')">Apply</button>`}</div>`).join('')||'<p class="text-sm text-mute card p-4">No briefs yet. Post the first one.</p>'}</div>`;
+  }
+  function applyBrief(id){if(!me){toast('Sign in to apply.');openAuth('signin');return}const b=BR.find(x=>x.id===id);openChat(b.created_by,`Hi, I'd like to apply for your brief "${b.title}".`)}
+  function openBrief(){if(!me){toast('Sign in to post a brief.');openAuth('signin');return}$('b-c').innerHTML=CATS.map(c=>`<option>${c}</option>`).join('');openM('brief')}
+  async function submitBrief(e){e.preventDefault();const{error}=await db.from('briefs').insert({created_by:me.id,title:$('b-t').value,category:$('b-c').value,budget:+$('b-b').value,deadline:$('b-d').value||null,description:$('b-x').value});if(error){toast(error.message);return false}e.target.reset();closeM('brief');toast('Brief posted.');go('briefs');return false}
 
-/* ---------- messaging ---------- */
-async function loadMsgs(){const{data}=await db.from('messages').select('*').order('created_at').limit(500);msgs=data||[]}
-async function sendMsg(to,body){const{data,error}=await db.from('messages').insert({sender_id:me.id,recipient_id:to,body}).select().single();if(error){toast(error.message);return null}msgs.push(data);return data}
-function openChat(id,d){if(!me){toast('Sign in to send messages.');openAuth('signin');return}draft=d||'';go('chat',id)}
-function convs(){const m={};msgs.forEach(x=>{const o=x.sender_id===me.id?x.recipient_id:x.sender_id;(m[o]=m[o]||[]).push(x)});if(chatWith&&!m[chatWith])m[chatWith]=[];return Object.entries(m).sort((a,b)=>(b[1].at(-1)?.created_at||'9')>(a[1].at(-1)?.created_at||'9')?1:-1)}
-async function rChat(){
-  await who(convs().map(c=>c[0]));
-  $('main').innerHTML=head('Messages','Talk directly with clients and creatives.')+`<div class="grid md:grid-cols-[280px_1fr] gap-4 h-[calc(100dvh-11rem)] md:h-[calc(100dvh-9rem)]"><div id="clist" class="overflow-y-auto space-y-2 ${chatWith?'hidden md:block':''}"></div><div id="thread" class="card flex-col p-3 min-h-0 ${chatWith?'flex':'hidden md:flex'}"></div></div>`;
-  paintChat(true);
-}
-function paintChat(first){
-  if(!$('clist'))return;
-  $('clist').innerHTML=convs().map(([id,ms])=>{const p=P[id],u=ms.filter(x=>x.recipient_id===me.id&&!x.read_at).length;return `<button onclick="go('chat','${id}')" class="card p-3 w-full flex gap-3 items-center text-left ${id===chatWith?'!border-primary':''}"><span class="w-10 h-10 rounded-full overflow-hidden tile shrink-0">${pic(p)}</span><span class="min-w-0 flex-1"><b class="block truncate text-sm">${esc(p?.full_name||'Member')}</b><span class="block truncate text-xs text-mute">${esc(ms.at(-1)?.body||'New conversation')}</span></span>${u?`<span class="bdg !static">${u}</span>`:''}</button>`}).join('')||'<p class="text-sm text-mute">No conversations yet. Open a creative and tap Message.</p>';
-  const t=$('thread');if(!chatWith){t.innerHTML='<p class="m-auto text-sm text-mute">Select a conversation</p>';return}
-  const p=P[chatWith],th=msgs.filter(x=>x.sender_id===chatWith||x.recipient_id===chatWith),old=$('cin')?.value;
-  t.innerHTML=`<div class="flex items-center gap-3 pb-3 border-b border-line"><button class="md:hidden" onclick="go('chat')"><span class="m">arrow_back</span></button><button class="flex items-center gap-3" onclick="go('person','${chatWith}')"><span class="w-9 h-9 rounded-full overflow-hidden tile">${pic(p)}</span><b class="text-sm">${esc(p?.full_name||'Member')}</b></button></div>
+  /* ---------- messaging ---------- */
+  async function loadMsgs(){const{data}=await db.from('messages').select('*').order('created_at').limit(500);msgs=data||[]}
+  async function sendMsg(to,body){const{data,error}=await db.from('messages').insert({sender_id:me.id,recipient_id:to,body}).select().single();if(error){toast(error.message);return null}msgs.push(data);return data}
+  function openChat(id,d){if(!me){toast('Sign in to send messages.');openAuth('signin');return}draft=d||'';go('chat',id)}
+  function convs(){const m={};msgs.forEach(x=>{const o=x.sender_id===me.id?x.recipient_id:x.sender_id;(m[o]=m[o]||[]).push(x)});if(chatWith&&!m[chatWith])m[chatWith]=[];return Object.entries(m).sort((a,b)=>(b[1].at(-1)?.created_at||'9')>(a[1].at(-1)?.created_at||'9')?1:-1)}
+  async function rChat(){
+    await who(convs().map(c=>c[0]));
+    $('main').innerHTML=head('Messages','Talk directly with clients and creatives.')+`<div class="grid md:grid-cols-[280px_1fr] gap-4 h-[calc(100dvh-11rem)] md:h-[calc(100dvh-9rem)]"><div id="clist" class="overflow-y-auto space-y-2 ${chatWith?'hidden md:block':''}"></div><div id="thread" class="card flex-col p-3 min-h-0 ${chatWith?'flex':'hidden md:flex'}"></div></div>`;
+    paintChat(true);
+  }
+  function paintChat(first){
+    if(!$('clist'))return;
+    $('clist').innerHTML=convs().map(([id,ms])=>{const p=P[id],u=ms.filter(x=>x.recipient_id===me.id&&!x.read_at).length;return `<button onclick="go('chat','${id}')" class="card p-3 w-full flex gap-3 items-center text-left ${id===chatWith?'!border-primary':''}"><span class="w-10 h-10 rounded-full overflow-hidden tile shrink-0">${pic(p)}</span><span class="min-w-0 flex-1"><b class="block truncate text-sm">${esc(p?.full_name||'Member')}</b><span class="block truncate text-xs text-mute">${esc(ms.at(-1)?.body||'New conversation')}</span></span>${u?`<span class="bdg !static">${u}</span>`:''}</button>`}).join('')||'<p class="text-sm text-mute">No conversations yet. Open a creative and tap Message.</p>';
+    const t=$('thread');if(!chatWith){t.innerHTML='<p class="m-auto text-sm text-mute">Select a conversation</p>';return}
+    const p=P[chatWith],th=msgs.filter(x=>x.sender_id===chatWith||x.recipient_id===chatWith),old=$('cin')?.value;
+    t.innerHTML=`<div class="flex items-center gap-3 pb-3 border-b border-line"><button class="md:hidden" onclick="go('chat')"><span class="m">arrow_back</span></button><button class="flex items-center gap-3" onclick="go('person','${chatWith}')"><span class="w-9 h-9 rounded-full overflow-hidden tile">${pic(p)}</span><b class="text-sm">${esc(p?.full_name||'Member')}</b></button></div>
   <div id="msgs" class="flex-1 overflow-y-auto py-3 space-y-2">${th.map(x=>`<div class="flex ${x.sender_id===me.id?'justify-end':''}"><div class="max-w-[80%] px-3 py-2 rounded-2xl text-sm whitespace-pre-wrap ${x.sender_id===me.id?'bg-primary':'bg-[#24242c]'}">${esc(x.body)}<div class="text-[10px] opacity-60 mt-1">${hm(x.created_at)}</div></div></div>`).join('')||'<p class="text-sm text-mute text-center mt-6">Say hello.</p>'}</div>
   <form onsubmit="return send(event)" class="flex gap-2 pt-2"><input id="cin" class="inp" autocomplete="off" placeholder="Write a message" value="${esc(first?draft:old||'')}"/><button class="btn">Send</button></form>`;
-  $('msgs').scrollTop=1e9;draft='';
-  if(th.some(x=>x.recipient_id===me.id&&!x.read_at)){const now=new Date().toISOString();th.forEach(x=>{if(x.recipient_id===me.id&&!x.read_at)x.read_at=now});db.from('messages').update({read_at:now}).eq('recipient_id',me.id).eq('sender_id',chatWith).is('read_at',null).then(()=>{});notifs.forEach(n=>{if(n.link==='chat:'+chatWith)n.read=true});db.from('notifications').update({read:true}).eq('user_id',me.id).eq('link','chat:'+chatWith).then(()=>{});nav();bell();paintChat()}
-}
-async function send(e){e.preventDefault();const v=$('cin').value.trim();if(!v)return false;$('cin').value='';if(await sendMsg(chatWith,v))paintChat();return false}
-async function onMsg(m){msgs.push(m);await who([m.sender_id]);nav();if(view==='chat')paintChat()}
+    $('msgs').scrollTop=1e9;draft='';
+    if(th.some(x=>x.recipient_id===me.id&&!x.read_at)){const now=new Date().toISOString();th.forEach(x=>{if(x.recipient_id===me.id&&!x.read_at)x.read_at=now});db.from('messages').update({read_at:now}).eq('recipient_id',me.id).eq('sender_id',chatWith).is('read_at',null).then(()=>{});notifs.forEach(n=>{if(n.link==='chat:'+chatWith)n.read=true});db.from('notifications').update({read:true}).eq('user_id',me.id).eq('link','chat:'+chatWith).then(()=>{});nav();bell();paintChat()}
+  }
+  async function send(e){e.preventDefault();const v=$('cin').value.trim();if(!v)return false;$('cin').value='';if(await sendMsg(chatWith,v))paintChat();return false}
+  async function onMsg(m){msgs.push(m);await who([m.sender_id]);nav();if(view==='chat')paintChat()}
 
-/* ---------- notifications ---------- */
-async function loadNotifs(){const{data}=await db.from('notifications').select('*').order('created_at',{ascending:false}).limit(20);notifs=data||[]}
-function bell(){const n=notifs.filter(x=>!x.read).length;$('bdg').textContent=n;$('bdg').classList.toggle('hidden',!n)}
-function toggleNp(){const el=$('np');el.classList.toggle('hidden');if(el.classList.contains('hidden'))return;
-  el.innerHTML=`<div class="flex justify-between items-center p-3 border-b border-line"><b class="text-sm">Notifications</b><button class="text-xs text-primary font-semibold" onclick="readAll()">Mark all read</button></div>`+(notifs.map(n=>`<button onclick="openN('${n.id}')" class="w-full text-left p-3 border-b border-line hover:bg-[#1d1d23] flex gap-2">${n.read?'':'<span class="w-2 h-2 mt-1.5 rounded-full bg-primary shrink-0"></span>'}<span class="min-w-0"><b class="block text-sm">${esc(n.title)}</b><span class="block text-xs text-mute truncate">${esc(n.body||'')}</span></span></button>`).join('')||'<p class="p-4 text-sm text-mute">You are all caught up.</p>')}
-function openN(id){const n=notifs.find(x=>x.id===id);if(!n.read){n.read=true;db.from('notifications').update({read:true}).eq('id',id).then(()=>{});bell()}$('np').classList.add('hidden');n.link?.startsWith('chat:')?go('chat',n.link.slice(5)):go('dashboard')}
-function readAll(){notifs.forEach(n=>n.read=true);db.from('notifications').update({read:true}).eq('user_id',me.id).eq('read',false).then(()=>{});bell();toggleNp();toggleNp()}
+  /* ---------- notifications ---------- */
+  async function loadNotifs(){const{data}=await db.from('notifications').select('*').order('created_at',{ascending:false}).limit(20);notifs=data||[]}
+  function bell(){const n=notifs.filter(x=>!x.read).length;$('bdg').textContent=n;$('bdg').classList.toggle('hidden',!n)}
+  function toggleNp(){const el=$('np');el.classList.toggle('hidden');if(el.classList.contains('hidden'))return;
+    el.innerHTML=`<div class="flex justify-between items-center p-3 border-b border-line"><b class="text-sm">Notifications</b><button class="text-xs text-primary font-semibold" onclick="readAll()">Mark all read</button></div>`+(notifs.map(n=>`<button onclick="openN('${n.id}')" class="w-full text-left p-3 border-b border-line hover:bg-[#1d1d23] flex gap-2">${n.read?'':'<span class="w-2 h-2 mt-1.5 rounded-full bg-primary shrink-0"></span>'}<span class="min-w-0"><b class="block text-sm">${esc(n.title)}</b><span class="block text-xs text-mute truncate">${esc(n.body||'')}</span></span></button>`).join('')||'<p class="p-4 text-sm text-mute">You are all caught up.</p>')}
+  function openN(id){const n=notifs.find(x=>x.id===id);if(!n.read){n.read=true;db.from('notifications').update({read:true}).eq('id',id).then(()=>{});bell()}$('np').classList.add('hidden');n.link?.startsWith('chat:')?go('chat',n.link.slice(5)):go('dashboard')}
+  function readAll(){notifs.forEach(n=>n.read=true);db.from('notifications').update({read:true}).eq('user_id',me.id).eq('read',false).then(()=>{});bell();toggleNp();toggleNp()}
 
-/* ---------- live subscriptions ---------- */
-function live(){
-  if(chan)db.removeChannel(chan);
-  const t=(table,event,filter,fn)=>[ 'postgres_changes',{event,schema:'public',table,...(filter?{filter}:{})},fn];
-  chan=db.channel('live-'+me.id)
-   .on(...t('notifications','INSERT','user_id=eq.'+me.id,p=>{notifs.unshift(p.new);bell();toast(p.new.title)}))
-   .on(...t('messages','INSERT','recipient_id=eq.'+me.id,p=>onMsg(p.new)))
-   .on(...t('profile_views','INSERT','profile_id=eq.'+me.id,()=>['dashboard','analytics'].includes(view)&&go(view)))
-   .on(...t('bookings','*',null,()=>view==='dashboard'&&go('dashboard')))
-   .on(...t('briefs','INSERT',null,()=>view==='briefs'&&go('briefs')))
-   .subscribe();
-}
+  /* ---------- live subscriptions ---------- */
+  function live(){
+    if(chan)db.removeChannel(chan);
+    const t=(table,event,filter,fn)=>[ 'postgres_changes',{event,schema:'public',table,...(filter?{filter}:{})},fn];
+    chan=db.channel('live-'+me.id)
+            .on(...t('notifications','INSERT','user_id=eq.'+me.id,p=>{notifs.unshift(p.new);bell();toast(p.new.title)}))
+            .on(...t('messages','INSERT','recipient_id=eq.'+me.id,p=>onMsg(p.new)))
+            .on(...t('profile_views','INSERT','profile_id=eq.'+me.id,()=>['dashboard','analytics'].includes(view)&&go(view)))
+            .on(...t('bookings','*',null,()=>view==='dashboard'&&go('dashboard')))
+            .on(...t('briefs','INSERT',null,()=>view==='briefs'&&go('briefs')))
+            .subscribe();
+  }
 
-/* ---------- dashboard & analytics (live) ---------- */
-const since7=()=>{const d=new Date(Date.now()-6*864e5);d.setHours(0,0,0,0);return d};
-async function rDash(){
-  load('Dashboard');
-  const[v,b]=await Promise.all([db.from('profile_views').select('id',{count:'exact',head:true}).eq('profile_id',me.id).gte('created_at',since7().toISOString()),db.from('bookings').select('*').neq('payment_status','pending').order('created_at',{ascending:false}).limit(50)]);
-  const bs=b.data||[];await who(bs.flatMap(x=>[x.client_id,x.artist_id]));
-  const esc$=bs.filter(x=>x.payment_status==='escrow_held').reduce((a,x)=>a+Number(x.escrow_deposit),0);
-  const card=(l,n)=>`<div class="card p-4"><span class="text-xs text-mute">${l}</span><div class="text-2xl font-bold mt-1">${n}</div></div>`;
-  $('main').innerHTML=head('Dashboard','Welcome back, '+esc(me.full_name.split(' ')[0])+'. Updates live.')+
-  `<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">${card('Profile views (7d)',v.count||0)}${card('Bookings',bs.length)}${card('In escrow',R(esc$))}${card('Unread messages',uMsg())}</div>
+  /* ---------- dashboard & analytics (live) ---------- */
+  const since7=()=>{const d=new Date(Date.now()-6*864e5);d.setHours(0,0,0,0);return d};
+  async function rDash(){
+    load('Dashboard');
+    const[v,b]=await Promise.all([db.from('profile_views').select('id',{count:'exact',head:true}).eq('profile_id',me.id).gte('created_at',since7().toISOString()),db.from('bookings').select('*').neq('payment_status','pending').order('created_at',{ascending:false}).limit(50)]);
+    const bs=b.data||[];await who(bs.flatMap(x=>[x.client_id,x.artist_id]));
+    const esc$=bs.filter(x=>x.payment_status==='escrow_held').reduce((a,x)=>a+Number(x.escrow_deposit),0);
+    const card=(l,n)=>`<div class="card p-4"><span class="text-xs text-mute">${l}</span><div class="text-2xl font-bold mt-1">${n}</div></div>`;
+    $('main').innerHTML=head('Dashboard','Welcome back, '+esc(me.full_name.split(' ')[0])+'. Updates live.')+
+            `<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">${card('Profile views (7d)',v.count||0)}${card('Bookings',bs.length)}${card('In escrow',R(esc$))}${card('Unread messages',uMsg())}</div>
   <h3 class="font-bold mb-3">Recent bookings</h3><div class="grid gap-2">${bs.slice(0,6).map(x=>{const o=P[x.client_id===me.id?x.artist_id:x.client_id];return `<div class="card p-3 flex justify-between gap-3 text-sm"><span class="truncate">${x.client_id===me.id?'To':'From'} ${esc(o?.full_name||'Member')}</span><span class="text-mute shrink-0">${R(x.escrow_deposit)} · ${esc(x.payment_status.replace('_',' '))}</span></div>`}).join('')||'<p class="text-sm text-mute card p-4">No bookings yet. When someone requests a booking, it will show up here.</p>'}</div>`;
-}
-async function rAna(){
-  load('Analytics');const s=since7(),{data}=await db.from('profile_views').select('created_at,viewer_id').eq('profile_id',me.id).gte('created_at',s.toISOString());
-  const rows=data||[],days=[...Array(7)].map((_,i)=>{const d=new Date(s.getTime()+i*864e5);return{k:d.toLocaleDateString('en-CA'),l:d.toLocaleDateString('en-ZA',{weekday:'short'}),n:0}});
-  rows.forEach(r=>{const d=days.find(x=>x.k===new Date(r.created_at).toLocaleDateString('en-CA'));if(d)d.n++});
-  await who(rows.map(r=>r.viewer_id));const by={};rows.forEach(r=>{const k=r.viewer_id?(ROLES[P[r.viewer_id]?.role]?.[0]||'Member'):'Visitors (not signed in)';by[k]=(by[k]||0)+1});
-  const mx=Math.max(1,...days.map(d=>d.n));
-  $('main').innerHTML=head('Analytics','Who is looking at your profile. Repeat visits within 6 hours count once. Updates live.')+
-  `<div class="card p-5"><b>${rows.length} profile views, last 7 days</b><div class="flex items-end gap-2 h-44 mt-5">${days.map(d=>`<div class="flex-1 flex flex-col items-center gap-2 justify-end h-full"><span class="text-[10px] text-mute">${d.n}</span><div class="w-full bg-primary rounded-t" style="height:${Math.max(d.n/mx*100,2)}%"></div><span class="text-[10px] text-mute">${d.l}</span></div>`).join('')}</div></div>
+  }
+  async function rAna(){
+    load('Analytics');const s=since7(),{data}=await db.from('profile_views').select('created_at,viewer_id').eq('profile_id',me.id).gte('created_at',s.toISOString());
+    const rows=data||[],days=[...Array(7)].map((_,i)=>{const d=new Date(s.getTime()+i*864e5);return{k:d.toLocaleDateString('en-CA'),l:d.toLocaleDateString('en-ZA',{weekday:'short'}),n:0}});
+    rows.forEach(r=>{const d=days.find(x=>x.k===new Date(r.created_at).toLocaleDateString('en-CA'));if(d)d.n++});
+    await who(rows.map(r=>r.viewer_id));const by={};rows.forEach(r=>{const k=r.viewer_id?(ROLES[P[r.viewer_id]?.role]?.[0]||'Member'):'Visitors (not signed in)';by[k]=(by[k]||0)+1});
+    const mx=Math.max(1,...days.map(d=>d.n));
+    $('main').innerHTML=head('Analytics','Who is looking at your profile. Repeat visits within 6 hours count once. Updates live.')+
+            `<div class="card p-5"><b>${rows.length} profile views, last 7 days</b><div class="flex items-end gap-2 h-44 mt-5">${days.map(d=>`<div class="flex-1 flex flex-col items-center gap-2 justify-end h-full"><span class="text-[10px] text-mute">${d.n}</span><div class="w-full bg-primary rounded-t" style="height:${Math.max(d.n/mx*100,2)}%"></div><span class="text-[10px] text-mute">${d.l}</span></div>`).join('')}</div></div>
   <div class="card p-4 mt-4"><b>Who viewed</b><div class="mt-2 space-y-1 text-sm text-mute">${Object.entries(by).map(([k,v])=>`<div class="flex justify-between"><span>${esc(k)}</span><span class="text-white">${v}</span></div>`).join('')||'No views yet. Share your profile to get started.'}</div></div>`;
-}
+  }
 
-/* ---------- own profile ---------- */
-const catChips=id=>{$(id).innerHTML=CATS.map(c=>`<button type="button" class="chip ${sel.includes(c)?'on':''}" onclick="tg('${c}','${id}')">${c}</button>`).join('')};
-function tg(c,id){sel=sel.includes(c)?sel.filter(x=>x!==c):[...sel,c];catChips(id)}
-async function rProfile(){
-  sel=[...(me.categories||[])];
-  $('main').innerHTML=head('Profile','What visitors see. Changes appear on the home wall instantly.')+
-  `<div class="card p-5 space-y-4 max-w-xl"><label class="flex items-center gap-4 cursor-pointer"><span class="w-20 h-20 rounded-full overflow-hidden tile">${pic(me)}</span><span class="text-sm"><b>Profile photo</b><br/><span class="btn2 !py-1.5 !px-3 mt-1 inline-block">Change photo</span></span><input type="file" accept="image/*" class="hidden" onchange="changePhoto(this)"/></label>
+  /* ---------- own profile ---------- */
+  const catChips=id=>{$(id).innerHTML=CATS.map(c=>`<button type="button" class="chip ${sel.includes(c)?'on':''}" onclick="tg('${c}','${id}')">${c}</button>`).join('')};
+  function tg(c,id){sel=sel.includes(c)?sel.filter(x=>x!==c):[...sel,c];catChips(id)}
+  async function rProfile(){
+    sel=[...(me.categories||[])];
+    $('main').innerHTML=head('Profile','What visitors see. Changes appear on the home wall instantly.')+
+            `<div class="card p-5 space-y-4 max-w-xl"><label class="flex items-center gap-4 cursor-pointer"><span class="w-20 h-20 rounded-full overflow-hidden tile">${pic(me)}</span><span class="text-sm"><b>Profile photo</b><br/><span class="btn2 !py-1.5 !px-3 mt-1 inline-block">Change photo</span></span><input type="file" accept="image/*" class="hidden" onchange="changePhoto(this)"/></label>
   <input id="pf-n" class="inp" value="${esc(me.full_name)}" placeholder="Name"/>
   <select id="pf-m" class="inp">${CITIES.map(c=>`<option ${c===me.metro?'selected':''}>${c}</option>`).join('')}</select>
   ${me.role==='artist'?`<input id="pf-c" class="inp" value="${esc(me.craft||'')}" placeholder="What you do"/><div><p class="text-xs text-mute mb-2">Categories your work falls under</p><div id="cats-pf" class="flex flex-wrap gap-2"></div></div>`:''}
   <textarea id="pf-b" rows="4" class="inp" placeholder="Tell clients about you">${esc(me.bio||'')}</textarea>
   <button class="btn" onclick="saveProfile()">Save changes</button></div>${me.role==='artist'?'<div id="pf-port"></div>':''}<div class="card p-5 max-w-xl mt-4"><b>Change password</b><div class="relative mt-3"><input id="np1" class="inp pr-11" type="password" minlength="6" placeholder="New password (6+ characters)"/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><button class="btn mt-3" onclick="chPw()">Update password</button></div><div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="openM('pw')">Change password</button><button class="btn2" onclick="openGuide()">Guidelines</button><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
-  if(me.role==='artist'){catChips('cats-pf');pfInit()}
-}
-async function saveProfile(){
-  const u={full_name:$('pf-n').value.trim()||me.full_name,metro:$('pf-m').value,bio:$('pf-b').value};
-  if(me.role==='artist'){u.craft=$('pf-c').value.trim();u.categories=sel}
-  const{error}=await db.from('profiles').update(u).eq('id',me.id);if(error){toast(error.message);return}
-  Object.assign(me,u);P[me.id]=me;renderWho();loadPeople();toast('Profile saved.');
-}
-async function changePhoto(el){if(!el.files[0])return;await upAvatar(await shrink(el.files[0],500));renderWho();rProfile();toast('Photo updated.')}
-async function upAvatar(d){
-  const blob=await(await fetch(d)).blob(),{error}=await db.storage.from('avatars').upload(me.id+'.jpg',blob,{upsert:true,contentType:'image/jpeg'});
-  if(error){toast(error.message);return}
-  const url=db.storage.from('avatars').getPublicUrl(me.id+'.jpg').data.publicUrl+'?v='+Date.now();
-  await db.from('profiles').update({avatar_url:url}).eq('id',me.id);me.avatar_url=url;P[me.id]=me;loadPeople();
-}
-function shrink(f,max){return new Promise(r=>{const i=new Image,u=URL.createObjectURL(f);i.onload=()=>{const s=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.82))};i.src=u})}
-
-/* ---------- auth ---------- */
-function openAuth(t){
-  if(!db){toast('Add your Supabase keys to CONFIG in index.html first.');return}
-  if(t==='signup'){closeM('auth');openOnboard();return}
-  openM('auth');$('auth-h').textContent='Welcome back';
-}
-let bootErr='';
-async function boot(u){
-  let{data,error}=await db.from('profiles').select('*').eq('id',u.id).maybeSingle();
-  if(error){console.error('Profile load failed:',error);bootErr=error.message;return false}
-  if(!data){ // signed up but no profile row (e.g. account made by hand): rebuild it from the sign-up details
-    const m=u.user_metadata||{},row={id:u.id,full_name:m.full_name||(u.email||'Member').split('@')[0],role:ROLES[m.role]?m.role:'artist',metro:m.metro||CITIES[0]};
-    const ins=await db.from('profiles').insert(row).select().maybeSingle();
-    if(ins.error||!ins.data){console.error('Profile create failed:',ins.error);bootErr=ins.error?.message||'no profile';return false}
-    data=ins.data;
+    if(me.role==='artist'){catChips('cats-pf');pfInit()}
   }
-  bootErr='';
-  me=data;P[me.id]=me;await Promise.all([loadMsgs(),loadNotifs()]);live();renderWho();wall();return true;
-}
-async function signin(e){
-  e.preventDefault();const{data,error}=await db.auth.signInWithPassword({email:$('si-e').value.trim(),password:$('si-p').value});
-  if(error){toast(error.message);return false}
-  if(!await boot(data.user)){await db.auth.signOut();toast('Signed in, but your profile could not be loaded'+(bootErr?': '+bootErr:'.'));return false}
-  e.target.reset();closeM('auth');toast('Welcome back, '+me.full_name.split(' ')[0]+'.');if(me.role==='artist'&&!me.avatar_url){openOnboard();return false}enterApp('dashboard');return false;
-}
-async function signOut(){await db.auth.signOut();if(chan)db.removeChannel(chan);me=null;msgs=[];notifs=[];renderWho();showWelcome();toast('Signed out.')}
+  async function saveProfile(){
+    const u={full_name:$('pf-n').value.trim()||me.full_name,metro:$('pf-m').value,bio:$('pf-b').value};
+    if(me.role==='artist'){u.craft=$('pf-c').value.trim();u.categories=sel}
+    const{error}=await db.from('profiles').update(u).eq('id',me.id);if(error){toast(error.message);return}
+    Object.assign(me,u);P[me.id]=me;renderWho();loadPeople();toast('Profile saved.');
+  }
+  async function changePhoto(el){if(!el.files[0])return;await upAvatar(await shrink(el.files[0],500));renderWho();rProfile();toast('Photo updated.')}
+  async function upAvatar(d){
+    const blob=await(await fetch(d)).blob(),{error}=await db.storage.from('avatars').upload(me.id+'.jpg',blob,{upsert:true,contentType:'image/jpeg'});
+    if(error){toast(error.message);return}
+    const url=db.storage.from('avatars').getPublicUrl(me.id+'.jpg').data.publicUrl+'?v='+Date.now();
+    await db.from('profiles').update({avatar_url:url}).eq('id',me.id);me.avatar_url=url;P[me.id]=me;loadPeople();
+  }
+  function shrink(f,max){return new Promise(r=>{const i=new Image,u=URL.createObjectURL(f);i.onload=()=>{const s=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.82))};i.src=u})}
 
-/* ---------- booking & escrow ---------- */
-function openBooking(id){if(!me){toast('Sign in to book.');openAuth('signin');return}bk={id,name:P[id]?.full_name||'creative'};$('book-h').textContent='Request a booking with '+bk.name;$('bk-b').value='';$('book-d').textContent='R0';
-  const pay=!!C.PAYMENTS;$('bk-b').style.display=pay?'':'none';$('book-dr').style.display=pay?'':'none';
-  $('book-sub').textContent=pay?'Pay a 25% deposit held in escrow, or leave the budget empty to just send a message.':'Send a booking request. Agree the details in the chat. Secure deposits are coming soon.';
-  $('bk-n').placeholder=pay?'What do you need?':'What do you need? Include your budget and timing.';openM('book')}
-const depOf=()=>Math.round((parseFloat($('bk-b').value)||0)*.25);
-function dep(){$('book-d').textContent=R(depOf())}
-async function submitBooking(e){
-  e.preventDefault();const b=C.PAYMENTS?(parseFloat($('bk-b').value)||0):0,date=$('bk-d').value,note=$('bk-n').value.trim();
-  if(!b){closeM('book');if(await sendMsg(bk.id,`Booking request${date?' for '+date:''}\n${note}`)){toast('Message sent.');openChat(bk.id)}return false}
-  const btn=e.target.querySelector('.btn.w-full');btn.disabled=true;btn.textContent='Opening secure checkout…';
-  try{const{data:{session}}=await db.auth.getSession();
-    const res=await fetch(C.API+'/api/checkout/yoco',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token},body:JSON.stringify({budget:b,artistId:bk.id,note,date})});
-    const j=await res.json().catch(()=>({}));
-    if(j.success&&j.redirectUrl){location.href=j.redirectUrl;return false}
-    toast(j.message||'Could not start payment.');
-  }catch(x){toast('Could not reach the payment server. Check API in CONFIG.')}
-  btn.disabled=false;btn.textContent='Send request';return false;
-}
+  /* ---------- auth ---------- */
+  function openAuth(t){
+    if(!db){toast('Add your Supabase keys to CONFIG in index.html first.');return}
+    if(t==='signup'){closeM('auth');openOnboard();return}
+    openM('auth');$('auth-h').textContent='Welcome back';
+  }
+  let bootErr='';
+  async function boot(u){
+    let{data,error}=await db.from('profiles').select('*').eq('id',u.id).maybeSingle();
+    if(error){console.error('Profile load failed:',error);bootErr=error.message;return false}
+    if(!data){ // signed up but no profile row (e.g. account made by hand): rebuild it from the sign-up details
+      const m=u.user_metadata||{},row={id:u.id,full_name:m.full_name||(u.email||'Member').split('@')[0],role:ROLES[m.role]?m.role:'artist',metro:m.metro||CITIES[0]};
+      const ins=await db.from('profiles').insert(row).select().maybeSingle();
+      if(ins.error||!ins.data){console.error('Profile create failed:',ins.error);bootErr=ins.error?.message||'no profile';return false}
+      data=ins.data;
+    }
+    bootErr='';
+    me=data;P[me.id]=me;await Promise.all([loadMsgs(),loadNotifs()]);live();renderWho();wall();return true;
+  }
+  async function signin(e){
+    e.preventDefault();const{data,error}=await db.auth.signInWithPassword({email:$('si-e').value.trim(),password:$('si-p').value});
+    if(error){toast(error.message);return false}
+    if(!await boot(data.user)){await db.auth.signOut();toast('Signed in, but your profile could not be loaded'+(bootErr?': '+bootErr:'.'));return false}
+    e.target.reset();closeM('auth');toast('Welcome back, '+me.full_name.split(' ')[0]+'.');if(me.role==='artist'&&!me.avatar_url){openOnboard();return false}enterApp('dashboard');return false;
+  }
+  async function signOut(){await db.auth.signOut();if(chan)db.removeChannel(chan);me=null;msgs=[];notifs=[];renderWho();showWelcome();toast('Signed out.')}
 
-/* ---------- onboarding ---------- */
-const REF=((new URLSearchParams(location.search).get('ref')||'').match(/^[0-9a-f-]{36}$/i)||[null])[0];
-const okUrl=u=>/^https?:\/\//i.test(u);
-const lnk=u=>{let h=u;try{h=new URL(u).hostname.replace('www.','')}catch(e){}const ic=/spotify/.test(h)?'headphones':/youtu/.test(h)?'play_circle':'link';return `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer" class="chip !text-white inline-flex items-center gap-1"><span class="m !text-base">${ic}</span>${esc(h)}</a>`};
-function portfolio(p){const l=(p.portfolio_links||[]).filter(okUrl),i=p.portfolio_images||[];return(l.length?`<div class="flex flex-wrap gap-2 mt-4">${l.map(lnk).join('')}</div>`:'')+(i.length?`<div class="grid grid-cols-3 gap-2 mt-4">${i.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer" class="tile aspect-square rounded-lg"><img src="${esc(u)}" loading="lazy" alt=""/></a>`).join('')}</div>`:'')}
-let ob={};
-const closeOb=()=>closeM('ob');
-function openOnboard(r){
-  if(!db){toast('Add your Supabase keys to CONFIG in index.html first.');return}
-  ob=me?{step:me.role!=='artist'||me.portfolio_links?.length||me.portfolio_images?.length?3:2,role:me.role}:{step:1,role:ROLES[r]?r:'artist'};
-  Object.assign(ob,{cats:[...(me?.categories||[])],links:[''],imgs:[],photo:null,craft:me?.craft||'',genre:'',fav:'',other:false});
-  $('ob-bg').innerHTML=[...people.filter(p=>p.avatar_url),...people.filter(p=>!p.avatar_url)].slice(0,9).map(p=>`<div class="tile">${pic(p)}</div>`).join('');
-  openM('ob');obPaint();
-}
-function obPaint(){
-  const art=ob.role==='artist',tot=art?4:3,n=art||ob.step<3?ob.step:ob.step-1;
-  $('ob-bar').style.width=n/tot*100+'%';$('ob-step').textContent=`Step ${n} of ${tot}`;
-  $('ob-body').innerHTML=`<div class="up">${[0,ob1h,ob2h,ob3h,ob4h][ob.step]()}</div>`;
-  if(ob.step===1)obRoles();
-}
-/* step 1: who you are */
-const TASTE={
-  'Amapiano':['Kabza De Small','DJ Maphorisa','Uncle Waffles','Focalistic','Young Stunna','Major League DJz'],
-  'Hip-hop':['Nasty C','Cassper Nyovest','A-Reece','Kwesta','Emtee','Blxckie'],
-  'House':['Black Coffee','Caiiro','Culoe De Song','Da Capo','Shimza','Enoo Napa'],
-  'Gqom':['DJ Lag','Distruction Boyz','Busta 929','Rudeboyz','Griffit Vigo'],
-  'Afro-pop':['Master KG','Sho Madjozi','Mafikizolo','Zahara','Black Motion'],
-  'R&B / Soul':['Tyla','Sjava','Msaki','Tresor','Zoe Modiga'],
-  'Gospel':['Joyous Celebration','Spirit of Praise','Rebecca Malope','Dr Tumi','Lebo Sekgobela'],
-  'Rock / Alternative':['Prime Circle','Seether','BCUC','Mi Casa','The Parlotones'],
-  'Jazz':['Nduduzo Makhathini','Mandisi Dyantyis','Thandi Ntuli','Ndlovu Youth Choir'],
-  'Kwaito':['Zola 7','Mdu Masilela','Mapaputsi','Trompies','Professor']
-};
-function obGenre(i){ob.genre=Object.keys(TASTE)[i];ob.fav='';ob.other=false;document.querySelectorAll('#ob-gen .chip').forEach((c,j)=>c.classList.toggle('on',j===i));obFavs()}
-function obFavs(){const l=TASTE[ob.genre]||[];$('ob-favs').innerHTML=l.map((a,i)=>`<button type="button" class="chip ${ob.fav===a&&!ob.other?'on':''}" onclick="obPick(${i})">${esc(a)}</button>`).join('')+`<button type="button" class="chip ${ob.other?'on':''}" onclick="obPick(-1)">Someone else</button>`+(ob.other?`<input id="ob-oth" class="inp mt-2 w-full" placeholder="Type your favourite artist" maxlength="60" oninput="ob.fav=this.value"/>`:'');if(ob.other)$('ob-oth').focus()}
-function obPick(i){if(i<0){ob.other=true;ob.fav=''}else{ob.other=false;ob.fav=TASTE[ob.genre][i]}obFavs()}
-const ob1h=()=>`<h2 class="font-display text-3xl font-bold">Let's get you on the wall.</h2><p class="text-mute text-sm mt-2">Two minutes, then explore everyone on the platform.</p>
+  /* ---------- booking & escrow ---------- */
+  function openBooking(id){if(!me){toast('Sign in to book.');openAuth('signin');return}bk={id,name:P[id]?.full_name||'creative'};$('book-h').textContent='Request a booking with '+bk.name;$('bk-b').value='';$('book-d').textContent='R0';
+    const pay=!!C.PAYMENTS;$('bk-b').style.display=pay?'':'none';$('book-dr').style.display=pay?'':'none';
+    $('book-sub').textContent=pay?'Pay a 25% deposit held in escrow, or leave the budget empty to just send a message.':'Send a booking request. Agree the details in the chat. Secure deposits are coming soon.';
+    $('bk-n').placeholder=pay?'What do you need?':'What do you need? Include your budget and timing.';openM('book')}
+  const depOf=()=>Math.round((parseFloat($('bk-b').value)||0)*.25);
+  function dep(){$('book-d').textContent=R(depOf())}
+  async function submitBooking(e){
+    e.preventDefault();const b=C.PAYMENTS?(parseFloat($('bk-b').value)||0):0,date=$('bk-d').value,note=$('bk-n').value.trim();
+    if(!b){closeM('book');if(await sendMsg(bk.id,`Booking request${date?' for '+date:''}\n${note}`)){toast('Message sent.');openChat(bk.id)}return false}
+    const btn=e.target.querySelector('.btn.w-full');btn.disabled=true;btn.textContent='Opening secure checkout…';
+    try{const{data:{session}}=await db.auth.getSession();
+      const res=await fetch(C.API+'/api/checkout/yoco',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token},body:JSON.stringify({budget:b,artistId:bk.id,note,date})});
+      const j=await res.json().catch(()=>({}));
+      if(j.success&&j.redirectUrl){location.href=j.redirectUrl;return false}
+      toast(j.message||'Could not start payment.');
+    }catch(x){toast('Could not reach the payment server. Check API in CONFIG.')}
+    btn.disabled=false;btn.textContent='Send request';return false;
+  }
+
+  /* ---------- onboarding ---------- */
+  const REF=((new URLSearchParams(location.search).get('ref')||'').match(/^[0-9a-f-]{36}$/i)||[null])[0];
+  const okUrl=u=>/^https?:\/\//i.test(u);
+  const lnk=u=>{let h=u;try{h=new URL(u).hostname.replace('www.','')}catch(e){}const ic=/spotify/.test(h)?'headphones':/youtu/.test(h)?'play_circle':'link';return `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer" class="chip !text-white inline-flex items-center gap-1"><span class="m !text-base">${ic}</span>${esc(h)}</a>`};
+  function portfolio(p){const l=(p.portfolio_links||[]).filter(okUrl),i=p.portfolio_images||[];return(l.length?`<div class="flex flex-wrap gap-2 mt-4">${l.map(lnk).join('')}</div>`:'')+(i.length?`<div class="grid grid-cols-3 gap-2 mt-4">${i.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer" class="tile aspect-square rounded-lg"><img src="${esc(u)}" loading="lazy" alt=""/></a>`).join('')}</div>`:'')}
+  let ob={};
+  const closeOb=()=>closeM('ob');
+  function openOnboard(r){
+    if(!db){toast('Add your Supabase keys to CONFIG in index.html first.');return}
+    ob=me?{step:me.role!=='artist'||me.portfolio_links?.length||me.portfolio_images?.length?3:2,role:me.role}:{step:1,role:ROLES[r]?r:'artist'};
+    Object.assign(ob,{cats:[...(me?.categories||[])],links:[''],imgs:[],photo:null,craft:me?.craft||'',genre:'',fav:'',other:false});
+    $('ob-bg').innerHTML=[...people.filter(p=>p.avatar_url),...people.filter(p=>!p.avatar_url)].slice(0,9).map(p=>`<div class="tile">${pic(p)}</div>`).join('');
+    openM('ob');obPaint();
+  }
+  function obPaint(){
+    const art=ob.role==='artist',tot=art?4:3,n=art||ob.step<3?ob.step:ob.step-1;
+    $('ob-bar').style.width=n/tot*100+'%';$('ob-step').textContent=`Step ${n} of ${tot}`;
+    $('ob-body').innerHTML=`<div class="up">${[0,ob1h,ob2h,ob3h,ob4h][ob.step]()}</div>`;
+    if(ob.step===1)obRoles();
+  }
+  /* step 1: who you are */
+  const TASTE={
+    'Amapiano':['Kabza De Small','DJ Maphorisa','Uncle Waffles','Focalistic','Young Stunna','Major League DJz'],
+    'Hip-hop':['Nasty C','Cassper Nyovest','A-Reece','Kwesta','Emtee','Blxckie'],
+    'House':['Black Coffee','Caiiro','Culoe De Song','Da Capo','Shimza','Enoo Napa'],
+    'Gqom':['DJ Lag','Distruction Boyz','Busta 929','Rudeboyz','Griffit Vigo'],
+    'Afro-pop':['Master KG','Sho Madjozi','Mafikizolo','Zahara','Black Motion'],
+    'R&B / Soul':['Tyla','Sjava','Msaki','Tresor','Zoe Modiga'],
+    'Gospel':['Joyous Celebration','Spirit of Praise','Rebecca Malope','Dr Tumi','Lebo Sekgobela'],
+    'Rock / Alternative':['Prime Circle','Seether','BCUC','Mi Casa','The Parlotones'],
+    'Jazz':['Nduduzo Makhathini','Mandisi Dyantyis','Thandi Ntuli','Ndlovu Youth Choir'],
+    'Kwaito':['Zola 7','Mdu Masilela','Mapaputsi','Trompies','Professor']
+  };
+  function obGenre(i){ob.genre=Object.keys(TASTE)[i];ob.fav='';ob.other=false;document.querySelectorAll('#ob-gen .chip').forEach((c,j)=>c.classList.toggle('on',j===i));obFavs()}
+  function obFavs(){const l=TASTE[ob.genre]||[];$('ob-favs').innerHTML=l.map((a,i)=>`<button type="button" class="chip ${ob.fav===a&&!ob.other?'on':''}" onclick="obPick(${i})">${esc(a)}</button>`).join('')+`<button type="button" class="chip ${ob.other?'on':''}" onclick="obPick(-1)">Someone else</button>`+(ob.other?`<input id="ob-oth" class="inp mt-2 w-full" placeholder="Type your favourite artist" maxlength="60" oninput="ob.fav=this.value"/>`:'');if(ob.other)$('ob-oth').focus()}
+  function obPick(i){if(i<0){ob.other=true;ob.fav=''}else{ob.other=false;ob.fav=TASTE[ob.genre][i]}obFavs()}
+  const ob1h=()=>`<h2 class="font-display text-3xl font-bold">Let's get you on the wall.</h2><p class="text-mute text-sm mt-2">Two minutes, then explore everyone on the platform.</p>
 <p class="text-xs text-mute mt-6 mb-2">I am a…</p><div id="ob-roles" class="grid grid-cols-2 gap-2"></div>
 <form onsubmit="return ob1(event)" class="space-y-3 mt-4"><input id="ob-n" class="inp" placeholder="Full name or studio name" required/><input id="ob-e" class="inp" type="email" placeholder="Email" required/><div class="relative"><input id="ob-p" class="inp pr-11" type="password" minlength="6" placeholder="Password (6+ characters)" required/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><select id="ob-c" class="inp">${CITIES.map(c=>`<option>${c}</option>`).join('')}</select>
 <div class="card p-3"><p class="text-sm font-semibold">Quick check: what do you listen to?</p><p class="text-xs text-mute mt-1">Pick your favourite genre, then your favourite artist in it.</p><div id="ob-gen" class="flex flex-wrap gap-2 mt-3">${Object.keys(TASTE).map((g,i)=>`<button type="button" class="chip ${ob.genre===g?'on':''}" onclick="obGenre(${i})">${esc(g)}</button>`).join('')}</div><div id="ob-favs" class="flex flex-wrap gap-2 mt-3"></div></div>
 <input id="ob-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0"/>
 <label class="flex gap-3 items-start text-xs text-mute cursor-pointer"><input id="ob-ok" type="checkbox" required class="mt-0.5 w-4 h-4 shrink-0 accent-[#C4293D]"/><span>I am 18 or older and I agree to the <button type="button" class="text-primary font-semibold underline" onclick="openLegal('terms')">Terms</button>, <button type="button" class="text-primary font-semibold underline" onclick="openLegal('privacy')">Privacy Policy</button> and <button type="button" class="text-primary font-semibold underline" onclick="openGuide()">community guidelines</button>.</span></label><button class="btn w-full">Continue</button></form>
 <p class="text-xs text-mute text-center mt-4">Already have an account? <button class="text-primary font-semibold" onclick="closeOb();openAuth('signin')">Sign in</button></p>`;
-function obRoles(){$('ob-roles').innerHTML=Object.entries(ROLES).map(([k,v])=>`<button type="button" onclick="ob.role='${k}';obRoles()" class="text-left p-3 rounded-xl border text-sm ${k===ob.role?'border-primary bg-primary/10':'border-line'}"><span class="m text-primary">${v[1]}</span><br/><b>${v[0]}</b></button>`).join('')}
-async function ob1(e){
-  e.preventDefault();if($('ob-hp').value)return false; // hidden field: only bots fill it
-  const fav=(ob.fav||'').trim();if(!ob.genre||!fav){toast('Pick your favourite genre and artist to continue.');return false}
-  const b=e.target.querySelector('button.btn');b.disabled=true;b.textContent='Creating your account…';
-  const{data,error}=await db.auth.signUp({email:(ob.email=$('ob-e').value.trim()),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF,fav_genre:ob.genre,fav_artist:fav.slice(0,60),agreed_guidelines:new Date().toISOString(),agreed_terms:new Date().toISOString()}}});
-  if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return false}
-  if(!data.session){toast('Account created. Please sign in to continue.');closeOb();openAuth('signin');return false}
-  if(!await boot(data.user)){toast('Your account was created. Please sign in to continue.');closeOb();openAuth('signin');return false}
-  ob.step=ob.role==='artist'?2:3;obPaint();return false;
-}
-/* step 2: portfolio (artists) */
-const ob2h=()=>`<h2 class="font-display text-3xl font-bold">Show us your work.</h2><p class="text-mute text-sm mt-2">Clients are more likely to book what they can see. Share a link, upload pictures, or both.</p>
+  function obRoles(){$('ob-roles').innerHTML=Object.entries(ROLES).map(([k,v])=>`<button type="button" onclick="ob.role='${k}';obRoles()" class="text-left p-3 rounded-xl border text-sm ${k===ob.role?'border-primary bg-primary/10':'border-line'}"><span class="m text-primary">${v[1]}</span><br/><b>${v[0]}</b></button>`).join('')}
+  async function ob1(e){
+    e.preventDefault();if($('ob-hp').value)return false; // hidden field: only bots fill it
+    const fav=(ob.fav||'').trim();if(!ob.genre||!fav){toast('Pick your favourite genre and artist to continue.');return false}
+    const b=e.target.querySelector('button.btn');b.disabled=true;b.textContent='Creating your account…';
+    const{data,error}=await db.auth.signUp({email:(ob.email=$('ob-e').value.trim()),password:$('ob-p').value,options:{data:{full_name:$('ob-n').value.trim(),role:ob.role,metro:$('ob-c').value,ref:REF,fav_genre:ob.genre,fav_artist:fav.slice(0,60),agreed_guidelines:new Date().toISOString(),agreed_terms:new Date().toISOString()}}});
+    if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return false}
+    if(!data.session){toast('Account created. Please sign in to continue.');closeOb();openAuth('signin');return false}
+    if(!await boot(data.user)){toast('Your account was created. Please sign in to continue.');closeOb();openAuth('signin');return false}
+    ob.step=ob.role==='artist'?2:3;obPaint();return false;
+  }
+  /* step 2: portfolio (artists) */
+  const ob2h=()=>`<h2 class="font-display text-3xl font-bold">Show us your work.</h2><p class="text-mute text-sm mt-2">Clients are more likely to book what they can see. Share a link, upload pictures, or both.</p>
 <input class="inp mt-6" placeholder="What you do (e.g. Amapiano producer)" value="${esc(ob.craft)}" oninput="ob.craft=this.value"/>
 <p class="text-xs text-mute mt-5 mb-2">Categories (pick all that fit)</p><div class="flex flex-wrap gap-2">${CATS.map(c=>`<button type="button" class="chip ${ob.cats.includes(c)?'on':''}" onclick="obCat('${c}')">${c}</button>`).join('')}</div>
 <p class="text-xs text-mute mt-5 mb-2">Links: Spotify, YouTube, Instagram, anything</p>${ob.links.map((l,i)=>`<input class="inp mb-2" placeholder="https://" value="${esc(l)}" oninput="ob.links[${i}]=this.value"/>`).join('')}${ob.links.length<3?`<button type="button" class="text-xs text-primary font-semibold" onclick="ob.links.push('');obPaint()">+ Add another link</button>`:''}
 <p class="text-xs text-mute mt-5 mb-2">Or upload pictures of your work (up to 6)</p><div class="grid grid-cols-3 gap-2">${ob.imgs.map((d,i)=>`<div class="tile aspect-square rounded-lg"><img src="${d}"/><button type="button" class="absolute top-1 right-1 bg-black/70 rounded-full w-6 h-6" onclick="ob.imgs.splice(${i},1);obPaint()"><span class="m !text-sm">close</span></button></div>`).join('')}${ob.imgs.length<6?`<label class="aspect-square rounded-lg border border-dashed border-[#44444f] flex flex-col items-center justify-center text-mute cursor-pointer hover:border-primary"><span class="m">add_photo_alternate</span><span class="text-[11px]">Add</span><input type="file" accept="image/*" multiple class="hidden" onchange="obImgs(this)"/></label>`:''}</div>
 <button id="ob2b" class="btn w-full mt-6" onclick="ob2()">Continue</button>`;
-function obCat(c){ob.cats=ob.cats.includes(c)?ob.cats.filter(x=>x!==c):[...ob.cats,c];obPaint()}
-async function obImgs(el){for(const f of [...el.files].slice(0,6-ob.imgs.length))ob.imgs.push(await shrink(f,900));obPaint()}
-async function ob2(){
-  const links=ob.links.map(l=>l.trim()).filter(Boolean).map(l=>okUrl(l)?l:'https://'+l);
-  if(!ob.craft.trim()||!ob.cats.length)return toast('Tell us what you do and pick a category.');
-  if(!links.length&&!ob.imgs.length)return toast('Add a link or at least one picture.');
-  const b=$('ob2b');b.disabled=true;b.textContent='Saving your portfolio…';const urls=[];
-  for(const[i,d]of ob.imgs.entries()){const path=`${me.id}/${Date.now()}-${i}.jpg`,{error}=await db.storage.from('portfolio').upload(path,await(await fetch(d)).blob(),{contentType:'image/jpeg'});if(!error)urls.push(db.storage.from('portfolio').getPublicUrl(path).data.publicUrl)}
-  const u={craft:ob.craft.trim(),categories:ob.cats,portfolio_links:links,portfolio_images:urls},{error}=await db.from('profiles').update(u).eq('id',me.id);
-  if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return}
-  Object.assign(me,u);P[me.id]=me;ob.step=3;obPaint();
-}
-/* step 3: photo with live wall preview */
-const ob3h=()=>{
-  const art=ob.role==='artist',cells=people.filter(p=>p.id!==me.id&&p.avatar_url).slice(0,5).map(p=>`<div class="tile aspect-square">${pic(p)}</div>`);
-  while(cells.length<5)cells.push('<div class="tile aspect-square"><div class="ph !text-white/20"><span class="m">add</span></div></div>');
-  cells.splice(1,0,`<div class="tile aspect-square ring-2 ring-primary ring-inset">${ob.photo?`<img src="${ob.photo}"/>`:pic(me)}<span class="absolute bottom-1 left-1 text-[10px] font-bold bg-primary rounded px-1">You</span></div>`);
-  return `<h2 class="font-display text-3xl font-bold">${art?'Now, your face.':'Add your logo or photo.'}</h2><p class="text-mute text-sm mt-2">${art?'This puts you on our welcome wall. Tap your tile and visitors land on your profile.':'Optional, but profiles with a picture get more replies.'}</p>
+  function obCat(c){ob.cats=ob.cats.includes(c)?ob.cats.filter(x=>x!==c):[...ob.cats,c];obPaint()}
+  async function obImgs(el){for(const f of [...el.files].slice(0,6-ob.imgs.length))ob.imgs.push(await shrink(f,900));obPaint()}
+  async function ob2(){
+    const links=ob.links.map(l=>l.trim()).filter(Boolean).map(l=>okUrl(l)?l:'https://'+l);
+    if(!ob.craft.trim()||!ob.cats.length)return toast('Tell us what you do and pick a category.');
+    if(!links.length&&!ob.imgs.length)return toast('Add a link or at least one picture.');
+    const b=$('ob2b');b.disabled=true;b.textContent='Saving your portfolio…';const urls=[];
+    for(const[i,d]of ob.imgs.entries()){const path=`${me.id}/${Date.now()}-${i}.jpg`,{error}=await db.storage.from('portfolio').upload(path,await(await fetch(d)).blob(),{contentType:'image/jpeg'});if(!error)urls.push(db.storage.from('portfolio').getPublicUrl(path).data.publicUrl)}
+    const u={craft:ob.craft.trim(),categories:ob.cats,portfolio_links:links,portfolio_images:urls},{error}=await db.from('profiles').update(u).eq('id',me.id);
+    if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return}
+    Object.assign(me,u);P[me.id]=me;ob.step=3;obPaint();
+  }
+  /* step 3: photo with live wall preview */
+  const ob3h=()=>{
+    const art=ob.role==='artist',cells=people.filter(p=>p.id!==me.id&&p.avatar_url).slice(0,5).map(p=>`<div class="tile aspect-square">${pic(p)}</div>`);
+    while(cells.length<5)cells.push('<div class="tile aspect-square"><div class="ph !text-white/20"><span class="m">add</span></div></div>');
+    cells.splice(1,0,`<div class="tile aspect-square ring-2 ring-primary ring-inset">${ob.photo?`<img src="${ob.photo}"/>`:pic(me)}<span class="absolute bottom-1 left-1 text-[10px] font-bold bg-primary rounded px-1">You</span></div>`);
+    return `<h2 class="font-display text-3xl font-bold">${art?'Now, your face.':'Add your logo or photo.'}</h2><p class="text-mute text-sm mt-2">${art?'This puts you on our welcome wall. Tap your tile and visitors land on your profile.':'Optional, but profiles with a picture get more replies.'}</p>
 <div class="grid grid-cols-3 rounded-xl overflow-hidden mt-6">${cells.join('')}</div>
 <label class="btn2 w-full mt-4 flex items-center justify-center gap-2 cursor-pointer"><span class="m">add_a_photo</span>${ob.photo?'Choose a different photo':'Upload a photo'}<input type="file" accept="image/*" class="hidden" onchange="obPhoto(this)"/></label>
 <button class="btn w-full mt-3" onclick="ob3()">${ob.photo?'Put me on the wall':'Continue'}</button><button class="text-xs text-mute w-full mt-3" onclick="ob.step=4;obPaint()">Skip for now</button>`};
-async function obPhoto(el){if(el.files[0]){ob.photo=await shrink(el.files[0],500);obPaint()}}
-async function ob3(){
-  if(!ob.photo){if(ob.role==='artist')return toast('Add a photo to join the wall, or skip for now.');ob.step=4;return obPaint()}
-  await upAvatar(ob.photo);renderWho();ob.step=4;obPaint();
-}
-/* step 4: tell a creative to tell a creative */
-const inv=()=>location.href.split('?')[0].split('#')[0]+'?ref='+me.id;
-const ob4h=()=>`<div class="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center"><span class="m text-primary !text-4xl">check_circle</span></div><h2 class="font-display text-3xl font-bold mt-4">You're in, ${esc(me.full_name.split(' ')[0])}.</h2>
+  async function obPhoto(el){if(el.files[0]){ob.photo=await shrink(el.files[0],500);obPaint()}}
+  async function ob3(){
+    if(!ob.photo){if(ob.role==='artist')return toast('Add a photo to join the wall, or skip for now.');ob.step=4;return obPaint()}
+    await upAvatar(ob.photo);renderWho();ob.step=4;obPaint();
+  }
+  /* step 4: tell a creative to tell a creative */
+  const inv=()=>location.href.split('?')[0].split('#')[0]+'?ref='+me.id;
+  const ob4h=()=>`<div class="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center"><span class="m text-primary !text-4xl">check_circle</span></div><h2 class="font-display text-3xl font-bold mt-4">You're in, ${esc(me.full_name.split(' ')[0])}.</h2>
 <p class="text-mute text-sm mt-2">${me.avatar_url?'Your face is on the wall.':'Your profile is live.'} Now tell a creative to tell a creative: the more of us here, the more work comes in.</p>
 <div class="card p-4 mt-6"><p class="text-xs text-mute">Your personal invite link</p><p class="text-sm break-all mt-1">${esc(inv())}</p><div class="grid grid-cols-2 gap-2 mt-3"><a class="btn text-center" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Join me on Creative Hub ZA, where South Africans can find and potentially book local creatives: '+inv())}">WhatsApp</a><button class="btn2" onclick="navigator.clipboard.writeText(inv()).then(()=>toast('Link copied.'))">Copy link</button></div></div>
 <button class="btn w-full mt-6" onclick="finishOb()">Explore the platform</button><button class="text-xs text-mute w-full mt-3" onclick="closeOb();enterApp('profile')">View my profile</button>`;
-function finishOb(){closeOb();enterApp('discover');toast('Welcome. See who else is here.')}
+  function finishOb(){closeOb();enterApp('discover');toast('Welcome. See who else is here.')}
 
-function eye(b){const i=b.previousElementSibling,s=i.type==='password';i.type=s?'text':'password';b.firstChild.textContent=s?'visibility_off':'visibility'}
-function viewOnce(id){try{const a=JSON.parse(sessionStorage.getItem('pv')||'[]');if(a.includes(id))return false;a.push(id);sessionStorage.setItem('pv',JSON.stringify(a))}catch(e){}return true}
-async function delAcct(){
-  if(prompt('This permanently deletes your profile, messages and photos. Type DELETE to confirm.')!=='DELETE')return;
-  const{count}=await db.from('bookings').select('id',{count:'exact',head:true}).eq('payment_status','escrow_held').or(`client_id.eq.${me.id},artist_id.eq.${me.id}`);
-  if(count)return toast('You have a booking with money held in escrow. Finish or refund it first.');
-  try{const{data:f}=await db.storage.from('portfolio').list(me.id);if(f?.length)await db.storage.from('portfolio').remove(f.map(x=>`${me.id}/${x.name}`));await db.storage.from('avatars').remove([`${me.id}.jpg`])}catch(e){}
-  const{error}=await db.rpc('delete_my_account');if(error){toast(error.message);return}
-  await signOut();toast('Your account has been deleted.');
-}
-const vkey=()=>{try{let k=localStorage.getItem('chk');if(!k){k=crypto.randomUUID();localStorage.setItem('chk',k)}return k}catch(e){return null}};
-/* ---------- portfolio editor (Profile page) ---------- */
-let pf={};
-function pfInit(){pf={links:[...(me.portfolio_links||[])],imgs:[...(me.portfolio_images||[])],add:[],gone:[]};portPaint()}
-const ptile=(u,fn)=>`<div class="tile aspect-square rounded-lg"><img src="${esc(u)}" alt=""/><button type="button" class="absolute top-1 right-1 bg-black/70 rounded-full w-6 h-6" onclick="${fn}" aria-label="Remove picture"><span class="m !text-sm">close</span></button></div>`;
-function pfDel(i){pf.gone.push(pf.imgs[i]);pf.imgs.splice(i,1);portPaint()}
-async function pfAdd(el){for(const f of [...el.files].slice(0,6-pf.imgs.length-pf.add.length))pf.add.push(await shrink(f,900));portPaint()}
-function portPaint(){
-  const el=$('pf-port');if(!el)return;const n=pf.imgs.length+pf.add.length;
-  el.innerHTML=`<div class="card p-5 mt-4 max-w-xl"><b>Portfolio</b><p class="text-xs text-mute mt-1">What clients see on your profile: links and up to 6 pictures.</p>
+  function eye(b){const i=b.previousElementSibling,s=i.type==='password';i.type=s?'text':'password';b.firstChild.textContent=s?'visibility_off':'visibility'}
+  function viewOnce(id){try{const a=JSON.parse(sessionStorage.getItem('pv')||'[]');if(a.includes(id))return false;a.push(id);sessionStorage.setItem('pv',JSON.stringify(a))}catch(e){}return true}
+  async function delAcct(){
+    if(prompt('This permanently deletes your profile, messages and photos. Type DELETE to confirm.')!=='DELETE')return;
+    const{count}=await db.from('bookings').select('id',{count:'exact',head:true}).eq('payment_status','escrow_held').or(`client_id.eq.${me.id},artist_id.eq.${me.id}`);
+    if(count)return toast('You have a booking with money held in escrow. Finish or refund it first.');
+    try{const{data:f}=await db.storage.from('portfolio').list(me.id);if(f?.length)await db.storage.from('portfolio').remove(f.map(x=>`${me.id}/${x.name}`));await db.storage.from('avatars').remove([`${me.id}.jpg`])}catch(e){}
+    const{error}=await db.rpc('delete_my_account');if(error){toast(error.message);return}
+    await signOut();toast('Your account has been deleted.');
+  }
+  const vkey=()=>{try{let k=localStorage.getItem('chk');if(!k){k=crypto.randomUUID();localStorage.setItem('chk',k)}return k}catch(e){return null}};
+  /* ---------- portfolio editor (Profile page) ---------- */
+  let pf={};
+  function pfInit(){pf={links:[...(me.portfolio_links||[])],imgs:[...(me.portfolio_images||[])],add:[],gone:[]};portPaint()}
+  const ptile=(u,fn)=>`<div class="tile aspect-square rounded-lg"><img src="${esc(u)}" alt=""/><button type="button" class="absolute top-1 right-1 bg-black/70 rounded-full w-6 h-6" onclick="${fn}" aria-label="Remove picture"><span class="m !text-sm">close</span></button></div>`;
+  function pfDel(i){pf.gone.push(pf.imgs[i]);pf.imgs.splice(i,1);portPaint()}
+  async function pfAdd(el){for(const f of [...el.files].slice(0,6-pf.imgs.length-pf.add.length))pf.add.push(await shrink(f,900));portPaint()}
+  function portPaint(){
+    const el=$('pf-port');if(!el)return;const n=pf.imgs.length+pf.add.length;
+    el.innerHTML=`<div class="card p-5 mt-4 max-w-xl"><b>Portfolio</b><p class="text-xs text-mute mt-1">What clients see on your profile: links and up to 6 pictures.</p>
   <p class="text-xs text-mute mt-4 mb-2">Links (Spotify, YouTube, Instagram, anything)</p>
   ${pf.links.map((l,i)=>`<div class="flex gap-2 mb-2"><input class="inp" placeholder="https://" value="${esc(l)}" oninput="pf.links[${i}]=this.value"/><button type="button" class="btn2 !px-3" onclick="pf.links.splice(${i},1);portPaint()" aria-label="Remove link"><span class="m">delete</span></button></div>`).join('')}
   ${pf.links.length<5?`<button type="button" class="text-xs text-primary font-semibold" onclick="pf.links.push('');portPaint()">+ Add a link</button>`:''}
   <p class="text-xs text-mute mt-5 mb-2">Pictures (${n}/6)</p>
   <div class="grid grid-cols-3 gap-2">${pf.imgs.map((u,i)=>ptile(u,`pfDel(${i})`)).join('')}${pf.add.map((u,i)=>ptile(u,`pf.add.splice(${i},1);portPaint()`)).join('')}${n<6?`<label class="aspect-square rounded-lg border border-dashed border-[#44444f] flex flex-col items-center justify-center text-mute cursor-pointer hover:border-primary"><span class="m">add_photo_alternate</span><span class="text-[11px]">Add</span><input type="file" accept="image/*" multiple class="hidden" onchange="pfAdd(this)"/></label>`:''}</div>
   <button id="pf-sv" class="btn mt-5" onclick="savePort()">Save portfolio</button></div>`;
-}
-async function savePort(){
-  const links=pf.links.map(l=>l.trim()).filter(Boolean).map(l=>okUrl(l)?l:'https://'+l);
-  if(!links.length&&!pf.imgs.length&&!pf.add.length)return toast('Keep at least one link or picture.');
-  const b=$('pf-sv');b.disabled=true;b.textContent='Saving…';const urls=[...pf.imgs];
-  for(const[i,d]of pf.add.entries()){const path=`${me.id}/${Date.now()}-${i}.jpg`,{error}=await db.storage.from('portfolio').upload(path,await(await fetch(d)).blob(),{contentType:'image/jpeg'});if(error)toast(error.message);else urls.push(db.storage.from('portfolio').getPublicUrl(path).data.publicUrl)}
-  const u={portfolio_links:links,portfolio_images:urls},{error}=await db.from('profiles').update(u).eq('id',me.id);
-  if(error){toast(error.message);b.disabled=false;b.textContent='Save portfolio';return}
-  const rm=pf.gone.map(x=>(x.split('/portfolio/')[1]||'')).filter(p=>p.startsWith(me.id+'/'));
-  if(rm.length)db.storage.from('portfolio').remove(rm);
-  Object.assign(me,u);P[me.id]=me;toast('Portfolio saved.');pfInit();
-}
+  }
+  async function savePort(){
+    const links=pf.links.map(l=>l.trim()).filter(Boolean).map(l=>okUrl(l)?l:'https://'+l);
+    if(!links.length&&!pf.imgs.length&&!pf.add.length)return toast('Keep at least one link or picture.');
+    const b=$('pf-sv');b.disabled=true;b.textContent='Saving…';const urls=[...pf.imgs];
+    for(const[i,d]of pf.add.entries()){const path=`${me.id}/${Date.now()}-${i}.jpg`,{error}=await db.storage.from('portfolio').upload(path,await(await fetch(d)).blob(),{contentType:'image/jpeg'});if(error)toast(error.message);else urls.push(db.storage.from('portfolio').getPublicUrl(path).data.publicUrl)}
+    const u={portfolio_links:links,portfolio_images:urls},{error}=await db.from('profiles').update(u).eq('id',me.id);
+    if(error){toast(error.message);b.disabled=false;b.textContent='Save portfolio';return}
+    const rm=pf.gone.map(x=>(x.split('/portfolio/')[1]||'')).filter(p=>p.startsWith(me.id+'/'));
+    if(rm.length)db.storage.from('portfolio').remove(rm);
+    Object.assign(me,u);P[me.id]=me;toast('Portfolio saved.');pfInit();
+  }
 
-/* ---------- passwords ---------- */
-async function savePw(e){e.preventDefault();const a=$('pw-1').value;if(a!==$('pw-2').value){toast('The two passwords do not match.');return false}
-  const{error}=await db.auth.updateUser({password:a});if(error){toast(error.message);return false}
-  e.target.reset();closeM('pw');toast('Password updated.');return false}
-async function forgot(){const m=$('si-e').value.trim();if(!m)return toast('Type your email above first.');
-  const{error}=await db.auth.resetPasswordForEmail(m,{redirectTo:location.origin+location.pathname});toast(error?error.message:'If that email has an account, a reset link is on its way.')}
-db?.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY')openM('pw')});
+  /* ---------- passwords ---------- */
+  async function savePw(e){e.preventDefault();const a=$('pw-1').value;if(a!==$('pw-2').value){toast('The two passwords do not match.');return false}
+    const{error}=await db.auth.updateUser({password:a});if(error){toast(error.message);return false}
+    e.target.reset();closeM('pw');toast('Password updated.');return false}
+  async function forgot(){const m=$('si-e').value.trim();if(!m)return toast('Type your email above first.');
+    const{error}=await db.auth.resetPasswordForEmail(m,{redirectTo:location.origin+location.pathname});toast(error?error.message:'If that email has an account, a reset link is on its way.')}
+  db?.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY')openM('pw')});
 
-async function chPw(){const p=$('np1').value;if(p.length<6)return toast('Use at least 6 characters.');const{error}=await db.auth.updateUser({password:p});if(error)return toast(error.message);$('np1').value='';toast('Password updated.')}
-/* ---------- community guidelines ---------- */
-const SUPPORT='creativehub.admin@gmail.com';
-const GUIDE=()=>{
-  const h=t=>`<h3 class="font-bold mt-6 mb-2">${t}</h3>`,p=t=>`<p class="text-sm text-white/80 leading-relaxed">${t}</p>`,l=a=>`<ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
-  const us=SUPPORT.includes('@')?`<a class="text-primary font-semibold" href="mailto:${esc(SUPPORT)}">${esc(SUPPORT)}</a>`:'the Creative Hub ZA team';
-  return p(`Creative Hub ZA is a local home for creatives and the people looking to work with them. These guidelines keep it safe, fair and welcoming. By joining you agree to follow them. Last updated October 2026.`)+
-  h('Who belongs here')+p(`Every creative is welcome: musicians, dancers, tattooists, photographers, painters, 3D artists, filmmakers, designers, and anyone else who makes things. Labels, radio stations, brands and clients are welcome too. You must be 18 or older to join.`)+
-  h('Be respectful')+l([`No harassment, bullying, threats, hate speech or discrimination of any kind.`,`No unwanted sexual advances or sexual messages.`,`Disagree politely. Criticise the work, never the person.`])+
-  h('Keep it real')+l([`Post only your own work, or work you have permission to share, and credit your collaborators.`,`Never pretend to be someone else or claim work that is not yours.`,`Be honest about your experience, prices and availability.`,`If work is made with AI, say so.`])+
-  h('What you can post')+l([`No sexually explicit material and no graphic violence meant to shock.`,`Any content that sexualises or harms children is banned. We remove it immediately and report it to the authorities.`,`No illegal content, and nothing that infringes someone else's copyright.`,`Artistic work that includes nudity must be non-explicit.`])+
-  h('Messages')+l([`Be clear and reply within a reasonable time. A polite no is better than silence.`,`No spam, mass messages or unwanted promotion.`,`Never share someone else's private details, and never share your password with anyone.`,`Messages are stored on our systems and are not end-to-end encrypted. We only read them to look into a report or when the law requires it.`])+
-  h('Briefs')+l([`A brief must describe real, paid work with a real budget, a clear deliverable and a deadline.`,`No free work dressed up as paid work.`,`Reply to people who apply, even if you choose someone else.`])+
-  h('Bookings and payments')+l([`Agree the scope, price, dates and deliverables in the chat before you pay.`,...(C.PAYMENTS?[`Deposits are 25% of the budget and are paid through our payment partner. Keep your booking and payment on the platform so your deposit stays protected. Be wary of anyone who asks you to pay elsewhere.`,`If a creative cancels or does not deliver, the client is refunded the deposit.`,`If a client cancels, we look at how much work had already started and decide what is fair.`]:[`Secure deposits are not live yet. Until they are, agree payment terms clearly in the chat and be careful about paying anyone before you trust them.`]),`Creatives keep the copyright in their work unless a written agreement says otherwise. Clients receive the usage rights agreed in the brief.`,`If you cannot agree, talk it through first. If that fails, contact ${us} and we will review the chat and the booking.`])+
-  h('Your information')+l([`We collect only what we need to run the platform: your profile, portfolio, messages and booking details.`,`We do not sell your information.`,`Your profile, portfolio and photo are public so clients can find you. Your email address is not shown to other members.`,`You can edit your profile and portfolio at any time. If you delete your account, your profile, messages and photos are removed. We may keep booking and payment records for accounting.`,`Only invite people who would want to hear from you. No spamming invite links.`])+
-  h('Reporting and consequences')+p(`If you see something that breaks these guidelines, tell us at ${us}. Depending on how serious it is, we may remove content, warn you, suspend your account or remove it permanently. We report illegal activity to the authorities.`)+
-  h('Changes')+p(`We may update these guidelines as the community grows. If you keep using the platform after an update, you accept the new version. We will let you know about big changes.`)
-};
-function rGuide(){$('main').innerHTML=head('Community guidelines','How we keep Creative Hub ZA safe, fair and welcoming.')+`<div class="card p-5 md:p-8 max-w-3xl">${GUIDE()}</div>`}
-function openGuide(){$('gm-body').innerHTML=GUIDE();openM('gm')}
+  async function chPw(){const p=$('np1').value;if(p.length<6)return toast('Use at least 6 characters.');const{error}=await db.auth.updateUser({password:p});if(error)return toast(error.message);$('np1').value='';toast('Password updated.')}
+  /* ---------- community guidelines ---------- */
+  const SUPPORT='creativehubza.admin@gmail.com';
+  const GUIDE=()=>{
+    const h=t=>`<h3 class="font-bold mt-6 mb-2">${t}</h3>`,p=t=>`<p class="text-sm text-white/80 leading-relaxed">${t}</p>`,l=a=>`<ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+    const us=SUPPORT.includes('@')?`<a class="text-primary font-semibold" href="mailto:${esc(SUPPORT)}">${esc(SUPPORT)}</a>`:'the Creative Hub ZA team';
+    return p(`Creative Hub ZA is a local home for creatives and the people looking to work with them. These guidelines keep it safe, fair and welcoming. By joining you agree to follow them. Last updated October 2026.`)+
+            h('Who belongs here')+p(`Every creative is welcome: musicians, dancers, tattooists, photographers, painters, 3D artists, filmmakers, designers, and anyone else who makes things. Labels, radio stations, brands and clients are welcome too. You must be 18 or older to join.`)+
+            h('Be respectful')+l([`No harassment, bullying, threats, hate speech or discrimination of any kind.`,`No unwanted sexual advances or sexual messages.`,`Disagree politely. Criticise the work, never the person.`])+
+            h('Keep it real')+l([`Post only your own work, or work you have permission to share, and credit your collaborators.`,`Never pretend to be someone else or claim work that is not yours.`,`Be honest about your experience, prices and availability.`,`If work is made with AI, say so.`])+
+            h('What you can post')+l([`No sexually explicit material and no graphic violence meant to shock.`,`Any content that sexualises or harms children is banned. We remove it immediately and report it to the authorities.`,`No illegal content, and nothing that infringes someone else's copyright.`,`Artistic work that includes nudity must be non-explicit.`])+
+            h('Messages')+l([`Be clear and reply within a reasonable time. A polite no is better than silence.`,`No spam, mass messages or unwanted promotion.`,`Never share someone else's private details, and never share your password with anyone.`,`Messages are stored on our systems and are not end-to-end encrypted. We only read them to look into a report or when the law requires it.`])+
+            h('Briefs')+l([`A brief must describe real, paid work with a real budget, a clear deliverable and a deadline.`,`No free work dressed up as paid work.`,`Reply to people who apply, even if you choose someone else.`])+
+            h('Bookings and payments')+l([`Agree the scope, price, dates and deliverables in the chat before you pay.`,...(C.PAYMENTS?[`Deposits are 25% of the budget and are paid through our payment partner. Keep your booking and payment on the platform so your deposit stays protected. Be wary of anyone who asks you to pay elsewhere.`,`If a creative cancels or does not deliver, the client is refunded the deposit.`,`If a client cancels, we look at how much work had already started and decide what is fair.`]:[`Secure deposits are not live yet. Until they are, agree payment terms clearly in the chat and be careful about paying anyone before you trust them.`]),`Creatives keep the copyright in their work unless a written agreement says otherwise. Clients receive the usage rights agreed in the brief.`,`If you cannot agree, talk it through first. If that fails, contact ${us} and we will review the chat and the booking.`])+
+            h('Your information')+l([`We collect only what we need to run the platform: your profile, portfolio, messages and booking details.`,`We do not sell your information.`,`Your profile, portfolio and photo are public so clients can find you. Your email address is not shown to other members.`,`You can edit your profile and portfolio at any time. If you delete your account, your profile, messages and photos are removed. We may keep booking and payment records for accounting.`,`Only invite people who would want to hear from you. No spamming invite links.`])+
+            h('Reporting and consequences')+p(`If you see something that breaks these guidelines, tell us at ${us}. Depending on how serious it is, we may remove content, warn you, suspend your account or remove it permanently. We report illegal activity to the authorities.`)+
+            h('Changes')+p(`We may update these guidelines as the community grows. If you keep using the platform after an update, you accept the new version. We will let you know about big changes.`)
+  };
+  function rGuide(){$('main').innerHTML=head('Community guidelines','How we keep Creative Hub ZA safe, fair and welcoming.')+`<div class="card p-5 md:p-8 max-w-3xl">${GUIDE()}</div>`}
+  function openGuide(){$('gm-body').innerHTML=GUIDE();openM('gm')}
 
-/* ---------- terms of use + privacy policy ---------- */
-// Drafted for a South African marketplace. Have an attorney review before you go public, and add
-// your registered business name below once you have one.
-const LG={
-  h:t=>`<h3 class="font-bold mt-6 mb-2">${t}</h3>`,
-  p:t=>`<p class="text-sm text-white/80 leading-relaxed">${t}</p>`,
-  l:a=>`<ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`,
-  us:()=>SUPPORT.includes('@')?`<a class="text-primary font-semibold" href="mailto:${esc(SUPPORT)}">${esc(SUPPORT)}</a>`:'the Creative Hub ZA team'
-};
-const TERMS=()=>{const{h,p,l,us}=LG;
-  return p(`These Terms of Use apply when you use Creative Hub ZA ("we", "us"). By creating an account or using the platform you agree to them, together with our Privacy Policy and Community Guidelines. Last updated October 2026.`)+
-  h('What Creative Hub ZA is')+p(`We are a marketplace that helps creatives, labels, radio stations, brands and clients find and contact each other. When a booking is agreed, the agreement is between the client and the creative. We are not a party to it, and we are not the employer, agent or manager of any member.`)+
-  h('Who can use it')+l([`You must be 18 or older.`,`The details you give us must be true and kept up to date.`,`Keep your password private. You are responsible for what happens on your account.`,`One person or business, one account.`])+
-  h('Your content')+l([`You keep the copyright in the work you upload.`,`You give us permission to display your profile, portfolio and photos on the platform so clients can find you. This ends when you remove the content or delete your account.`,`You are responsible for what you post. Only post work you made or have permission to share.`])+
-  h('Bookings, deposits and fees')+l([`Members agree scope, price, dates and deliverables with each other, preferably in the chat, before any work starts.`,`When secure deposits are switched on, the client pays a deposit through our payment partner and we hold it until the booking is completed or cancelled, as set out in the Community Guidelines.`,`We may charge a service fee on bookings made through the platform. Any fee is shown before you pay or accept a booking.`,`Keep bookings and payments on the platform. We cannot protect payments made elsewhere.`,`We do not guarantee bookings, enquiries, income or exposure to any member. Appearing on the wall or in search does not mean you will be booked.`,`We do not guarantee the quality, timing or outcome of any creative's work, or the conduct of any client.`])+
-  h('What you may not do')+l([`Break the Community Guidelines or any law.`,`Misuse the platform, for example by scraping it, spamming members or trying to access other people's accounts.`,`Copy another person's work or pretend to be someone else.`])+
-  h('Suspending or closing an account')+p(`We may remove content or suspend or close an account that breaks these Terms or the Community Guidelines. You can delete your account at any time from your profile.`)+
-  h('Our responsibility')+p(`We work to keep the platform available and accurate, but we provide it as is. To the extent the law allows, we are not liable for losses that arise from the actions of members, from work or payments agreed between members, or from the platform being unavailable. Nothing in these Terms limits any right you have under South African consumer protection law.`)+
-  h('Disputes and governing law')+p(`If something goes wrong, contact us at ${us()} and we will try to help you resolve it. These Terms are governed by the laws of South Africa.`)+
-  h('Changes')+p(`We may update these Terms as the platform grows. If you keep using the platform after an update, you accept the new version. We will tell you about big changes.`)
-};
-const PRIVACY=()=>{const{h,p,l,us}=LG;
-  return p(`This policy explains how Creative Hub ZA ("we", "us") collects and uses your personal information, in line with the Protection of Personal Information Act (POPIA). We are the responsible party for the information described here. Last updated October 2026.`)+
-  h('What we collect')+l([`Account details: your name, email address, password (kept in hashed form by our sign-in provider, so we never see it), city and the type of member you are.`,`Profile details: your craft, categories, links, photos and portfolio images.`,`Activity: messages, briefs you post or apply to, and booking records.`,`Payment records: deposit amounts and status. Card details are handled by our payment partner and never reach our servers.`,`Usage: when someone views a profile we record the view against an anonymous viewer ID stored in their browser, so creatives can see simple analytics. If you arrived through an invite link we record which one.`])+
-  h('Why we use it')+l([`To run the platform: create your account, show your profile, connect members and send notifications.`,`To process bookings and deposits.`,`To keep members safe, look into reports and prevent fraud.`,`To meet legal and accounting duties.`])+
-  h('What is public and what is private')+p(`Your name, craft, city, photo, portfolio and links are public so clients can find you. Your email address and your messages are not shown to other members.`)+
-  h('Who we share it with')+l([`Service providers that help us run the platform: for hosting, database, sign-in and file storage, payments and email. They may only use your information to provide their service to us.`,`Authorities, where the law requires it.`,`We do not sell your personal information.`])+
-  h('Where it is stored')+p(`Our providers may store information on servers outside South Africa. We choose providers that protect personal information to a standard comparable to POPIA.`)+
-  h('How long we keep it')+p(`We keep your information while your account is active. If you delete your account, we remove your profile, messages and photos. We keep booking and payment records for as long as the law requires for accounting and tax.`)+
-  h('Browser storage')+p(`We store your sign-in session and an anonymous viewer ID in your browser so the platform works. We do not use advertising trackers.`)+
-  h('Your rights')+l([`Ask what information we hold about you, and ask us to correct it.`,`Edit your profile and portfolio yourself at any time.`,`Delete your account from your profile, or ask us to delete your information.`,`Object to how we use your information.`,`Complain to the Information Regulator of South Africa if you think we have handled your information unlawfully.`])+
-  h('Keeping it safe')+p(`We use reasonable technical and organisational measures to protect your information. No online service is perfectly secure, so please use a strong password and do not share it.`)+
-  h('Children')+p(`Creative Hub ZA is for people 18 and older. If you think someone under 18 has signed up, tell us and we will remove the account.`)+
-  h('Contact us')+p(`For any privacy question or request, contact ${us()}.`)+
-  h('Changes')+p(`We may update this policy. We will tell you about big changes.`)
-};
-/* ---------- partner with us (labels, stations, brands, venues, studios) ---------- */
-function rPartner(){
-  const mail=`mailto:${SUPPORT}?subject=${encodeURIComponent('Partnering with Creative Hub ZA')}&body=${encodeURIComponent('Hi Creative Hub ZA,\n\nWe are [organisation name], a [label / radio station / brand / venue / studio / agency]. We would like to talk about working together.\n\nName:\nOrganisation:\nWebsite:\nWhat we are looking for:\n')}`;
-  const partner=me&&me.role!=='artist';
-  $('main').innerHTML=head('Partner with us','For labels, radio stations and brands who want to find and work with South African creatives.')+
-  `<div class="max-w-3xl space-y-4">
+  /* ---------- terms of use + privacy policy ---------- */
+  // Drafted for a South African marketplace. Have an attorney review before you go public, and add
+  // your registered business name below once you have one.
+  const LG={
+    h:t=>`<h3 class="font-bold mt-6 mb-2">${t}</h3>`,
+    p:t=>`<p class="text-sm text-white/80 leading-relaxed">${t}</p>`,
+    l:a=>`<ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed">${a.map(x=>`<li>${x}</li>`).join('')}</ul>`,
+    us:()=>SUPPORT.includes('@')?`<a class="text-primary font-semibold" href="mailto:${esc(SUPPORT)}">${esc(SUPPORT)}</a>`:'the Creative Hub ZA team'
+  };
+  const TERMS=()=>{const{h,p,l,us}=LG;
+    return p(`These Terms of Use apply when you use Creative Hub ZA ("we", "us"). By creating an account or using the platform you agree to them, together with our Privacy Policy and Community Guidelines. Last updated October 2026.`)+
+            h('What Creative Hub ZA is')+p(`We are a marketplace that helps creatives, labels, radio stations, brands and clients find and contact each other. When a booking is agreed, the agreement is between the client and the creative. We are not a party to it, and we are not the employer, agent or manager of any member.`)+
+            h('Who can use it')+l([`You must be 18 or older.`,`The details you give us must be true and kept up to date.`,`Keep your password private. You are responsible for what happens on your account.`,`One person or business, one account.`])+
+            h('Your content')+l([`You keep the copyright in the work you upload.`,`You give us permission to display your profile, portfolio and photos on the platform so clients can find you. This ends when you remove the content or delete your account.`,`You are responsible for what you post. Only post work you made or have permission to share.`])+
+            h('Bookings, deposits and fees')+l([`Members agree scope, price, dates and deliverables with each other, preferably in the chat, before any work starts.`,`When secure deposits are switched on, the client pays a deposit through our payment partner and we hold it until the booking is completed or cancelled, as set out in the Community Guidelines.`,`We may charge a service fee on bookings made through the platform. Any fee is shown before you pay or accept a booking.`,`Keep bookings and payments on the platform. We cannot protect payments made elsewhere.`,`We do not guarantee bookings, enquiries, income or exposure to any member. Appearing on the wall or in search does not mean you will be booked.`,`We do not guarantee the quality, timing or outcome of any creative's work, or the conduct of any client.`])+
+            h('What you may not do')+l([`Break the Community Guidelines or any law.`,`Misuse the platform, for example by scraping it, spamming members or trying to access other people's accounts.`,`Copy another person's work or pretend to be someone else.`])+
+            h('Suspending or closing an account')+p(`We may remove content or suspend or close an account that breaks these Terms or the Community Guidelines. You can delete your account at any time from your profile.`)+
+            h('Our responsibility')+p(`We work to keep the platform available and accurate, but we provide it as is. To the extent the law allows, we are not liable for losses that arise from the actions of members, from work or payments agreed between members, or from the platform being unavailable. Nothing in these Terms limits any right you have under South African consumer protection law.`)+
+            h('Disputes and governing law')+p(`If something goes wrong, contact us at ${us()} and we will try to help you resolve it. These Terms are governed by the laws of South Africa.`)+
+            h('Changes')+p(`We may update these Terms as the platform grows. If you keep using the platform after an update, you accept the new version. We will tell you about big changes.`)
+  };
+  const PRIVACY=()=>{const{h,p,l,us}=LG;
+    return p(`This policy explains how Creative Hub ZA ("we", "us") collects and uses your personal information, in line with the Protection of Personal Information Act (POPIA). We are the responsible party for the information described here. Last updated October 2026.`)+
+            h('What we collect')+l([`Account details: your name, email address, password (kept in hashed form by our sign-in provider, so we never see it), city and the type of member you are.`,`Profile details: your craft, categories, links, photos and portfolio images.`,`Activity: messages, briefs you post or apply to, and booking records.`,`Payment records: deposit amounts and status. Card details are handled by our payment partner and never reach our servers.`,`Usage: when someone views a profile we record the view against an anonymous viewer ID stored in their browser, so creatives can see simple analytics. If you arrived through an invite link we record which one.`])+
+            h('Why we use it')+l([`To run the platform: create your account, show your profile, connect members and send notifications.`,`To process bookings and deposits.`,`To keep members safe, look into reports and prevent fraud.`,`To meet legal and accounting duties.`])+
+            h('What is public and what is private')+p(`Your name, craft, city, photo, portfolio and links are public so clients can find you. Your email address and your messages are not shown to other members.`)+
+            h('Who we share it with')+l([`Service providers that help us run the platform: for hosting, database, sign-in and file storage, payments and email. They may only use your information to provide their service to us.`,`Authorities, where the law requires it.`,`We do not sell your personal information.`])+
+            h('Where it is stored')+p(`Our providers may store information on servers outside South Africa. We choose providers that protect personal information to a standard comparable to POPIA.`)+
+            h('How long we keep it')+p(`We keep your information while your account is active. If you delete your account, we remove your profile, messages and photos. We keep booking and payment records for as long as the law requires for accounting and tax.`)+
+            h('Browser storage')+p(`We store your sign-in session and an anonymous viewer ID in your browser so the platform works. We do not use advertising trackers.`)+
+            h('Your rights')+l([`Ask what information we hold about you, and ask us to correct it.`,`Edit your profile and portfolio yourself at any time.`,`Delete your account from your profile, or ask us to delete your information.`,`Object to how we use your information.`,`Complain to the Information Regulator of South Africa if you think we have handled your information unlawfully.`])+
+            h('Keeping it safe')+p(`We use reasonable technical and organisational measures to protect your information. No online service is perfectly secure, so please use a strong password and do not share it.`)+
+            h('Children')+p(`Creative Hub ZA is for people 18 and older. If you think someone under 18 has signed up, tell us and we will remove the account.`)+
+            h('Contact us')+p(`For any privacy question or request, contact ${us()}.`)+
+            h('Changes')+p(`We may update this policy. We will tell you about big changes.`)
+  };
+  /* ---------- partner with us (labels, stations, brands, venues, studios) ---------- */
+  function rPartner(){
+    const mail=`mailto:${SUPPORT}?subject=${encodeURIComponent('Partnering with Creative Hub ZA')}&body=${encodeURIComponent('Hi Creative Hub ZA,\n\nWe are [organisation name], a [label / radio station / brand / venue / studio / agency]. We would like to talk about working together.\n\nName:\nOrganisation:\nWebsite:\nWhat we are looking for:\n')}`;
+    const partner=me&&me.role!=='artist';
+    $('main').innerHTML=head('Partner with us','For labels, radio stations and brands who want to find and work with South African creatives.')+
+            `<div class="max-w-3xl space-y-4">
   <div class="card p-5 md:p-6"><h2 class="font-display text-2xl md:text-3xl font-bold">Looking for local talent?</h2>
   <p class="text-sm text-white/80 leading-relaxed mt-2">Creative Hub ZA is a growing home for South African creatives. We are building it with labels, radio stations, brands, agencies, venues, studios and schools who want to find new talent and work with it.</p>
   <ul class="list-disc pl-5 space-y-1 text-sm text-white/80 leading-relaxed mt-4"><li>Browse creatives by craft and city and look through their work.</li><li>Post a brief so the right creatives can respond.</li><li>Message creatives directly and request bookings.</li><li>Talk to us about collaborations, showcases and sponsored opportunities.</li></ul>
   <p class="text-xs text-mute mt-4">Creatives are being onboarded now, so early partners can help shape what we build. Any work or bookings are agreed between you and the creative.</p></div>
   <div class="card p-5 md:p-6">${partner
-    ?`<b>You are signed in as ${esc(ROLES[me.role]?.[0]||'a partner')}.</b><p class="text-xs text-mute mt-1">Find talent or tell creatives what you need.</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn" onclick="openBrief()">Post a brief</button><button class="btn2" onclick="go('discover')">Browse creatives</button></div>`
-    :`<b>Create your partner account</b><p class="text-xs text-mute mt-1">Pick what best describes you. Agencies, venues, studios and schools can choose Brand / business.</p><div class="grid sm:grid-cols-3 gap-2 mt-4">${['label','radio','brand'].map(k=>`<button class="text-left p-3 rounded-xl border border-line hover:border-primary" onclick="openOnboard('${k}')"><span class="m text-primary">${ROLES[k][1]}</span><br/><b class="text-sm">${ROLES[k][0]}</b></button>`).join('')}</div>${me?'':`<p class="text-xs text-mute mt-4">Already have an account? <button class="text-primary font-semibold" onclick="openAuth('signin')">Sign in</button></p>`}`}</div>
+                    ?`<b>You are signed in as ${esc(ROLES[me.role]?.[0]||'a partner')}.</b><p class="text-xs text-mute mt-1">Find talent or tell creatives what you need.</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn" onclick="openBrief()">Post a brief</button><button class="btn2" onclick="go('discover')">Browse creatives</button></div>`
+                    :`<b>Create your partner account</b><p class="text-xs text-mute mt-1">Pick what best describes you. Agencies, venues, studios and schools can choose Brand / business.</p><div class="grid sm:grid-cols-3 gap-2 mt-4">${['label','radio','brand'].map(k=>`<button class="text-left p-3 rounded-xl border border-line hover:border-primary" onclick="openOnboard('${k}')"><span class="m text-primary">${ROLES[k][1]}</span><br/><b class="text-sm">${ROLES[k][0]}</b></button>`).join('')}</div>${me?'':`<p class="text-xs text-mute mt-4">Already have an account? <button class="text-primary font-semibold" onclick="openAuth('signin')">Sign in</button></p>`}`}</div>
   <p class="text-sm text-mute">Prefer to talk first? <a class="text-primary font-semibold" href="${esc(mail)}">Email ${esc(SUPPORT)}</a></p></div>`;
-}
-function openLegal(k){$('lm-t').textContent=k==='terms'?'Terms of Use':'Privacy Policy';$('lm-body').innerHTML=k==='terms'?TERMS():PRIVACY();openM('lm')}
+  }
+  function openLegal(k){$('lm-t').textContent=k==='terms'?'Terms of Use':'Privacy Policy';$('lm-body').innerHTML=k==='terms'?TERMS():PRIVACY();openM('lm')}
 
 
-/* ---------- init ---------- */
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});
-(async()=>{renderWho();await loadPeople();if(!db)return;const{data:{session}}=await db.auth.getSession();if(session)await boot(session.user);const PAY=new URLSearchParams(location.search).get('pay');if(PAY&&me){history.replaceState(null,'',location.pathname);if(PAY==='ok'){toast('Payment received. Confirming your booking…');enterApp('dashboard')}else toast('Payment was not completed.')}if(REF&&!me)openOnboard()})();
+  /* ---------- init ---------- */
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});
+  (async()=>{renderWho();await loadPeople();if(!db)return;const{data:{session}}=await db.auth.getSession();if(session)await boot(session.user);const PAY=new URLSearchParams(location.search).get('pay');if(PAY&&me){history.replaceState(null,'',location.pathname);if(PAY==='ok'){toast('Payment received. Confirming your booking…');enterApp('dashboard')}else toast('Payment was not completed.')}if(REF&&!me)openOnboard()})();
 </script>
 </body>
 </html>
