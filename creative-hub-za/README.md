@@ -1,80 +1,37 @@
 # Creative Hub ZA
 
-South Africa's creative talent network — a marketplace connecting musicians, tattoo artists, photographers, painters, and 3D artists with record labels, radio stations, and brands. Bookings are protected with an escrow deposit.
-
-**Status:** working prototype. Frontend is fully functional on its own (with local demo data); real accounts and real payments need your own Supabase and Yoco keys, set up below.
-
-## Project structure
+A marketplace for South African creatives and the people who hire them. Clients pay a 10% deposit that is held until they release it.
 
 ```
-creative-hub-za/
-├── frontend/
-│   └── index.html        # the whole app — single-file HTML/Tailwind/vanilla JS
-├── backend/
-│   ├── server.js          # Express API — Yoco payments + admin stats
-│   ├── package.json
-│   └── .env.example
-├── supabase/
-│   └── schema.sql         # database tables + row-level security
-└── README.md
+frontend/   index.html, join.html (onboarding page), theme.css, index-patches.md
+backend/    server.js (Express: Yoco checkout, webhook, release, refund, admin), .env.example
+supabase/   schema.sql (tables, security rules, storage, triggers)
 ```
 
-## How it works right now (no setup required)
+Stack: plain HTML + Tailwind CDN + vanilla JS, Node/Express, Supabase (Postgres, auth, storage, realtime), Yoco payments.
 
-Open `frontend/index.html` in a browser (or deploy it anywhere static — Netlify, Vercel, GitHub Pages) and the whole app works out of the box: sign up, browse creatives, post briefs, apply, book with a deposit. Accounts and bookings are stored in `localStorage` (your browser only) so this mode is for demos/portfolio purposes, not real users.
+## Set up
 
-## Making it real: Supabase (accounts + database)
+1. **Database.** Supabase SQL Editor: run `supabase/schema.sql`. To make yourself an admin, run the `update ... set role = 'admin'` line at the bottom of that file.
+2. **Frontend.** Apply the edits in `frontend/index-patches.md`. Deploy the `frontend` folder (Netlify).
+3. **Backend.** `cd backend && cp .env.example .env`, fill it in, `npm install`, `npm start`. Deploy to Render, Railway or Fly. Set the same variables there.
+4. **Yoco webhook.** In the Yoco dashboard register `https://YOUR-BACKEND/api/webhooks/yoco` for payment events and copy the signing secret into `YOCO_WEBHOOK_SECRET`.
+5. **Test with test keys.** Make a booking, pay with a Yoco test card, check the booking becomes `escrow_held`, then release one and refund one.
+6. **Go live.** Switch to live Yoco keys, set `PAYMENTS:true` in `index.html`.
 
-1. Create a free project at [supabase.com](https://supabase.com).
-2. In **SQL Editor**, run `supabase/schema.sql` to create the tables.
-3. In **Project Settings → API**, copy your **Project URL** and **anon public key**.
-4. Open `frontend/index.html`, find the `CONFIG` block near the top of the `<script>` tag, and fill in:
-   ```js
-   SUPABASE_URL: 'https://your-project-id.supabase.co',
-   SUPABASE_ANON_KEY: 'your-anon-key',
-   ```
-   The anon key is safe to put in frontend code — it's public by design and restricted by the row-level security rules in `schema.sql`. Never put your **service role** key here.
+## How money moves
 
-Once set, sign up/sign in/sign out use real Supabase auth automatically.
+1. Client pays 10% of the budget through Yoco. The webhook marks the booking `escrow_held`.
+2. Client taps **Release deposit**: status becomes `released`, and `PLATFORM_FEE_RATE` (default 10%) of the deposit is recorded as our fee.
+3. The rest is paid to the creative **manually** for now. `GET /api/admin/payouts` lists what is owed; `POST /api/admin/payouts/:id/paid` marks it done.
+4. If the creative cancels, **Cancel and refund** returns the full deposit to the client.
 
-## Making it real: Yoco (payments)
+Yoco is a payment processor, not a licensed escrow service: the deposit sits in your own merchant balance. Before real launch, get a lawyer or accountant to confirm how holding client money should be structured, and confirm Yoco's refund endpoint in their docs.
 
-1. Create a Yoco account at [yoco.com](https://www.yoco.com) and get your test API keys from the dashboard.
-2. In `frontend/index.html`, set:
-   ```js
-   YOCO_PUBLIC_KEY: 'pk_test_xxxxxxxx',
-   API_BASE_URL: 'https://your-deployed-backend-url.com',
-   ```
-3. Set up the backend (below) — Yoco's secret key must live there, never in the frontend.
+## Ways the platform earns
 
-## Running the backend
+Booking fee on released deposits (built). Next: a Pro subscription for creatives, featured placement, paid brief credits for businesses, and sponsored showcases.
 
-The backend confirms payments server-side and writes escrow status to Supabase — this step can't be skipped for real payments, since secret keys can't live in browser code.
+## Licence
 
-```bash
-cd backend
-cp .env.example .env      # fill in your real keys
-npm install
-npm start                  # runs on http://localhost:5000
-```
-
-For production, deploy this folder to [Render](https://render.com), [Railway](https://railway.app), or [Fly.io](https://fly.io) (all have free tiers), then update `API_BASE_URL` in the frontend to your deployed URL.
-
-## Tech stack
-
-- **Frontend:** plain HTML + [Tailwind CSS](https://tailwindcss.com) (CDN) + vanilla JavaScript — no build step
-- **Backend:** Node.js + Express
-- **Database/Auth:** [Supabase](https://supabase.com) (Postgres + built-in auth)
-- **Payments:** [Yoco](https://www.yoco.com) (South African payment gateway)
-
-## Roadmap ideas
-
-- [ ] Move file uploads (Gallery) from browser storage to Supabase Storage
-- [ ] Real-time notifications via Supabase Realtime
-- [ ] Booking status flow (pending → accepted → delivered → released) with dispute handling
-- [ ] Commission/fee logic on escrow release
-- [ ] Rating & review system after a completed booking
-
-## License
-
-MIT — do what you like with it.
+MIT

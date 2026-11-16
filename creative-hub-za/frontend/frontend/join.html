@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <title>Join the creative family | Creative Hub ZA</title>
+    <meta name="description" content="Creative Hub ZA opens in December. Join free as a creative, record label, radio station or brand and be on the wall from day one."/>
+    <meta name="theme-color" content="#0e0e11"/>
+    <meta name="color-scheme" content="dark"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <link rel="manifest" href="/site.webmanifest"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="Join the creative family | Creative Hub ZA"/>
+    <meta property="og:description" content="Show your work. Get discovered. Join South Africa’s creative home before we open in December."/>
+    <meta property="og:url" content="https://creativehubza.netlify.app/join.html"/>
+    <meta property="og:image" content="https://creativehubza.netlify.app/og-image.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300,0&display=block" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{bg:'#0e0e11',line:'rgba(255,255,255,.09)',mute:'#a19fa9',primary:'#C4293D'},fontFamily:{sans:['DM Sans','system-ui','sans-serif']}}}}</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+        html{scroll-behavior:smooth;scroll-padding-top:4.5rem;-webkit-text-size-adjust:100%}
+        body{background:#0e0e11;color:#f3f2f5;line-height:1.65;-webkit-font-smoothing:antialiased}
+        body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#0e0e11;z-index:30}
+        .m{font-family:'Material Symbols Outlined';font-weight:300;font-style:normal;font-size:22px;line-height:1;vertical-align:middle;letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;font-feature-settings:'liga'}
+        .hd,.serif{font-weight:500;letter-spacing:-.03em;line-height:1.1}
+        .btn,.btn2{display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:.9rem;padding:.85rem 1.5rem;border-radius:999px;transition:background .2s,border-color .2s}
+        .btn{background:#C4293D;color:#fff}.btn:hover{background:#D93A50}
+        .btn2{border:1px solid rgba(255,255,255,.2);color:#fff}.btn2:hover{background:rgba(255,255,255,.06)}
+        a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:8px}
+        .role{display:flex;flex-direction:column;gap:.5rem;text-align:left;padding:1rem 1.1rem;border-radius:16px;border:1px solid rgba(255,255,255,.1);transition:border-color .2s,background .2s}
+        .role:hover{border-color:rgba(255,255,255,.25)}
+        .role[aria-checked=true]{border-color:#C4293D;background:rgba(196,41,61,.1)}
+        .tile{position:relative;display:block;overflow:hidden;background:#1a1a20;aspect-ratio:1}
+        .tile img{width:100%;height:100%;object-fit:cover}
+        .tile .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3)}
+        summary{cursor:pointer;list-style:none}summary::-webkit-details-marker{display:none}
+        details[open] summary .m{transform:rotate(45deg)}summary .m{transition:transform .2s}
+        #sticky{transition:transform .25s ease}
+        #sticky:not(.show){transform:translateY(130%);visibility:hidden}
+        @keyframes pulse{50%{opacity:.5}}.skel{animation:pulse 1.4s ease-in-out infinite}
+        @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.skel{animation:none}#sticky,summary .m{transition:none}}
+    </style>
+</head>
+<body class="font-sans">
+
+<header class="sticky z-20 bg-bg/90 backdrop-blur border-b border-line" style="top:env(safe-area-inset-top,0px)">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-5 h-14">
+        <a href="/" class="font-semibold tracking-[.07em] text-sm">CREATIVE HUB <span class="text-primary">ZA</span></a>
+        <a href="/" class="text-sm text-mute hover:text-white">Explore creatives</a>
+    </div>
+</header>
+
+<main>
+    <!-- HERO -->
+    <section id="hero" class="max-w-6xl mx-auto px-5 pt-10 md:pt-24 pb-14 md:pb-20 grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-center">
+        <div>
+            <h1 class="hd text-[2.6rem] sm:text-6xl lg:text-7xl">Join the<br/>creative family.</h1>
+            <p class="text-base md:text-lg text-white/80 mt-5 max-w-md">One home for South African creatives to show their work, and for the people who hire them to find it.</p>
+            <div class="mt-8">
+                <a href="#join" class="btn">Choose how you’re joining</a>
+            </div>
+            <p class="text-sm text-mute mt-5">Free to join. The platform opens in December.</p>
+        </div>
+        <div>
+            <div id="strip" class="grid grid-cols-4 gap-1.5 rounded-2xl overflow-hidden"></div>
+            <p id="strip-note" class="text-xs text-mute mt-3">The wall is filling up. Your tile is waiting.</p>
+        </div>
+    </section>
+
+    <!-- WHAT IT IS -->
+    <section class="max-w-6xl mx-auto px-5 py-14 md:py-20 border-t border-line grid md:grid-cols-[1fr_1.4fr] gap-6 md:gap-12">
+        <h2 class="hd text-3xl md:text-4xl">What is Creative Hub ZA?</h2>
+        <div class="text-white/75 space-y-4 max-w-prose">
+            <p>Musicians, photographers, tattoo artists, dancers, painters, filmmakers, designers and 3D artists each get a public profile with their links and pictures of their work.</p>
+            <p>Labels, radio stations, brands and everyday clients can browse that wall, message creatives directly, post a brief for paid work and request a booking.</p>
+            <p>We are onboarding the first creatives now, so the platform is full of talent the day it opens.</p>
+        </div>
+    </section>
+
+    <!-- HOW -->
+    <section id="how" class="max-w-6xl mx-auto px-5 py-14 md:py-20 border-t border-line">
+        <h2 class="hd text-3xl md:text-4xl">Set up in about two minutes</h2>
+        <ol class="grid md:grid-cols-3 gap-8 md:gap-10 mt-9">
+            <li><span class="hd text-4xl text-primary">1</span><b class="block font-semibold mt-2">Create your account</b><p class="text-sm text-mute mt-1 max-w-xs">Choose who you are joining as, then add your name, email and city.</p></li>
+            <li><span class="hd text-4xl text-primary">2</span><b class="block font-semibold mt-2">Show your work</b><p class="text-sm text-mute mt-1 max-w-xs">Add your Spotify, YouTube or Instagram links and up to six pictures.</p></li>
+            <li><span class="hd text-4xl text-primary">3</span><b class="block font-semibold mt-2">Take your place on the wall</b><p class="text-sm text-mute mt-1 max-w-xs">Upload a photo. Visitors who tap your tile land on your profile.</p></li>
+        </ol>
+    </section>
+
+    <!-- ROLE PICKER -->
+    <section id="join" class="max-w-6xl mx-auto px-5 py-14 md:py-20 border-t border-line">
+        <h2 class="hd text-3xl md:text-4xl">Who are you joining as?</h2>
+        <div id="roles" role="radiogroup" aria-label="Join as" class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-7"></div>
+
+        <div class="mt-10 grid md:grid-cols-[1.3fr_1fr] gap-10 md:gap-16" aria-live="polite">
+            <div>
+                <h3 id="r-title" class="hd text-2xl md:text-3xl"></h3>
+                <p id="r-lead" class="text-white/75 mt-3 max-w-prose"></p>
+                <ul id="r-list" class="mt-6 border-t border-line"></ul>
+            </div>
+            <div class="md:pt-2">
+                <div class="md:sticky md:top-24">
+                    <a id="r-cta" href="/?join=artist" class="btn w-full !py-4"></a>
+                    <p class="text-xs text-mute mt-4 leading-relaxed">Free to join. You must be 18 or older. You can edit or delete your profile at any time.</p>
+                    <p class="text-sm text-mute mt-4">Already have an account? <a href="/" class="text-white underline underline-offset-4">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHARE -->
+    <section class="max-w-6xl mx-auto px-5 py-14 md:py-20 border-t border-line grid md:grid-cols-2 gap-8 items-center">
+        <div>
+            <h2 class="hd text-3xl md:text-4xl">Know someone who should be here?</h2>
+            <p class="text-white/75 mt-3 max-w-md">The more of us on the wall, the more work comes in for everyone. Send this page to a creative whose work deserves to be seen.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3">
+            <a id="wa" class="btn" target="_blank" rel="noopener">Share on WhatsApp</a>
+            <button id="copy" class="btn2" type="button">Copy link</button>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="max-w-3xl mx-auto px-5 py-14 md:py-20 border-t border-line">
+        <h2 class="hd text-3xl md:text-4xl">Questions</h2>
+        <div class="mt-7 divide-y divide-line border-y border-line">
+            <details class="py-4"><summary class="flex justify-between gap-4 font-medium">Does it cost anything to join?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">No. Creating an account and building your profile is free.</p></details>
+            <details class="py-4"><summary class="flex justify-between gap-4 font-medium">When does the platform open?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">In December. Your profile is saved, so you are ready from day one.</p></details>
+            <details class="py-4"><summary class="flex justify-between gap-4 font-medium">Who can see my profile?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">Your name, craft, city, photo, links and portfolio are public so clients can find you. Your email and messages stay private.</p></details>
+            <details class="py-4"><summary class="flex justify-between gap-4 font-medium">Do I keep ownership of my work?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">Yes. You keep the copyright in everything you upload. Our Terms and Privacy Policy are on the <a href="/" class="underline underline-offset-4">main site</a>.</p></details>
+            <details class="py-4"><summary class="flex justify-between gap-4 font-medium">I run a label, station or brand. Why join now?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">You can post briefs and message creatives as soon as you sign up, and you will already know who is on the platform when it opens.</p></details>
+        </div>
+    </section>
+
+</main>
+
+<footer class="border-t border-line px-5 pt-8 pb-28 md:pb-10 text-xs text-mute text-center">
+    <a href="/" class="underline underline-offset-4">Creative Hub ZA</a> · Need help? <a class="underline underline-offset-4" href="mailto:creativehubza.admin@gmail.com">creativehubza.admin@gmail.com</a>
+</footer>
+
+<!-- mobile: persistent join button once the hero has scrolled away -->
+<div id="sticky" class="md:hidden fixed inset-x-0 bottom-0 z-20 px-4 pt-3 bg-gradient-to-t from-bg via-bg/95 to-transparent" style="padding-bottom:max(.9rem,env(safe-area-inset-bottom))">
+    <a href="#join" class="btn w-full">Join the creative family</a>
+</div>
+
+<script>
+    const ROLES={
+        artist:{icon:'brush',name:'Artist / Creator',title:'Join as a creative',cta:'Create my creative profile',
+            lead:'Musicians, dancers, tattoo artists, photographers, painters, filmmakers, designers and 3D artists. Get found by people ready to pay for your work.',
+            pts:[['A profile that sells you','Links, pictures and a bio on one public page you can share anywhere.'],['A place on the wall','Your photo on our welcome wall, one tap from your profile.'],['Paid briefs','Apply to jobs posted by labels, stations and brands.'],['Messages and bookings','Clients contact you directly, with no one in the middle.'],['Profile analytics','See how many people view your profile, and who they are.']]},
+        label:{icon:'library_music',name:'Record label',title:'Join as a record label',cta:'Create my label account',
+            lead:'Find new South African talent before everyone else does, then sign them or book them for projects.',
+            pts:[['Browse local talent','Search by craft and city and look through real portfolios.'],['Post briefs','Describe the project and budget so the right artists apply.'],['Talk to artists directly','Message them and agree the details in the chat.'],['Request bookings','Send a booking request for sessions, shoots and features.']]},
+        radio:{icon:'radio',name:'Radio station',title:'Join as a radio station',cta:'Create my station account',
+            lead:'Discover homegrown artists, find guests and presenters, and commission creative work for your station.',
+            pts:[['Discover new artists','Browse local musicians and creatives by genre, craft and city.'],['Find guests','Message artists about interviews, live sessions and features.'],['Post briefs','Commission jingles, artwork, video and more.'],['Partner with us','Talk to us about showcases and collaborations.']]},
+        brand:{icon:'storefront',name:'Brand / business',title:'Join as a brand or business',cta:'Create my business account',
+            lead:'Agencies, venues, studios, schools and companies. Hire local creatives for campaigns, events and content.',
+            pts:[['Hire for any project','Photographers, designers, dancers, videographers and more.'],['Post a brief','Say what you need and your budget. Creatives apply to you.'],['Message before you commit','Check availability and agree the scope in the chat.'],['Everything in one place','Briefs, conversations and booking requests together.']]}
+    };
+    const $=id=>document.getElementById(id);
+    const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    const params=new URLSearchParams(location.search);
+    const ref=(params.get('ref')||'').match(/^[0-9a-f-]{36}$/i)?.[0]||'';
+    let cur=ROLES[params.get('join')]?params.get('join'):'artist';
+
+    function paint(){
+        $('roles').innerHTML=Object.entries(ROLES).map(([k,r])=>`<button type="button" role="radio" aria-checked="${k===cur}" class="role" data-k="${k}"><span class="m text-primary">${r.icon}</span><b class="text-sm font-medium">${esc(r.name)}</b></button>`).join('');
+        const r=ROLES[cur];
+        $('r-title').textContent=r.title;$('r-lead').textContent=r.lead;
+        $('r-list').innerHTML=r.pts.map(p=>`<li class="py-4 border-b border-line md:grid md:grid-cols-[13rem_1fr] md:gap-6"><b class="block font-medium text-sm">${esc(p[0])}</b><span class="block text-sm text-mute mt-1 md:mt-0">${esc(p[1])}</span></li>`).join('');
+        const cta=$('r-cta');cta.textContent=r.cta;cta.href='/?join='+cur+(ref?'&ref='+ref:'');
+    }
+    $('roles').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;cur=b.dataset.k;paint();$('roles').querySelector(`[data-k="${cur}"]`).focus({preventScroll:true})});
+    paint();
+
+    const shareUrl=location.origin+'/join.html'+(ref?'?ref='+ref:'');
+    $('wa').href='https://wa.me/?text='+encodeURIComponent('Creative Hub ZA opens in December and it is free to join. Get your profile on the wall: '+shareUrl);
+    $('copy').onclick=()=>navigator.clipboard.writeText(shareUrl).then(()=>{$('copy').textContent='Link copied'},()=>{$('copy').textContent='Copy failed'});
+
+    /* sticky mobile button: hidden while the hero or the role picker is on screen */
+    {const vis={hero:true,join:false},sb=$('sticky'),io=new IntersectionObserver(es=>{es.forEach(e=>vis[e.target.id]=e.isIntersecting);sb.classList.toggle('show',!vis.hero&&!vis.join)});io.observe($('hero'));io.observe($('join'))}
+
+    /* wall strip: real creatives with photos, topped up with "add" tiles */
+    (async()=>{
+        const N=8,el=$('strip');
+        el.innerHTML=Array(N).fill('<div class="tile skel"></div>').join('');
+        let list=[];
+        try{
+            const db=supabase.createClient('https://xbqmsgufdhqfpkkelcas.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicW1zZ3VmZGhxZnBra2VsY2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5OTAyMzQsImV4cCI6MjEwNTU2NjIzNH0.yssGW3SZ-hy1UAnwuGe08nqu64_n09Cvuc4QTShKdzo');
+            const{data}=await db.from('public_profiles').select('id,full_name,avatar_url').eq('role','artist').not('avatar_url','is',null).limit(200);
+            list=(data||[]).sort(()=>Math.random()-.5).slice(0,N);
+        }catch(e){}
+        el.innerHTML=list.map(p=>`<a href="/" class="tile" aria-label="${esc(p.full_name)}"><img src="${esc(p.avatar_url)}" alt="${esc(p.full_name)}" loading="lazy"/></a>`).join('')+Array(Math.max(0,N-list.length)).fill('<a href="#join" class="tile" aria-label="Join Creative Hub ZA"><div class="ph"><span class="m !text-3xl">add</span></div></a>').join('');
+        if(list.length)$('strip-note').textContent=list.length+' creatives on the wall so far. Add yours.';
+    })();
+</script>
+</body>
+</html>

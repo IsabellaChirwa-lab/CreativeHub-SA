@@ -1,0 +1,52 @@
+/* Creative Hub ZA — calm theme layer.
+   Loaded AFTER the inline <style> in index.html. Quieter type, softer edges, better mobile. */
+:root{--ink:#f3f2f5;--mute:#a19fa9;--hair:rgba(255,255,255,.09);--sans:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);font-weight:400;line-height:1.6;color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:#C4293D;color:#fff}
+
+/* type: nothing heavier than 600, display headings use DM Sans medium */
+b,strong,.font-bold,.font-semibold,.font-extrabold{font-weight:600!important}
+.font-extrabold{letter-spacing:.07em!important;font-size:.9rem!important}
+.font-display{font-family:var(--sans)!important;font-weight:500!important;letter-spacing:-.03em!important;line-height:1.08!important}
+.font-display.text-2xl{font-size:1.6rem!important}
+.font-display.text-3xl{font-size:2rem!important}
+.font-display.text-5xl{font-size:clamp(2.2rem,7vw,3.4rem)!important}
+#welcome h1{font-size:clamp(2.5rem,9.5vw,5rem)!important}
+.ph{font-family:var(--sans)!important;font-weight:600!important;font-size:1.25rem!important}
+#title{font-weight:500!important;font-size:.95rem}
+.nav{font-weight:500;font-size:.9rem}
+.chip{font-weight:500;border-color:rgba(255,255,255,.14)}
+
+/* controls */
+.btn,.btn2{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;border-radius:999px!important;font-weight:600!important;font-size:.875rem!important;padding:.72rem 1.3rem;transition:background .2s,border-color .2s}
+.btn2{border-color:rgba(255,255,255,.2)}
+.btn:disabled{opacity:.6}
+.card{border-radius:18px;border-color:var(--hair);background:#141418}
+.inp{font-size:16px;border-radius:12px;background:#17171c;border-color:rgba(255,255,255,.1);padding:.8rem 1rem}
+.inp::placeholder{color:#7c7a85}
+@media(min-width:768px){.inp{font-size:.9rem}}
+a:focus-visible,button:focus-visible,summary:focus-visible,.inp:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+/* layout: more air on desktop */
+#main{padding-top:2rem}
+@media(min-width:768px){#main{padding:2.75rem 3rem 4rem}}
+#plist .card{padding:1rem 1.1rem}
+#plist .card:hover{border-color:rgba(255,255,255,.22)}
+
+/* mobile */
+@media(max-width:767px){
+    #tabs button{font-size:10px;font-weight:500;padding:.6rem 0 .5rem}
+    #tabs .m{font-size:22px}
+    #main{padding-left:1.1rem;padding-right:1.1rem}
+}
+@media(max-width:639px){
+    /* welcome: one clear action, two quiet ones, short copy */
+    #welcome p.text-white\/85{display:none}
+    #welcome p.text-lg{font-size:1rem;margin-top:.75rem}
+    #hero-cta{flex:1 1 100%}
+    #welcome .btn2{flex:1 1 calc(50% - .375rem)}
+    /* modals become bottom sheets */
+    .modal>.card,.modal>form.card{border-radius:22px 22px 0 0;padding-bottom:max(1.5rem,env(safe-area-inset-bottom))}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}

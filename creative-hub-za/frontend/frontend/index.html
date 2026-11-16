@@ -24,10 +24,10 @@
 <meta name="twitter:description" content="Show your work. Get discovered. Musicians, photographers, tattoo artists, dancers, painters and more, all in one place."/>
 <meta name="twitter:image" content="https://creativehubza.netlify.app/og-image.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=block" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300,0&display=block" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{bg:'#0e0e11',card:'#16161b',line:'#26262f',mute:'#a19fa9',primary:'#C4293D'},fontFamily:{sans:['Manrope','sans-serif'],display:['Playfair Display','serif']}}}}</script>
+<script>tailwind.config={theme:{extend:{colors:{bg:'#0e0e11',card:'#16161b',line:'#26262f',mute:'#a19fa9',primary:'#C4293D'},fontFamily:{sans:['DM Sans','system-ui','sans-serif'],display:['DM Sans','system-ui','sans-serif']}}}}</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
@@ -56,6 +56,7 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 @keyframes pulse{50%{opacity:.45}}.skel{background:#1d1d23;animation:pulse 1.4s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.up{animation:none}.wall{transition:none}.skel{animation:none}}
 </style>
+<link rel="stylesheet" href="/theme.css"/>
 </head>
 <body class="font-sans antialiased">
 <noscript><p style="padding:2rem;text-align:center">Creative Hub ZA needs JavaScript to run. Please turn it on and refresh.</p></noscript>
@@ -73,9 +74,9 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
     <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] max-w-3xl">Creatives, <br class="hidden md:block"/>all in one home.</h1>
     <p class="text-white text-lg md:text-xl font-semibold mt-4">Show your work. Get discovered.</p>
     <p class="text-white/85 mt-2 max-w-xl">South African musicians, photographers, tattoo artists, dancers, painters and more build a profile to show their work. Clients, labels and brands can browse, message and request to book them.</p>
-    <div class="flex flex-wrap gap-3 mt-6 pointer-events-auto"><button id="hero-cta" class="btn" onclick="me?enterApp('dashboard'):openOnboard()">Join as a creative</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('discover')">Explore creatives</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('partners')">Partner with us</button></div>
+    <div class="flex flex-wrap gap-3 mt-6 pointer-events-auto"><button id="hero-cta" class="btn" onclick="me?enterApp('dashboard'):openOnboard()">Join as a creative</button><button class="btn2 bg-black/40 backdrop-blur" onclick="enterApp('discover')">Explore creatives</button></div>
     <div id="wall-nudge" class="pointer-events-auto mt-3"></div>
-    <div class="pointer-events-auto flex flex-wrap gap-x-4 gap-y-1 mt-4 text-xs text-white/60 underline"><button onclick="enterApp('guidelines')">Community guidelines</button><button onclick="openLegal('terms')">Terms</button><button onclick="openLegal('privacy')">Privacy</button></div>
+    <div class="pointer-events-auto flex flex-wrap gap-x-4 gap-y-1 mt-4 text-xs text-white/60 underline"><button onclick="enterApp('partners')">Partner with us</button><button onclick="enterApp('guidelines')">Community guidelines</button><button onclick="openLegal('terms')">Terms</button><button onclick="openLegal('privacy')">Privacy</button></div>
   </div>
 </section>
 
@@ -268,7 +269,7 @@ function renderWho(){
   $('who-side').innerHTML=me?t+`<button class="text-xs text-mute mt-3" onclick="signOut()">Sign out</button>`:`<button class="btn2 w-full" onclick="openAuth('signin')">Sign in</button>`;
   $('bellb').classList.toggle('hidden',!me);
   {const hc=$('hero-cta');if(hc)hc.textContent=me?'Open my dashboard':'Join as a creative'}
-  $('w-btns').innerHTML=me?`<button class="btn" onclick="enterApp('dashboard')">Open app</button>`:`<button class="btn2 bg-black/40 backdrop-blur" onclick="openAuth('signin')">Sign in</button><button class="btn" onclick="openOnboard()"><span class="hidden sm:inline">Join as a creative</span><span class="sm:hidden">Join</span></button>`;
+  $('w-btns').innerHTML=me?'':`<button class="btn2 bg-black/40 backdrop-blur" onclick="openAuth('signin')">Sign in</button><button class="btn" onclick="openOnboard()"><span class="hidden sm:inline">Join as a creative</span><span class="sm:hidden">Join</span></button>`;
   nav();bell();
 }
 
@@ -360,7 +361,9 @@ async function rDash(){
   const card=(l,n)=>`<div class="card p-4"><span class="text-xs text-mute">${l}</span><div class="text-2xl font-bold mt-1">${n}</div></div>`;
   $('main').innerHTML=head('Dashboard','Welcome back, '+esc(me.full_name.split(' ')[0])+'. Updates live.')+
   `<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">${card('Profile views (7d)',v.count||0)}${card('Bookings',bs.length)}${card('In escrow',R(esc$))}${card('Unread messages',uMsg())}</div>
-  <h3 class="font-bold mb-3">Recent bookings</h3><div class="grid gap-2">${bs.slice(0,6).map(x=>{const o=P[x.client_id===me.id?x.artist_id:x.client_id];return `<div class="card p-3 flex justify-between gap-3 text-sm"><span class="truncate">${x.client_id===me.id?'To':'From'} ${esc(o?.full_name||'Member')}</span><span class="text-mute shrink-0">${R(x.escrow_deposit)} · ${esc(x.payment_status.replace('_',' '))}</span></div>`}).join('')||'<p class="text-sm text-mute card p-4">No bookings yet. When someone requests a booking, it will show up here.</p>'}</div>`;
+  <h3 class="font-bold mb-3">Recent bookings</h3><div class="grid gap-2">${bs.slice(0,6).map(x=>{const isC=x.client_id===me.id,o=P[isC?x.artist_id:x.client_id];
+const act=x.payment_status==='escrow_held'?(isC?`<button class="btn2 !py-1 !px-3 !text-xs" onclick="bookingAct('${x.id}','release')">Release deposit</button>`:`<button class="btn2 !py-1 !px-3 !text-xs" onclick="bookingAct('${x.id}','refund')">Cancel and refund</button>`):'';
+return `<div class="card p-3 flex items-center justify-between gap-3 text-sm"><span class="truncate">${isC?'To':'From'} ${esc(o?.full_name||'Member')}</span><span class="flex items-center gap-3 shrink-0"><span class="text-mute">${R(x.escrow_deposit)} · ${esc(x.payment_status.replace('_',' '))}</span>${act}</span></div>`}).join('')||'<p class="text-sm text-mute card p-4">No bookings yet. When someone requests a booking, it will show up here.</p>'}</div>`;
 }
 async function rAna(){
   load('Analytics');const s=since7(),{data}=await db.from('profile_views').select('created_at,viewer_id').eq('profile_id',me.id).gte('created_at',s.toISOString());
@@ -384,7 +387,7 @@ async function rProfile(){
   <select id="pf-m" class="inp">${CITIES.map(c=>`<option ${c===me.metro?'selected':''}>${c}</option>`).join('')}</select>
   ${me.role==='artist'?`<input id="pf-c" class="inp" value="${esc(me.craft||'')}" placeholder="What you do"/><div><p class="text-xs text-mute mb-2">Categories your work falls under</p><div id="cats-pf" class="flex flex-wrap gap-2"></div></div>`:''}
   <textarea id="pf-b" rows="4" class="inp" placeholder="Tell clients about you">${esc(me.bio||'')}</textarea>
-  <button class="btn" onclick="saveProfile()">Save changes</button></div>${me.role==='artist'?'<div id="pf-port"></div>':''}<div class="card p-5 max-w-xl mt-4"><b>Change password</b><div class="relative mt-3"><input id="np1" class="inp pr-11" type="password" minlength="6" placeholder="New password (6+ characters)"/><button type="button" aria-label="Show or hide password" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute" onclick="eye(this)"><span class="m">visibility</span></button></div><button class="btn mt-3" onclick="chPw()">Update password</button></div><div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="openM('pw')">Change password</button><button class="btn2" onclick="openGuide()">Guidelines</button><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
+  <button class="btn" onclick="saveProfile()">Save changes</button></div>${me.role==='artist'?'<div id="pf-port"></div>':''}<div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="openM('pw')">Change password</button><button class="btn2" onclick="openGuide()">Guidelines</button><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
   if(me.role==='artist'){catChips('cats-pf');pfInit()}
 }
 async function saveProfile(){
@@ -537,7 +540,7 @@ async function ob3(){
   await upAvatar(ob.photo);renderWho();ob.step=4;obPaint();
 }
 /* step 4: tell a creative to tell a creative */
-const inv=()=>location.href.split('?')[0].split('#')[0]+'?ref='+me.id;
+const inv=()=>location.origin+'/join.html?ref='+me.id;
 const ob4h=()=>`<div class="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center"><span class="m text-primary !text-4xl">check_circle</span></div><h2 class="font-display text-3xl font-bold mt-4">You're in, ${esc(me.full_name.split(' ')[0])}.</h2>
 <p class="text-mute text-sm mt-2">${me.avatar_url?'Your face is on the wall.':'Your profile is live.'} Now tell a creative to tell a creative: the more of us here, the more work comes in.</p>
 <div class="card p-4 mt-6"><p class="text-xs text-mute">Your personal invite link</p><p class="text-sm break-all mt-1">${esc(inv())}</p><div class="grid grid-cols-2 gap-2 mt-3"><a class="btn text-center" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Join me on Creative Hub ZA, where South Africans can find and potentially book local creatives: '+inv())}">WhatsApp</a><button class="btn2" onclick="navigator.clipboard.writeText(inv()).then(()=>toast('Link copied.'))">Copy link</button></div></div>
@@ -666,9 +669,19 @@ function rPartner(){
 function openLegal(k){$('lm-t').textContent=k==='terms'?'Terms of Use':'Privacy Policy';$('lm-body').innerHTML=k==='terms'?TERMS():PRIVACY();openM('lm')}
 
 
+/* ---------- release / refund a held deposit ---------- */
+async function bookingAct(id,act){
+  if(!confirm(act==='release'?'Release this deposit to the creative? This cannot be undone.':'Cancel this booking and refund the client?'))return;
+  const{data:{session}}=await db.auth.getSession();
+  try{const r=await fetch(C.API+'/api/bookings/'+id+'/'+act,{method:'POST',headers:{Authorization:'Bearer '+session.access_token}});
+    const j=await r.json().catch(()=>({}));toast(j.message||(r.ok?'Done.':'Something went wrong.'))}
+  catch(e){toast('Could not reach the server.')}
+  go('dashboard');
+}
+
 /* ---------- init ---------- */
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});
-(async()=>{renderWho();await loadPeople();if(!db)return;const{data:{session}}=await db.auth.getSession();if(session)await boot(session.user);const PAY=new URLSearchParams(location.search).get('pay');if(PAY&&me){history.replaceState(null,'',location.pathname);if(PAY==='ok'){toast('Payment received. Confirming your booking…');enterApp('dashboard')}else toast('Payment was not completed.')}if(REF&&!me)openOnboard()})();
+(async()=>{renderWho();await loadPeople();if(!db)return;const{data:{session}}=await db.auth.getSession();if(session)await boot(session.user);const PAY=new URLSearchParams(location.search).get('pay');if(PAY&&me){history.replaceState(null,'',location.pathname);if(PAY==='ok'){toast('Payment received. Confirming your booking…');enterApp('dashboard')}else toast('Payment was not completed.')}const J=new URLSearchParams(location.search).get('join');if((REF||J)&&!me)openOnboard(J)})();
 </script>
 </body>
 </html>
