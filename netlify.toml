@@ -1,0 +1,13 @@
+# Tells Netlify where the site actually lives.
+# index.html is inside creative-hub-za/frontend/frontend, so without this
+# Netlify finds no index.html at the root and shows "Page not found".
+[build]
+base    = "."
+publish = "creative-hub-za/frontend/frontend"
+command = ""
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
