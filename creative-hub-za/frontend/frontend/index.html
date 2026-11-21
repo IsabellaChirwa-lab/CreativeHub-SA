@@ -54,7 +54,13 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
 .wall{transition:opacity .45s ease}.wall.swap{opacity:0}
 @keyframes up{from{opacity:0;transform:translateY(10px)}}.up{animation:up .35s ease both}
 @keyframes pulse{50%{opacity:.45}}.skel{background:#1d1d23;animation:pulse 1.4s ease-in-out infinite}
-@media(prefers-reduced-motion:reduce){.up{animation:none}.wall{transition:none}.skel{animation:none}}
+.vinyl{position:relative;width:min(100%,300px);aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle at center,#09090b 0 2px,#17171b 2px 3px);box-shadow:0 18px 50px #000b,inset 0 0 0 6px #0c0c0f;animation:spin 3.4s linear infinite;animation-play-state:paused}
+    .vinyl.on{animation-play-state:running}
+    .vinyl:after{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,transparent 0 35deg,#ffffff18 55deg,transparent 85deg 215deg,#ffffff12 235deg,transparent 265deg)}
+    .vinyl .lab{position:absolute;inset:31%;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #09090b}
+    .vinyl .hole{position:absolute;left:50%;top:50%;width:4.5%;aspect-ratio:1;transform:translate(-50%,-50%);background:#0e0e11;border-radius:50%;z-index:2}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(prefers-reduced-motion:reduce){.vinyl{animation:none!important}.up{animation:none}.wall{transition:none}.skel{animation:none}}
 </style>
 <link rel="stylesheet" href="/theme.css"/>
 </head>
@@ -85,20 +91,20 @@ body{background:#0e0e11;color:#f5f4f7;overscroll-behavior:none}
   <aside class="hidden md:flex fixed inset-y-0 left-0 w-60 flex-col border-r border-line bg-bg p-4">
     <button class="font-extrabold tracking-tight text-lg px-2 py-3 text-left" onclick="showWelcome()">CREATIVE HUB <span class="text-primary">ZA</span></button>
     <nav id="side" class="flex flex-col gap-1 mt-4"></nav>
-    <div class="mt-auto"><button class="btn w-full mb-3" onclick="openBrief()">Post a brief</button><div id="who-side"></div><div class="flex gap-3 px-2 mt-3 text-[11px] text-mute underline"><button onclick="go('partners')">Partner with us</button><button onclick="openLegal('terms')">Terms</button><button onclick="openLegal('privacy')">Privacy</button></div></div>
+    <div class="mt-auto"><div id="who-side"></div><div class="flex gap-3 px-2 mt-3 text-[11px] text-mute underline"><button onclick="go('partners')">Partner with us</button><button onclick="openLegal('terms')">Terms</button><button onclick="openLegal('privacy')">Privacy</button></div></div>
   </aside>
   <header class="md:ml-60 sticky top-0 z-20 bg-bg/90 backdrop-blur border-b border-line flex items-center justify-between px-4 md:px-8 h-14 pt-[env(safe-area-inset-top)] box-content">
     <button class="md:hidden font-extrabold tracking-tight" onclick="showWelcome()">CH <span class="text-primary">ZA</span></button>
     <h2 id="title" class="hidden md:block font-bold"></h2>
     <div class="flex items-center gap-3">
-      <button class="btn md:hidden !py-2" onclick="openBrief()">Post</button>
+      
       <button id="bellb" class="relative hidden" onclick="toggleNp()" aria-label="Notifications"><span class="m">notifications</span><span id="bdg" class="bdg hidden">0</span></button>
       <div id="who-top"></div>
     </div>
   </header>
   <div id="np" class="hidden fixed right-3 top-14 z-40 w-80 max-w-[calc(100vw-1.5rem)] card shadow-2xl max-h-96 overflow-y-auto"></div>
   <main id="main" class="md:ml-60 px-4 md:px-8 py-6 pb-28 md:pb-10 max-w-5xl"></main>
-  <nav id="tabs" class="md:hidden fixed bottom-0 inset-x-0 z-20 bg-bg/95 backdrop-blur border-t border-line grid grid-cols-6 pb-[env(safe-area-inset-bottom)]"></nav>
+  <nav id="tabs" class="md:hidden fixed bottom-0 inset-x-0 z-20 bg-bg/95 backdrop-blur border-t border-line grid grid-cols-5 pb-[env(safe-area-inset-bottom)]"></nav>
 </div>
 
 <!-- MODALS -->
@@ -169,7 +175,7 @@ const db=C.URL.startsWith('http')?supabase.createClient(C.URL,C.KEY):null;
 const CATS=['Music','Dance','Tattoo','Photography','Fine art','3D / VFX','Film & video','Design','Other'];
 const CITIES=['Johannesburg','Cape Town','Durban','Pretoria','Gqeberha','Bloemfontein'];
 const ROLES={artist:['Artist / Creator','brush'],label:['Record label','library_music'],radio:['Radio station','radio'],brand:['Brand / business','storefront']};
-const NAV=[['discover','Discover','explore'],['briefs','Briefs','work'],['chat','Messages','chat'],['dashboard','Dashboard','space_dashboard'],['analytics','Analytics','monitoring'],['profile','Profile','person']];
+const NAV=[['discover','Discover','explore'],['briefs','Briefs','work'],['chat','Messages','chat'],['dashboard','Dashboard','space_dashboard'],['profile','Profile','person']];
 let me=null,view='discover',cat='All',q='',people=[],P={},msgs=[],notifs=[],BR=[],chatWith=null,draft='',sel=[],photo=null,bk=null,role='artist',chan=null;
 
 const $=id=>document.getElementById(id);
@@ -260,16 +266,16 @@ function nav(){
 }
 async function go(v,a){
   if(['chat','dashboard','analytics','profile'].includes(v)&&!me){toast('Sign in to open this page.');openAuth('signin');return}
-  view=v;if(v==='chat')chatWith=a||null;window.scrollTo(0,0);$('np').classList.add('hidden');nav();
-  try{await({discover:rDiscover,briefs:rBriefs,chat:rChat,dashboard:rDash,analytics:rAna,profile:rProfile,person:()=>rPerson(a),guidelines:rGuide,partners:rPartner})[v]()}catch(e){console.error(e);toast('Something went wrong loading this page.')}
+  vStop();view=v;if(v==='chat')chatWith=a||null;window.scrollTo(0,0);$('np').classList.add('hidden');nav();
+  try{await({discover:rDiscover,briefs:rBriefs,chat:rChat,dashboard:async()=>{await rDash();await rAna(true)},analytics:rAna,profile:rProfile,person:()=>rPerson(a),guidelines:rGuide,partners:rPartner})[v]()}catch(e){console.error(e);toast('Something went wrong loading this page.')}
 }
 function renderWho(){
   const t=me?`<button onclick="go('profile')" class="flex items-center gap-2 text-left"><span class="w-8 h-8 rounded-full overflow-hidden tile shrink-0">${pic(me)}</span><span class="hidden md:block text-sm"><b>${esc(me.full_name)}</b><br/><span class="text-xs text-mute">${ROLES[me.role]?.[0]||'Admin'}</span></span></button>`:'';
-  $('who-top').innerHTML=me?'':`<button class="btn2 !py-2" onclick="openAuth('signin')">Sign in</button>`;
+  $('who-top').innerHTML=me?'':`<button class="btn2 !py-2 md:hidden" onclick="openAuth('signin')">Sign in</button>`;
   $('who-side').innerHTML=me?t+`<button class="text-xs text-mute mt-3" onclick="signOut()">Sign out</button>`:`<button class="btn2 w-full" onclick="openAuth('signin')">Sign in</button>`;
   $('bellb').classList.toggle('hidden',!me);
   {const hc=$('hero-cta');if(hc)hc.textContent=me?'Open my dashboard':'Join as a creative'}
-  $('w-btns').innerHTML=me?'':`<button class="btn2 bg-black/40 backdrop-blur" onclick="openAuth('signin')">Sign in</button><button class="btn" onclick="openOnboard()"><span class="hidden sm:inline">Join as a creative</span><span class="sm:hidden">Join</span></button>`;
+  $('w-btns').innerHTML=me?'':`<button class="btn2 bg-black/40 backdrop-blur" onclick="openAuth('signin')">Sign in</button>`;
   nav();bell();
 }
 
@@ -287,20 +293,21 @@ function list(){
 async function rPerson(id){
   await who([id]);const p=P[id];
   if(!p){$('main').innerHTML='<p class="text-mute">This profile could not be found.</p>';return}
+    const tr=db?(await db.from('tracks').select('*').eq('profile_id',id).maybeSingle()).data:null;
   if((!me||me.id!==id)&&viewOnce(id))db?.rpc('record_profile_view',{p_profile:id,p_visitor:vkey()}).then(()=>{});
   const mine=me?.id===id;
   $('main').innerHTML=`<button class="text-sm text-mute mb-4" onclick="go('discover')"><span class="m">arrow_back</span> Back</button>
-  <div class="grid md:grid-cols-[280px_1fr] gap-6"><div class="tile aspect-square rounded-2xl">${pic(p)}</div><div>
-  <h1 class="font-display text-3xl font-bold">${esc(p.full_name)}</h1><p class="text-mute mt-1">${esc(p.craft||ROLES[p.role]?.[0]||'')} · ${esc(p.metro||'South Africa')}</p>
+  <div class="grid md:grid-cols-[280px_1fr] gap-6">${tr?vinyl(p,tr):`<div class="tile aspect-square rounded-2xl">${pic(p)}</div>`}<div>
+  <h1 class="font-display text-3xl font-bold">${esc(p.full_name)}</h1><p class="text-mute mt-1">${esc(p.craft||ROLES[p.role]?.[0]||'')} · ${esc(p.metro||'South Africa')}</p><p id="fcnt" class="text-xs text-mute mt-1"></p>
   <div class="flex flex-wrap gap-1 mt-3">${tags(p)}</div>
   <p class="mt-4 leading-relaxed max-w-prose whitespace-pre-wrap">${esc(p.bio||'This creative is new to the hub.')}</p>
-  ${portfolio(p)}<div class="flex gap-3 mt-6">${mine?`<button class="btn" onclick="go('profile')">Edit profile</button>`:`<button class="btn" onclick="openBooking('${id}')">Request booking</button><button class="btn2" onclick="openChat('${id}')"><span class="m">chat</span> Message</button>`}</div></div></div>`;
+  ${portfolio(p)}<div class="flex gap-3 mt-6">${mine?`<button class="btn" onclick="go('profile')">Edit profile</button>`:`<button class="btn" onclick="openBooking('${id}')">Request booking</button><button class="btn2" onclick="openChat('${id}')"><span class="m">chat</span> Message</button><button id="fbtn" class="btn2" onclick="toggleFollow('${id}')">${FOL.has(id)?'Following':'Follow'}</button>`}</div></div></div>`;fcount(id);vAuto();
 }
 
 /* ---------- briefs ---------- */
 async function rBriefs(){
   load('Briefs');const{data}=await db.from('briefs').select('*').order('created_at',{ascending:false}).limit(100);BR=data||[];await who(BR.map(b=>b.created_by));
-  $('main').innerHTML=head('Briefs','A brief is a job post. A client describes what they need and their budget, creatives apply, and you agree the details in chat.')+`<div class="grid gap-3">${BR.map(b=>`<div class="card p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><b>${esc(b.title)}</b><p class="text-sm text-mute mt-1">${esc(b.description)}</p><p class="text-xs text-mute mt-2">${esc(P[b.created_by]?.full_name||'Member')} · ${esc(b.category)} · <span class="text-white font-semibold">${R(b.budget)}</span>${b.deadline?' · due '+esc(b.deadline):''}</p></div>${me?.id===b.created_by?'<span class="text-sm text-mute">Your brief</span>':`<button class="btn shrink-0" onclick="applyBrief('${b.id}')">Apply</button>`}</div>`).join('')||'<p class="text-sm text-mute card p-4">No briefs yet. Post the first one.</p>'}</div>`;
+  $('main').innerHTML=head('Briefs','A brief is a job post. A client describes what they need and their budget, creatives apply, and you agree the details in chat.')+`<button class="btn mb-5" onclick="openBrief()">Post a brief</button>`+`<div class="grid gap-3">${BR.map(b=>`<div class="card p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><b>${esc(b.title)}</b><p class="text-sm text-mute mt-1">${esc(b.description)}</p><p class="text-xs text-mute mt-2">${esc(P[b.created_by]?.full_name||'Member')} · ${esc(b.category)} · <span class="text-white font-semibold">${R(b.budget)}</span>${b.deadline?' · due '+esc(b.deadline):''}</p></div>${me?.id===b.created_by?'<span class="text-sm text-mute">Your brief</span>':`<button class="btn shrink-0" onclick="applyBrief('${b.id}')">Apply</button>`}</div>`).join('')||'<p class="text-sm text-mute card p-4">No briefs yet. Post the first one.</p>'}</div>`;
 }
 function applyBrief(id){if(!me){toast('Sign in to apply.');openAuth('signin');return}const b=BR.find(x=>x.id===id);openChat(b.created_by,`Hi, I'd like to apply for your brief "${b.title}".`)}
 function openBrief(){if(!me){toast('Sign in to post a brief.');openAuth('signin');return}$('b-c').innerHTML=CATS.map(c=>`<option>${c}</option>`).join('');openM('brief')}
@@ -335,7 +342,7 @@ async function loadNotifs(){const{data}=await db.from('notifications').select('*
 function bell(){const n=notifs.filter(x=>!x.read).length;$('bdg').textContent=n;$('bdg').classList.toggle('hidden',!n)}
 function toggleNp(){const el=$('np');el.classList.toggle('hidden');if(el.classList.contains('hidden'))return;
   el.innerHTML=`<div class="flex justify-between items-center p-3 border-b border-line"><b class="text-sm">Notifications</b><button class="text-xs text-primary font-semibold" onclick="readAll()">Mark all read</button></div>`+(notifs.map(n=>`<button onclick="openN('${n.id}')" class="w-full text-left p-3 border-b border-line hover:bg-[#1d1d23] flex gap-2">${n.read?'':'<span class="w-2 h-2 mt-1.5 rounded-full bg-primary shrink-0"></span>'}<span class="min-w-0"><b class="block text-sm">${esc(n.title)}</b><span class="block text-xs text-mute truncate">${esc(n.body||'')}</span></span></button>`).join('')||'<p class="p-4 text-sm text-mute">You are all caught up.</p>')}
-function openN(id){const n=notifs.find(x=>x.id===id);if(!n.read){n.read=true;db.from('notifications').update({read:true}).eq('id',id).then(()=>{});bell()}$('np').classList.add('hidden');n.link?.startsWith('chat:')?go('chat',n.link.slice(5)):go('dashboard')}
+function openN(id){const n=notifs.find(x=>x.id===id);if(!n.read){n.read=true;db.from('notifications').update({read:true}).eq('id',id).then(()=>{});bell()}$('np').classList.add('hidden');n.link?.startsWith('chat:')?go('chat',n.link.slice(5)):n.link?.startsWith('person:')?go('person',n.link.slice(7)):go('dashboard')}
 function readAll(){notifs.forEach(n=>n.read=true);db.from('notifications').update({read:true}).eq('user_id',me.id).eq('read',false).then(()=>{});bell();toggleNp();toggleNp()}
 
 /* ---------- live subscriptions ---------- */
@@ -360,18 +367,18 @@ async function rDash(){
   const esc$=bs.filter(x=>x.payment_status==='escrow_held').reduce((a,x)=>a+Number(x.escrow_deposit),0);
   const card=(l,n)=>`<div class="card p-4"><span class="text-xs text-mute">${l}</span><div class="text-2xl font-bold mt-1">${n}</div></div>`;
   $('main').innerHTML=head('Dashboard','Welcome back, '+esc(me.full_name.split(' ')[0])+'. Updates live.')+
-  `<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">${card('Profile views (7d)',v.count||0)}${card('Bookings',bs.length)}${card('In escrow',R(esc$))}${card('Unread messages',uMsg())}</div>
-  <h3 class="font-bold mb-3">Recent bookings</h3><div class="grid gap-2">${bs.slice(0,6).map(x=>{const isC=x.client_id===me.id,o=P[isC?x.artist_id:x.client_id];
+  `${(C.PAYMENTS||bs.length)?`<div class="grid grid-cols-2 gap-3 mb-6">${card('Bookings',bs.length)}${card('In escrow',R(esc$))}</div>`:''}
+  ${(bs.length||C.PAYMENTS)?'<h3 class="font-bold mb-3">Recent bookings</h3>':''}<div class="grid gap-2">${bs.slice(0,6).map(x=>{const isC=x.client_id===me.id,o=P[isC?x.artist_id:x.client_id];
 const act=x.payment_status==='escrow_held'?(isC?`<button class="btn2 !py-1 !px-3 !text-xs" onclick="bookingAct('${x.id}','release')">Release deposit</button>`:`<button class="btn2 !py-1 !px-3 !text-xs" onclick="bookingAct('${x.id}','refund')">Cancel and refund</button>`):'';
-return `<div class="card p-3 flex items-center justify-between gap-3 text-sm"><span class="truncate">${isC?'To':'From'} ${esc(o?.full_name||'Member')}</span><span class="flex items-center gap-3 shrink-0"><span class="text-mute">${R(x.escrow_deposit)} · ${esc(x.payment_status.replace('_',' '))}</span>${act}</span></div>`}).join('')||'<p class="text-sm text-mute card p-4">No bookings yet. When someone requests a booking, it will show up here.</p>'}</div>`;
+return `<div class="card p-3 flex items-center justify-between gap-3 text-sm"><span class="truncate">${isC?'To':'From'} ${esc(o?.full_name||'Member')}</span><span class="flex items-center gap-3 shrink-0"><span class="text-mute">${R(x.escrow_deposit)} · ${esc(x.payment_status.replace('_',' '))}</span>${act}</span></div>`}).join('')||(C.PAYMENTS?'<p class="text-sm text-mute card p-4">No bookings yet. When someone requests a booking, it will show up here.</p>':'')}</div>`;
 }
-async function rAna(){
-  load('Analytics');const s=since7(),{data}=await db.from('profile_views').select('created_at,viewer_id').eq('profile_id',me.id).gte('created_at',s.toISOString());
+async function rAna(embed){
+  const TOP=embed?$('main').innerHTML:'';if(!embed)load('Analytics');const s=since7(),{data}=await db.from('profile_views').select('created_at,viewer_id').eq('profile_id',me.id).gte('created_at',s.toISOString());
   const rows=data||[],days=[...Array(7)].map((_,i)=>{const d=new Date(s.getTime()+i*864e5);return{k:d.toLocaleDateString('en-CA'),l:d.toLocaleDateString('en-ZA',{weekday:'short'}),n:0}});
   rows.forEach(r=>{const d=days.find(x=>x.k===new Date(r.created_at).toLocaleDateString('en-CA'));if(d)d.n++});
   await who(rows.map(r=>r.viewer_id));const by={};rows.forEach(r=>{const k=r.viewer_id?(ROLES[P[r.viewer_id]?.role]?.[0]||'Member'):'Visitors (not signed in)';by[k]=(by[k]||0)+1});
   const mx=Math.max(1,...days.map(d=>d.n));
-  $('main').innerHTML=head('Analytics','Who is looking at your profile. Repeat visits within 6 hours count once. Updates live.')+
+  $('main').innerHTML=TOP+(embed?`<h3 class="font-bold mt-8 mb-3">Who is viewing your profile</h3>`:head('Analytics','Who is looking at your profile. Repeat visits within 6 hours count once. Updates live.'))+
   `<div class="card p-5"><b>${rows.length} profile views, last 7 days</b><div class="flex items-end gap-2 h-44 mt-5">${days.map(d=>`<div class="flex-1 flex flex-col items-center gap-2 justify-end h-full"><span class="text-[10px] text-mute">${d.n}</span><div class="w-full bg-primary rounded-t" style="height:${Math.max(d.n/mx*100,2)}%"></div><span class="text-[10px] text-mute">${d.l}</span></div>`).join('')}</div></div>
   <div class="card p-4 mt-4"><b>Who viewed</b><div class="mt-2 space-y-1 text-sm text-mute">${Object.entries(by).map(([k,v])=>`<div class="flex justify-between"><span>${esc(k)}</span><span class="text-white">${v}</span></div>`).join('')||'No views yet. Share your profile to get started.'}</div></div>`;
 }
@@ -387,8 +394,8 @@ async function rProfile(){
   <select id="pf-m" class="inp">${CITIES.map(c=>`<option ${c===me.metro?'selected':''}>${c}</option>`).join('')}</select>
   ${me.role==='artist'?`<input id="pf-c" class="inp" value="${esc(me.craft||'')}" placeholder="What you do"/><div><p class="text-xs text-mute mb-2">Categories your work falls under</p><div id="cats-pf" class="flex flex-wrap gap-2"></div></div>`:''}
   <textarea id="pf-b" rows="4" class="inp" placeholder="Tell clients about you">${esc(me.bio||'')}</textarea>
-  <button class="btn" onclick="saveProfile()">Save changes</button></div>${me.role==='artist'?'<div id="pf-port"></div>':''}<div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="openM('pw')">Change password</button><button class="btn2" onclick="openGuide()">Guidelines</button><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
-  if(me.role==='artist'){catChips('cats-pf');pfInit()}
+  <button class="btn" onclick="saveProfile()">Save changes</button></div>${me.role==='artist'?'<div id="pf-port"></div><div id="pf-trk"></div>':''}<div class="card p-5 max-w-xl mt-4"><b>Account</b><p class="text-xs text-mute mt-1">${esc(me.email||"")}</p><div class="flex flex-wrap gap-3 mt-4"><button class="btn2" onclick="openM('pw')">Change password</button><button class="btn2" onclick="openGuide()">Guidelines</button><button class="btn2" onclick="signOut()">Sign out</button><button class="btn2 !text-red-400 !border-red-400/40" onclick="delAcct()">Delete my account</button></div></div>`;
+  if(me.role==='artist'){catChips('cats-pf');pfInit();trkInit()}
 }
 async function saveProfile(){
   const u={full_name:$('pf-n').value.trim()||me.full_name,metro:$('pf-m').value,bio:$('pf-b').value};
@@ -422,7 +429,7 @@ async function boot(u){
     data=ins.data;
   }
   bootErr='';
-  me=data;P[me.id]=me;await Promise.all([loadMsgs(),loadNotifs()]);live();renderWho();wall();return true;
+  me=data;P[me.id]=me;await Promise.all([loadMsgs(),loadNotifs(),loadFollows()]);live();renderWho();wall();return true;
 }
 async function signin(e){
   e.preventDefault();const{data,error}=await db.auth.signInWithPassword({email:$('si-e').value.trim(),password:$('si-p').value});
@@ -430,7 +437,7 @@ async function signin(e){
   if(!await boot(data.user)){await db.auth.signOut();toast('Signed in, but your profile could not be loaded'+(bootErr?': '+bootErr:'.'));return false}
   e.target.reset();closeM('auth');toast('Welcome back, '+me.full_name.split(' ')[0]+'.');if(me.role==='artist'&&!me.avatar_url){openOnboard();return false}enterApp('dashboard');return false;
 }
-async function signOut(){await db.auth.signOut();if(chan)db.removeChannel(chan);me=null;msgs=[];notifs=[];renderWho();showWelcome();toast('Signed out.')}
+async function signOut(){await db.auth.signOut();if(chan)db.removeChannel(chan);me=null;msgs=[];notifs=[];FOL=new Set();renderWho();showWelcome();toast('Signed out.')}
 
 /* ---------- booking & escrow ---------- */
 function openBooking(id){if(!me){toast('Sign in to book.');openAuth('signin');return}bk={id,name:P[id]?.full_name||'creative'};$('book-h').textContent='Request a booking with '+bk.name;$('bk-b').value='';$('book-d').textContent='R0';
@@ -510,6 +517,7 @@ async function ob1(e){
 const ob2h=()=>`<h2 class="font-display text-3xl font-bold">Show us your work.</h2><p class="text-mute text-sm mt-2">Clients are more likely to book what they can see. Share a link, upload pictures, or both.</p>
 <input class="inp mt-6" placeholder="What you do (e.g. Amapiano producer)" value="${esc(ob.craft)}" oninput="ob.craft=this.value"/>
 <p class="text-xs text-mute mt-5 mb-2">Categories (pick all that fit)</p><div class="flex flex-wrap gap-2">${CATS.map(c=>`<button type="button" class="chip ${ob.cats.includes(c)?'on':''}" onclick="obCat('${c}')">${c}</button>`).join('')}</div>
+${ob.cats.includes('Music')?`<p class="text-xs text-mute mt-5 mb-2">Your best track (optional). It plays on a spinning vinyl on your profile.</p><label class="btn2 inline-flex items-center gap-2 cursor-pointer"><span class="m">album</span><span>${ob.audio?esc(ob.audio.name):'Upload MP3 or M4A (10 MB max)'}</span><input type="file" accept="audio/mpeg,audio/mp4,audio/x-m4a,.mp3,.m4a" class="hidden" onchange="ob.audio=this.files[0]||null;obPaint()"/></label>`:''}
 <p class="text-xs text-mute mt-5 mb-2">Links: Spotify, YouTube, Instagram, anything</p>${ob.links.map((l,i)=>`<input class="inp mb-2" placeholder="https://" value="${esc(l)}" oninput="ob.links[${i}]=this.value"/>`).join('')}${ob.links.length<3?`<button type="button" class="text-xs text-primary font-semibold" onclick="ob.links.push('');obPaint()">+ Add another link</button>`:''}
 <p class="text-xs text-mute mt-5 mb-2">Or upload pictures of your work (up to 6)</p><div class="grid grid-cols-3 gap-2">${ob.imgs.map((d,i)=>`<div class="tile aspect-square rounded-lg"><img src="${d}"/><button type="button" class="absolute top-1 right-1 bg-black/70 rounded-full w-6 h-6" onclick="ob.imgs.splice(${i},1);obPaint()"><span class="m !text-sm">close</span></button></div>`).join('')}${ob.imgs.length<6?`<label class="aspect-square rounded-lg border border-dashed border-[#44444f] flex flex-col items-center justify-center text-mute cursor-pointer hover:border-primary"><span class="m">add_photo_alternate</span><span class="text-[11px]">Add</span><input type="file" accept="image/*" multiple class="hidden" onchange="obImgs(this)"/></label>`:''}</div>
 <button id="ob2b" class="btn w-full mt-6" onclick="ob2()">Continue</button>`;
@@ -523,7 +531,8 @@ async function ob2(){
   for(const[i,d]of ob.imgs.entries()){const path=`${me.id}/${Date.now()}-${i}.jpg`,{error}=await db.storage.from('portfolio').upload(path,await(await fetch(d)).blob(),{contentType:'image/jpeg'});if(!error)urls.push(db.storage.from('portfolio').getPublicUrl(path).data.publicUrl)}
   const u={craft:ob.craft.trim(),categories:ob.cats,portfolio_links:links,portfolio_images:urls},{error}=await db.from('profiles').update(u).eq('id',me.id);
   if(error){toast(error.message);b.disabled=false;b.textContent='Continue';return}
-  Object.assign(me,u);P[me.id]=me;ob.step=3;obPaint();
+  if(ob.audio&&ob.cats.includes('Music'))await upTrack(ob.audio,'');
+    Object.assign(me,u);P[me.id]=me;ob.step=3;obPaint();
 }
 /* step 3: photo with live wall preview */
 const ob3h=()=>{
@@ -553,7 +562,7 @@ async function delAcct(){
   if(prompt('This permanently deletes your profile, messages and photos. Type DELETE to confirm.')!=='DELETE')return;
   const{count}=await db.from('bookings').select('id',{count:'exact',head:true}).eq('payment_status','escrow_held').or(`client_id.eq.${me.id},artist_id.eq.${me.id}`);
   if(count)return toast('You have a booking with money held in escrow. Finish or refund it first.');
-  try{const{data:f}=await db.storage.from('portfolio').list(me.id);if(f?.length)await db.storage.from('portfolio').remove(f.map(x=>`${me.id}/${x.name}`));await db.storage.from('avatars').remove([`${me.id}.jpg`])}catch(e){}
+  try{const{data:f}=await db.storage.from('portfolio').list(me.id);if(f?.length)await db.storage.from('portfolio').remove(f.map(x=>`${me.id}/${x.name}`));await db.storage.from('avatars').remove([`${me.id}.jpg`]);const{data:tk}=await db.storage.from('tracks').list(me.id);if(tk?.length)await db.storage.from('tracks').remove(tk.map(x=>`${me.id}/${x.name}`))}catch(e){}
   const{error}=await db.rpc('delete_my_account');if(error){toast(error.message);return}
   await signOut();toast('Your account has been deleted.');
 }
@@ -586,7 +595,55 @@ async function savePort(){
   Object.assign(me,u);P[me.id]=me;toast('Portfolio saved.');pfInit();
 }
 
-/* ---------- passwords ---------- */
+/* ---------- vinyl player, tracks, follows ---------- */
+  let FOL=new Set();
+  const vinyl=(p,t)=>`<div><div id="vinyl" class="vinyl mx-auto"><span class="lab tile">${pic(p)}</span><span class="hole"></span></div>
+  <button id="vbtn" class="btn2 w-full mt-5 flex items-center justify-center gap-2" onclick="vToggle()"><span class="m">play_arrow</span><span>Play</span></button>
+  <p class="text-xs text-mute text-center mt-2 truncate">${esc(t.title||'Latest track')}</p><audio id="vaud" src="${esc(t.audio_url)}" preload="auto" loop></audio></div>`;
+  function vSet(on){$('vinyl')?.classList.toggle('on',on);const b=$('vbtn');if(b)b.innerHTML=`<span class="m">${on?'pause':'play_arrow'}</span><span>${on?'Pause':'Play'}</span>`}
+  function vAuto(){const a=$('vaud');if(!a)return;a.volume=.85;a.play().then(()=>vSet(true)).catch(()=>vSet(false))} // autoplay can be blocked: the Play button covers that
+  function vToggle(){const a=$('vaud');if(!a)return;if(a.paused)a.play().then(()=>vSet(true)).catch(()=>toast('Could not play this track.'));else{a.pause();vSet(false)}}
+  function vStop(){const a=$('vaud');if(a){a.pause();a.removeAttribute('src');a.load()}}
+
+  async function loadFollows(){if(!me)return;const{data}=await db.from('follows').select('followee_id').eq('follower_id',me.id);FOL=new Set((data||[]).map(x=>x.followee_id))}
+  async function fcount(id){const[a,b]=await Promise.all([db.from('follows').select('*',{count:'exact',head:true}).eq('followee_id',id),db.from('follows').select('*',{count:'exact',head:true}).eq('follower_id',id)]);const e=$('fcnt');if(e)e.textContent=`${a.count||0} followers · ${b.count||0} following`}
+  async function toggleFollow(id){
+    if(!me){toast('Sign in to follow.');openAuth('signin');return}
+    const on=FOL.has(id),{error}=on?await db.from('follows').delete().eq('follower_id',me.id).eq('followee_id',id):await db.from('follows').insert({follower_id:me.id,followee_id:id});
+    if(error){toast(error.message);return}
+    on?FOL.delete(id):FOL.add(id);const b=$('fbtn');if(b)b.textContent=on?'Follow':'Following';fcount(id);
+  }
+
+  async function upTrack(f,title){
+    if(!/^audio\//.test(f.type)&&!/\.(mp3|m4a)$/i.test(f.name)){toast('Please choose an MP3 or M4A file.');return false}
+    if(f.size>10*1048576){toast('Audio must be under 10 MB.');return false}
+    const{data:old}=await db.storage.from('tracks').list(me.id),ext=/m4a/i.test(f.name)?'m4a':'mp3',path=`${me.id}/track-${Date.now()}.${ext}`;
+    const{error}=await db.storage.from('tracks').upload(path,f,{contentType:f.type||'audio/mpeg'});
+    if(error){toast(error.message);return false}
+    const url=db.storage.from('tracks').getPublicUrl(path).data.publicUrl,{error:e2}=await db.from('tracks').upsert({profile_id:me.id,title:title||null,audio_url:url,updated_at:new Date().toISOString()});
+    if(e2){toast(e2.message);return false}
+    if(old?.length)db.storage.from('tracks').remove(old.map(x=>`${me.id}/${x.name}`));
+    return true;
+  }
+  async function trkInit(){
+    const el=$('pf-trk');if(!el)return;const{data:t}=await db.from('tracks').select('*').eq('profile_id',me.id).maybeSingle();
+    el.innerHTML=`<div class="card p-5 mt-4 max-w-xl"><b>Your track</b><p class="text-xs text-mute mt-1">Plays on a spinning vinyl when someone opens your profile. MP3 or M4A, up to 10 MB. Only upload music you own.</p>${t?`<p class="text-sm mt-3">Current: <b>${esc(t.title||'Untitled')}</b></p>`:''}
+    <input id="tk-t" class="inp mt-3" maxlength="80" placeholder="Track title" value="${esc(t?.title||'')}"/>
+    <label class="btn2 mt-3 inline-flex items-center gap-2 cursor-pointer"><span class="m">upload_file</span><span id="tk-n">${t?'Replace audio':'Choose audio file'}</span><input id="tk-f" type="file" accept="audio/mpeg,audio/mp4,audio/x-m4a,.mp3,.m4a" class="hidden" onchange="$('tk-n').textContent=this.files[0]?.name||'Choose audio file'"/></label>
+    <div class="flex gap-3 mt-4"><button class="btn" onclick="saveTrack()">Save track</button>${t?'<button class="btn2" onclick="delTrack()">Remove</button>':''}</div></div>`;
+  }
+  async function saveTrack(){
+    const f=$('tk-f').files[0],title=$('tk-t').value.trim();
+    if(!f){const{data,error}=await db.from('tracks').update({title}).eq('profile_id',me.id).select();if(error)return toast(error.message);return toast(data?.length?'Title saved.':'Choose an audio file first.')}
+    toast('Uploading…');if(await upTrack(f,title)){toast('Track saved.');trkInit()}
+  }
+  async function delTrack(){
+    if(!confirm('Remove your track?'))return;
+    const{data:f}=await db.storage.from('tracks').list(me.id);if(f?.length)await db.storage.from('tracks').remove(f.map(x=>`${me.id}/${x.name}`));
+    await db.from('tracks').delete().eq('profile_id',me.id);toast('Track removed.');trkInit();
+  }
+
+  /* ---------- passwords ---------- */
 async function savePw(e){e.preventDefault();const a=$('pw-1').value;if(a!==$('pw-2').value){toast('The two passwords do not match.');return false}
   const{error}=await db.auth.updateUser({password:a});if(error){toast(error.message);return false}
   e.target.reset();closeM('pw');toast('Password updated.');return false}

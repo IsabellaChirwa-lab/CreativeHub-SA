@@ -7,8 +7,8 @@
     <meta name="description" content="Creative Hub ZA opens in December. Join free as a creative, record label, radio station or brand and be on the wall from day one."/>
     <meta name="theme-color" content="#0e0e11"/>
     <meta name="color-scheme" content="dark"/>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-    <link rel="manifest" href="/site.webmanifest"/>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+    <link rel="manifest" href="site.webmanifest"/>
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="Join the creative family | Creative Hub ZA"/>
     <meta property="og:description" content="Show your work. Get discovered. Join South Africa’s creative home before we open in December."/>
@@ -50,8 +50,8 @@
 
 <header class="sticky z-20 bg-bg/90 backdrop-blur border-b border-line" style="top:env(safe-area-inset-top,0px)">
     <div class="max-w-6xl mx-auto flex items-center justify-between px-5 h-14">
-        <a href="/" class="font-semibold tracking-[.07em] text-sm">CREATIVE HUB <span class="text-primary">ZA</span></a>
-        <a href="/" class="text-sm text-mute hover:text-white">Explore creatives</a>
+        <a href="index.html" class="font-semibold tracking-[.07em] text-sm">CREATIVE HUB <span class="text-primary">ZA</span></a>
+        <a href="index.html" class="text-sm text-mute hover:text-white">Explore creatives</a>
     </div>
 </header>
 
@@ -105,9 +105,9 @@
             </div>
             <div class="md:pt-2">
                 <div class="md:sticky md:top-24">
-                    <a id="r-cta" href="/?join=artist" class="btn w-full !py-4"></a>
+                    <a id="r-cta" href="index.html?join=artist" class="btn w-full !py-4"></a>
                     <p class="text-xs text-mute mt-4 leading-relaxed">Free to join. You must be 18 or older. You can edit or delete your profile at any time.</p>
-                    <p class="text-sm text-mute mt-4">Already have an account? <a href="/" class="text-white underline underline-offset-4">Sign in</a></p>
+                    <p class="text-sm text-mute mt-4">Already have an account? <a href="index.html" class="text-white underline underline-offset-4">Sign in</a></p>
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
             <details class="py-4"><summary class="flex justify-between gap-4 font-medium">Does it cost anything to join?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">No. Creating an account and building your profile is free.</p></details>
             <details class="py-4"><summary class="flex justify-between gap-4 font-medium">When does the platform open?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">In December. Your profile is saved, so you are ready from day one.</p></details>
             <details class="py-4"><summary class="flex justify-between gap-4 font-medium">Who can see my profile?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">Your name, craft, city, photo, links and portfolio are public so clients can find you. Your email and messages stay private.</p></details>
-            <details class="py-4"><summary class="flex justify-between gap-4 font-medium">Do I keep ownership of my work?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">Yes. You keep the copyright in everything you upload. Our Terms and Privacy Policy are on the <a href="/" class="underline underline-offset-4">main site</a>.</p></details>
+            <details class="py-4"><summary class="flex justify-between gap-4 font-medium">Do I keep ownership of my work?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">Yes. You keep the copyright in everything you upload. Our Terms and Privacy Policy are on the <a href="index.html" class="underline underline-offset-4">main site</a>.</p></details>
             <details class="py-4"><summary class="flex justify-between gap-4 font-medium">I run a label, station or brand. Why join now?<span class="m">add</span></summary><p class="text-sm text-white/70 mt-2">You can post briefs and message creatives as soon as you sign up, and you will already know who is on the platform when it opens.</p></details>
         </div>
     </section>
@@ -140,7 +140,7 @@
 </main>
 
 <footer class="border-t border-line px-5 pt-8 pb-28 md:pb-10 text-xs text-mute text-center">
-    <a href="/" class="underline underline-offset-4">Creative Hub ZA</a> · Need help? <a class="underline underline-offset-4" href="mailto:creativehubza.admin@gmail.com">creativehubza.admin@gmail.com</a>
+    <a href="index.html" class="underline underline-offset-4">Creative Hub ZA</a> · Need help? <a class="underline underline-offset-4" href="mailto:creativehubza.admin@gmail.com">creativehubza.admin@gmail.com</a>
 </footer>
 
 <!-- mobile: persistent join button once the hero has scrolled away -->
@@ -174,12 +174,12 @@
         const r=ROLES[cur];
         $('r-title').textContent=r.title;$('r-lead').textContent=r.lead;
         $('r-list').innerHTML=r.pts.map(p=>`<li class="py-4 border-b border-line md:grid md:grid-cols-[13rem_1fr] md:gap-6"><b class="block font-medium text-sm">${esc(p[0])}</b><span class="block text-sm text-mute mt-1 md:mt-0">${esc(p[1])}</span></li>`).join('');
-        const cta=$('r-cta');cta.textContent=r.cta;cta.href='/?join='+cur+(ref?'&ref='+ref:'');
+        const cta=$('r-cta');cta.textContent=r.cta;cta.href='index.html?join='+cur+(ref?'&ref='+ref:'');
     }
     $('roles').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;cur=b.dataset.k;paint();$('roles').querySelector(`[data-k="${cur}"]`).focus({preventScroll:true})});
     paint();
 
-    const shareUrl=location.origin+'/join.html'+(ref?'?ref='+ref:'');
+    const shareUrl=location.origin+location.pathname+(ref?'?ref='+ref:'');
     $('wa').href='https://wa.me/?text='+encodeURIComponent('Creative Hub ZA opens in December and it is free to join. Get your profile on the wall: '+shareUrl);
     $('copy').onclick=()=>navigator.clipboard.writeText(shareUrl).then(()=>{$('copy').textContent='Link copied'},()=>{$('copy').textContent='Copy failed'});
 
@@ -196,7 +196,7 @@
             const{data}=await db.from('public_profiles').select('id,full_name,avatar_url').eq('role','artist').not('avatar_url','is',null).limit(200);
             list=(data||[]).sort(()=>Math.random()-.5).slice(0,N);
         }catch(e){}
-        el.innerHTML=list.map(p=>`<a href="/" class="tile" aria-label="${esc(p.full_name)}"><img src="${esc(p.avatar_url)}" alt="${esc(p.full_name)}" loading="lazy"/></a>`).join('')+Array(Math.max(0,N-list.length)).fill('<a href="#join" class="tile" aria-label="Join Creative Hub ZA"><div class="ph"><span class="m !text-3xl">add</span></div></a>').join('');
+        el.innerHTML=list.map(p=>`<a href="index.html" class="tile" aria-label="${esc(p.full_name)}"><img src="${esc(p.avatar_url)}" alt="${esc(p.full_name)}" loading="lazy"/></a>`).join('')+Array(Math.max(0,N-list.length)).fill('<a href="#join" class="tile" aria-label="Join Creative Hub ZA"><div class="ph"><span class="m !text-3xl">add</span></div></a>').join('');
         if(list.length)$('strip-note').textContent=list.length+' creatives on the wall so far. Add yours.';
     })();
 </script>
